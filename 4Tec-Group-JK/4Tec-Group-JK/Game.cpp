@@ -83,6 +83,7 @@ void Game::update(sf::Time t_deltaTime)
 
 void Game::render()
 {
+	updateGUI();
 	m_window.clear(sf::Color::White);
 
 	m_board.render(m_window);
@@ -91,7 +92,8 @@ void Game::render()
 	{
 		checker->render(m_window);
 	}
-	updateGUI();	
+		
+	ImGui::SFML::Render(m_window);
 	m_window.display();
 }
 
@@ -101,5 +103,5 @@ void Game::updateGUI()
 	ImGui::Begin("Hello, world!");
 	ImGui::Button("Cool Button");
 	ImGui::End();
-	ImGui::SFML::Render(m_window);
+	
 }
