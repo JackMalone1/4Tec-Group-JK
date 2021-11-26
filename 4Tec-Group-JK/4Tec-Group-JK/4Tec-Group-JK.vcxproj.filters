@@ -19,6 +19,12 @@
     <Filter Include="Resource Files\IMAGES">
       <UniqueIdentifier>{1d793ccc-0d22-4eea-8d0e-c5b5a5270a40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Players">
+      <UniqueIdentifier>{15617631-df70-4a77-955d-e5431548ab69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Players">
+      <UniqueIdentifier>{bd772e73-8e07-4d5f-bb19-ffd7dfc08f48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
