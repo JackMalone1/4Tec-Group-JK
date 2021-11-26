@@ -5,6 +5,7 @@ Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
 	m_exitGame{false} //when true game will exit
 {
+	ImGui::SFML::Init(m_window);
 	for (int i = 0; i < G_CHECKER_COUNT; i++)
 	{
 		int m_color = (rand() % 4);
@@ -14,7 +15,7 @@ Game::Game() :
 
 Game::~Game()
 {
-
+	ImGui::SFML::Shutdown();
 }
 
 void Game::run()
@@ -42,6 +43,7 @@ void Game::processEvents()
 	sf::Event newEvent;
 	while (m_window.pollEvent(newEvent))
 	{
+		ImGui::SFML::ProcessEvent(m_window, newEvent);
 		if ( sf::Event::Closed == newEvent.type) // window message
 		{
 			m_exitGame = true;
@@ -75,6 +77,8 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	m_deltaTime = t_deltaTime;
+	
 }
 
 void Game::render()
@@ -87,6 +91,15 @@ void Game::render()
 	{
 		checker->render(m_window);
 	}
-
+	updateGUI();	
 	m_window.display();
+}
+
+void Game::updateGUI()
+{
+	ImGui::SFML::Update(m_window, m_deltaTime);
+	ImGui::Begin("Hello, world!");
+	ImGui::Button("Cool Button");
+	ImGui::End();
+	ImGui::SFML::Render(m_window);
 }

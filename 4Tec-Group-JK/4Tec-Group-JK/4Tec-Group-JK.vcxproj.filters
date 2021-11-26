@@ -31,6 +31,9 @@
     <Filter Include="Header Files\Board">
       <UniqueIdentifier>{13261287-687c-414e-a60f-f16c317f0983}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Imgui">
+      <UniqueIdentifier>{1f2d0184-fe47-4adf-ba07-b24bb6795409}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,6 +47,21 @@
     </ClCompile>
     <ClCompile Include="Checker.cpp">
       <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_draw.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_tables.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_widgets.cpp">
+      <Filter>Source Files\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-sfml\imgui-SFML.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
