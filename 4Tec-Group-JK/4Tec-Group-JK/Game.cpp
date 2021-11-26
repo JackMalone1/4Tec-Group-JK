@@ -5,6 +5,12 @@ Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
 	m_exitGame{false} //when true game will exit
 {
+	sf::Vector2f position = sf::Vector2f(400.f, 200.f);
+	for (int i = 0; i < 4; i++)
+	{
+		m_boards.push_back(Board(position));
+		position.y += 20;
+	}
 	ImGui::SFML::Init(m_window);
 	for (int i = 0; i < G_CHECKER_COUNT; i++)
 	{
@@ -86,7 +92,10 @@ void Game::render()
 	updateGUI();
 	m_window.clear(sf::Color::White);
 
-	m_board.render(m_window);
+	for (Board board : m_boards)
+	{
+		board.render(m_window);
+	}
 
 	for (auto &checker : m_checker)
 	{

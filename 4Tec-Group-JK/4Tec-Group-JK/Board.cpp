@@ -1,12 +1,12 @@
 #include "Board.h"
 
-Board::Board()
+Board::Board(sf::Vector2f t_position)
 {
 	m_directory = "Assets//IMAGES/Grid.png";
 	m_boardTexture.loadFromFile(m_directory);
 	m_board.setTexture(m_boardTexture);
 	m_board.setScale(2, 2);
-	m_board.setPosition(sf::Vector2f(400.f, 200.f));
+	m_board.setPosition(t_position);
 }
 
 Board::~Board()

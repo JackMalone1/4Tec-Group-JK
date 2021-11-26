@@ -10,7 +10,7 @@ class Board
 {
 public:
 
-	Board();
+	Board(sf::Vector2f t_position);
 	~Board();
 	void update();
 	void render(sf::RenderWindow& t_window);

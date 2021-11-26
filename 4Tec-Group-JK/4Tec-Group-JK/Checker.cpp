@@ -6,8 +6,8 @@ Checker::Checker(int t_color) :
 	m_directory = "Assets//IMAGES/Checker.png";
 	m_checkerTexture.loadFromFile(m_directory);
 	m_checker.setTexture(m_checkerTexture);
-	m_checker.setScale(1.0, 1.0);
-
+	m_checker.setScale(0.5, 0.5);
+	m_checker.setPosition(sf::Vector2f(402.5f, 205.f));
 	colorPicker();
 }
 
