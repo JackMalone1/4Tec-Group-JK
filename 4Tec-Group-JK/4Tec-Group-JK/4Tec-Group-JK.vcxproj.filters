@@ -25,6 +25,12 @@
     <Filter Include="Header Files\Players">
       <UniqueIdentifier>{bd772e73-8e07-4d5f-bb19-ffd7dfc08f48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Board">
+      <UniqueIdentifier>{be603ea1-10ad-4875-9280-c686da588cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Board">
+      <UniqueIdentifier>{13261287-687c-414e-a60f-f16c317f0983}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,9 +39,24 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files\Board</Filter>
+    </ClCompile>
+    <ClCompile Include="Checker.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Header Files\Board</Filter>
+    </ClInclude>
+    <ClInclude Include="Checker.h">
+      <Filter>Header Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

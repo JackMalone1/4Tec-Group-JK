@@ -2,10 +2,14 @@
 #include <iostream>
 
 Game::Game() :
-	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
+	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
 	m_exitGame{false} //when true game will exit
 {
-
+	for (int i = 0; i < G_CHECKER_COUNT; i++)
+	{
+		int m_color = (rand() % 4);
+		m_checker.push_back(new Checker(m_color));
+	}
 }
 
 Game::~Game()
@@ -42,7 +46,8 @@ void Game::processEvents()
 		{
 			m_exitGame = true;
 		}
-		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
+		if (sf::Event::KeyPressed == newEvent.type || 
+			sf::Event::MouseButtonReleased == newEvent.type) //user pressed a key
 		{
 			processKeys(newEvent);
 		}
@@ -54,6 +59,13 @@ void Game::processKeys(sf::Event t_event)
 	if (sf::Keyboard::Escape == t_event.key.code)
 	{
 		m_exitGame = true;
+	}
+
+	if (sf::Mouse::Left == t_event.key.code)
+	{
+		m_mousePos = sf::Mouse::getPosition(m_window);
+
+		std::cout << "X: " << m_mousePos.x << ", Y: " << m_mousePos.y << std::endl;
 	}
 }
 
@@ -69,7 +81,12 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 
-	//m_window.draw();
+	m_board.render(m_window);
+
+	for (auto &checker : m_checker)
+	{
+		checker->render(m_window);
+	}
 
 	m_window.display();
 }
