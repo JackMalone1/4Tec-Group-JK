@@ -7,6 +7,7 @@
 
 #include "Board.h"
 #include "Checker.h"
+#include "Globals.h"
 
 class Game
 {
@@ -24,10 +25,7 @@ private:
 	void updateGUI();
 	sf::RenderWindow m_window; // main SFML window
 	bool m_exitGame; // control exiting game
-
-	Board m_board;
-	std::vector<Checker*> m_checker;
-
+	Board m_board;	
 	sf::Vector2i m_mousePos;
 	sf::Time m_deltaTime;
 };

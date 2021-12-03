@@ -3,14 +3,10 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
-	m_exitGame{false} //when true game will exit
+	m_exitGame{false}, //when true game will exit,
+	m_board{ m_window }
 {
 	ImGui::SFML::Init(m_window);
-	for (int i = 0; i < G_CHECKER_COUNT; i++)
-	{
-		int m_color = (rand() % 4);
-		m_checker.push_back(new Checker(m_color));
-	}
 }
 
 Game::~Game()
@@ -40,18 +36,30 @@ void Game::run()
 
 void Game::processEvents()
 {
-	sf::Event newEvent;
-	while (m_window.pollEvent(newEvent))
+	sf::Event event;
+	while (m_window.pollEvent(event))
 	{
-		ImGui::SFML::ProcessEvent(m_window, newEvent);
-		if ( sf::Event::Closed == newEvent.type) // window message
+		ImGui::SFML::ProcessEvent(m_window, event);
+		if ( sf::Event::Closed == event.type) // window message
 		{
 			m_exitGame = true;
 		}
-		if (sf::Event::KeyPressed == newEvent.type || 
-			sf::Event::MouseButtonReleased == newEvent.type) //user pressed a key
+		if (sf::Event::KeyPressed == event.type ||
+			sf::Event::MouseButtonReleased == event.type) //user pressed a key
 		{
-			processKeys(newEvent);
+			processKeys(event);
+		}
+
+		if(event.mouseButton.button == sf::Mouse::Left && 
+		   event.type == sf::Event::MouseButtonReleased)
+		{
+			m_board.placePiece(sf::Mouse::getPosition(m_window));
+		}
+
+		// Turn on/off isometric view
+		if (event.KeyReleased == event.type && event.key.code == sf::Keyboard::A)
+		{
+			m_board.switchView();
 		}
 	}
 }
@@ -77,8 +85,7 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
-	m_deltaTime = t_deltaTime;
-	
+	m_deltaTime = t_deltaTime;	
 }
 
 void Game::render()
@@ -87,11 +94,6 @@ void Game::render()
 	m_window.clear(sf::Color::White);
 
 	m_board.render(m_window);
-
-	for (auto &checker : m_checker)
-	{
-		checker->render(m_window);
-	}
 		
 	ImGui::SFML::Render(m_window);
 	m_window.display();
@@ -99,9 +101,9 @@ void Game::render()
 
 void Game::updateGUI()
 {
+	if (m_deltaTime.asMicroseconds() <= 0) m_deltaTime = sf::seconds(0.1f);
 	ImGui::SFML::Update(m_window, m_deltaTime);
 	ImGui::Begin("Hello, world!");
 	ImGui::Button("Cool Button");
-	ImGui::End();
-	
+	ImGui::End();	
 }

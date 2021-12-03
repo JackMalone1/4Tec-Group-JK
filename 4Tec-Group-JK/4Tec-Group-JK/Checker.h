@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "Globals.h"
+
 class Checker
 {
 public:
@@ -11,7 +13,7 @@ public:
 	Checker(int t_color);
 	~Checker();
 	void update();
-	void render(sf::RenderWindow& t_window);
+	void render(sf::RenderWindow& t_window, bool t_viewOn);
 
 private:
 	

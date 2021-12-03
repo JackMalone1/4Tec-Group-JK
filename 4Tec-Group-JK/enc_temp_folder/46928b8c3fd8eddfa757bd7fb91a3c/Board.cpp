@@ -63,6 +63,7 @@ void Board::render(sf::RenderWindow& t_window)
 			}
 			else
 			{
+				//v.setSize(v.getSize().x, v.getSize().y * 2);
 				m_inPosition = true;
 			}
 		}

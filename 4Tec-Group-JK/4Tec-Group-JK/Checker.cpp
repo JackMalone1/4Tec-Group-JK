@@ -19,20 +19,29 @@ void Checker::update()
 {
 }
 
-void Checker::render(sf::RenderWindow& t_window)
+void Checker::render(sf::RenderWindow& t_window, bool t_viewOn)
 {
 	sf::Vector2f position = m_checker.getPosition();
-	m_checker.setRotation(45.f);
-	//adjust the position for new screen coordinates (once)
-	m_checker.setPosition(m_checker.getPosition().x, m_checker.getPosition().y * 2);
-	sf::View v = t_window.getDefaultView();
-	v.setSize(v.getSize().x, v.getSize().y * 2);
-	v.setCenter(v.getSize() * .5f);
 
-	t_window.setView(v);
+	if (t_viewOn)
+	{		
+		m_checker.setRotation(45.f);
+		//adjust the position for new screen coordinates (once)
+		m_checker.setPosition(m_checker.getPosition().x, m_checker.getPosition().y * 2);
+		sf::View v = t_window.getDefaultView();
+		v.setSize(v.getSize().x, v.getSize().y * 2);
+		v.setCenter(v.getSize() * .5f);
+		t_window.setView(v);		
+	}
+
 	t_window.draw(m_checker);
-	t_window.setView(t_window.getDefaultView());
-	m_checker.setPosition(position);
+
+	if(t_viewOn)
+	{
+		m_checker.setPosition(position);
+		t_window.setView(t_window.getDefaultView());
+	}
+	
 }
 
 void Checker::colorPicker()

@@ -4,21 +4,38 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "Checker.h"
 #include "Globals.h"
 
 class Board
 {
 public:
 
-	Board();
+	Board(sf::RenderWindow& t_window);
 	~Board();
 	void update();
 	void render(sf::RenderWindow& t_window);
+	void placePiece(sf::Vector2i t_mousePosition);
+	void switchView();
 
 private:
 
+	std::vector<Checker*> m_checker;
 	sf::Texture m_boardTexture;
 	sf::Sprite m_board;
 	std::string m_directory;
+	sf::RenderWindow& m_window;
+
+	sf::Vector2f m_targetPos = { 400.f, 350.f };
+	sf::Vector2f m_viewSize;
+	sf::View v;
+
+	int m_boarder = 15;
+	float m_boardMoveSpeed = 0.2f;
+	bool m_viewOn = false;
+	bool m_inPosition = false;
+
+	/// Testing
+	sf::CircleShape m_circ;
 };
 #endif
