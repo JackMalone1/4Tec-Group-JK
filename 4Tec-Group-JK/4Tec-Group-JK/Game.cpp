@@ -78,8 +78,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	m_deltaTime = t_deltaTime;
-
-	std::cout << "F" << std::endl;
+	
 }
 
 void Game::render()
