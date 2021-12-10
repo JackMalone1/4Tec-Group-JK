@@ -28,5 +28,6 @@ private:
 	Board m_board;	
 	sf::Vector2i m_mousePos;
 	sf::Time m_deltaTime;
+	int input = 0;
 };
 #endif // !GAME_HPP

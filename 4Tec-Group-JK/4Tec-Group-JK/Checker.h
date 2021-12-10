@@ -6,11 +6,18 @@
 
 #include "Globals.h"
 
+enum class Colour
+{
+	Red = 0,
+	Yellow = 1,
+	None = 2
+};
+
 class Checker
 {
 public:
 
-	Checker(int t_color);
+	Checker(Colour t_color);
 	~Checker();
 	void update();
 	void render(sf::RenderWindow& t_window, bool t_viewOn);
@@ -23,6 +30,6 @@ private:
 	sf::Sprite m_checker;
 	std::string m_directory;
 
-	int m_color;
+	Colour m_color;
 };
 #endif

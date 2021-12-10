@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
+#include <array>
 #include "Checker.h"
 #include "Globals.h"
 
@@ -20,7 +20,7 @@ public:
 
 private:
 
-	std::vector<Checker*> m_checker;
+	std::array<std::array<std::array<Checker*, 4>, 4>, 4> m_boards;
 	sf::Texture m_boardTexture;
 	sf::Sprite m_board;
 	std::string m_directory;

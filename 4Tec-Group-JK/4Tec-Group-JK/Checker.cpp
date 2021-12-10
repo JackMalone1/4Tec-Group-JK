@@ -1,7 +1,7 @@
 #include "Checker.h"
 
-Checker::Checker(int t_color) : 
-	m_color(t_color)
+Checker::Checker(Colour t_color) :
+	m_color{t_color}
 {
 	m_directory = "Assets//IMAGES/Checker.png";
 	m_checkerTexture.loadFromFile(m_directory);
@@ -21,6 +21,7 @@ void Checker::update()
 
 void Checker::render(sf::RenderWindow& t_window, bool t_viewOn)
 {
+	if (m_color == Colour::None) return;
 	sf::Vector2f position = m_checker.getPosition();
 
 	if (t_viewOn)
@@ -46,24 +47,14 @@ void Checker::render(sf::RenderWindow& t_window, bool t_viewOn)
 
 void Checker::colorPicker()
 {
-	if (m_color == 0)
+	if (m_color == Colour::Red)
 	{
 		m_checker.setTextureRect(sf::IntRect(0, 0, m_checkerTexture.getSize().x/2, m_checkerTexture.getSize().y / 2));
 		std::cout << "Checker Created Successfully: Red" << std::endl;
 	}
-	else if (m_color == 1)
-	{
-		m_checker.setTextureRect(sf::IntRect(m_checkerTexture.getSize().x / 2, 0, m_checkerTexture.getSize().x / 2, m_checkerTexture.getSize().y / 2));
-		std::cout << "Checker Created Successfully: Blue" << std::endl;
-	}
-	else if (m_color == 2)
+	else if (m_color == Colour::Yellow)
 	{
 		m_checker.setTextureRect(sf::IntRect(0, m_checkerTexture.getSize().y / 2, m_checkerTexture.getSize().x / 2, m_checkerTexture.getSize().y / 2));
 		std::cout << "Checker Created Successfully: Yellow" << std::endl;
-	}
-	else if (m_color == 3)
-	{
-		m_checker.setTextureRect(sf::IntRect(m_checkerTexture.getSize().x / 2, m_checkerTexture.getSize().y / 2, m_checkerTexture.getSize().x / 2, m_checkerTexture.getSize().y / 2));
-		std::cout << "Checker Created Successfully: Green" << std::endl;
 	}
 }

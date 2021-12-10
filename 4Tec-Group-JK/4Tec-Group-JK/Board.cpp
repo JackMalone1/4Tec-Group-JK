@@ -15,11 +15,15 @@ Board::Board(sf::RenderWindow& t_window) :
 	m_circ.setPosition(400.f, 350.f);
 
 	v = t_window.getDefaultView();
-
-	for (int i = 0; i < G_CHECKER_COUNT; i++)
+	for (int i = 0; i < m_boards.size(); i++)
 	{
-		int m_color = (rand() % 4);
-		m_checker.push_back(new Checker(m_color));
+		for (int j = 0; j < m_boards.at(i).size(); j++)
+		{
+			for (int k = 0; k < m_boards.at(i).at(j).size(); k++)
+			{
+				m_boards.at(i).at(j).at(k) = new Checker(Colour::None);
+			}
+		}
 	}
 }
 
@@ -76,17 +80,30 @@ void Board::render(sf::RenderWindow& t_window)
 		t_window.setView(t_window.getDefaultView());
 	}
 
-	for (auto& checker : m_checker)
+	for (auto& board : m_boards)
 	{
-		checker->render(t_window, m_viewOn);
+		for (auto& row : board)
+		{
+			for (Checker* checker : row)
+			{
+				if (checker != nullptr)
+				{
+					checker->render(t_window, m_viewOn);
+				}
+			}
+		}
 	}
 }
 
 void Board::placePiece(sf::Vector2i t_mousePosition)
 {
-	if (m_board.getGlobalBounds().contains((float)t_mousePosition.x, (float)t_mousePosition.y))
+	if (!m_viewOn)
 	{
-		std::cout << "clicked on board" << std::endl;
+		if (m_board.getGlobalBounds().contains((float)t_mousePosition.x, (float)t_mousePosition.y))
+		{
+			std::cout << "clicked on board" << std::endl;
+			sf::Vector2f size = sf::Vector2f(m_board.getGlobalBounds().width, m_board.getGlobalBounds().height);
+		}
 	}
 }
 

@@ -104,6 +104,10 @@ void Game::updateGUI()
 	if (m_deltaTime.asMicroseconds() <= 0) m_deltaTime = sf::seconds(0.1f);
 	ImGui::SFML::Update(m_window, m_deltaTime);
 	ImGui::Begin("Hello, world!");
-	ImGui::Button("Cool Button");
+	ImGui::InputInt("Row", &input, 1, 1);
+	if (input != 0)
+	{
+		std::cout << input << std::endl;
+	}
 	ImGui::End();	
 }
