@@ -3,10 +3,13 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
-	m_exitGame{false}, //when true game will exit,
+	m_exitGame{ false }, //when true game will exit,
 	m_board{ m_window }
 {
+	m_window.setFramerateLimit(fps);
 	ImGui::SFML::Init(m_window);
+
+	//updateGUI();
 }
 
 Game::~Game()
@@ -15,23 +18,20 @@ Game::~Game()
 }
 
 void Game::run()
-{	
+{
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
-	const float fps{ 60.0f };
-	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 60 fps
+
 	while (m_window.isOpen())
 	{
-		processEvents(); // as many as possible
 		timeSinceLastUpdate += clock.restart();
-		while (timeSinceLastUpdate > timePerFrame)
-		{
-			timeSinceLastUpdate -= timePerFrame;
-			processEvents(); // at least 60 fps
-			update(timePerFrame); //60 fps
-		}
-		render(); // as many as possible
+
+		processEvents();
+		ImGui::SFML::Update(m_window, sf::seconds(1.0f / fps));
+		updateGUI();
+		render();
 	}
+
 }
 
 void Game::processEvents()
@@ -40,7 +40,7 @@ void Game::processEvents()
 	while (m_window.pollEvent(event))
 	{
 		ImGui::SFML::ProcessEvent(m_window, event);
-		if ( sf::Event::Closed == event.type) // window message
+		if (sf::Event::Closed == event.type) // window message
 		{
 			m_exitGame = true;
 		}
@@ -50,8 +50,8 @@ void Game::processEvents()
 			processKeys(event);
 		}
 
-		if(event.mouseButton.button == sf::Mouse::Left && 
-		   event.type == sf::Event::MouseButtonReleased)
+		if (event.mouseButton.button == sf::Mouse::Left &&
+			event.type == sf::Event::MouseButtonReleased)
 		{
 			m_board.placePiece(sf::Mouse::getPosition(m_window));
 		}
@@ -85,29 +85,36 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
-	m_deltaTime = t_deltaTime;	
+	m_deltaTime = t_deltaTime;
+	//ImGui::SFML::Update(m_window, m_deltaTime);
 }
 
 void Game::render()
 {
-	updateGUI();
+	//updateGUI();
 	m_window.clear(sf::Color::White);
 
 	m_board.render(m_window);
-		
+
 	ImGui::SFML::Render(m_window);
 	m_window.display();
 }
 
 void Game::updateGUI()
 {
-	if (m_deltaTime.asMicroseconds() <= 0) m_deltaTime = sf::seconds(0.1f);
-	ImGui::SFML::Update(m_window, m_deltaTime);
 	ImGui::Begin("Hello, world!");
-	ImGui::InputInt("Row", &input, 1, 1);
-	if (input != 0)
+	if (ImGui::SliderInt("Row", &input, 1, 4))
 	{
 		std::cout << input << std::endl;
 	}
-	ImGui::End();	
+
+	if (ImGui::SliderInt("Col", &col, 1, 4))
+	{
+		std::cout << col << std::endl;
+	}
+	if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
+	{
+		std::cout << "Button Pressed";
+	}
+	ImGui::End();
 }
