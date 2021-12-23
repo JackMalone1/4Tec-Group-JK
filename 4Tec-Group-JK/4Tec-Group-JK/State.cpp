@@ -12,12 +12,12 @@ State::State()
 
 CheckerType State::getPieceAtPosition(int row, int col, int board)
 {
-	return m_pieces.at((col * 4 + row) * (board + 1));
+	return m_pieces.at((col * 4 + row) + (board * 16));
 }
 
 void State::setPieceAtPosition(int row, int col, int board, CheckerType type)
 {
-	m_pieces.at((col * 4 + row) * (board + 1)) = type;
+	m_pieces.at((col * 4 + row) + (board * 16)) = type;
 }
 
 GameOver State::checkVictory()
