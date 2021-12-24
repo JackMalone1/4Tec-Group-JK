@@ -6,6 +6,7 @@
 #include <array>
 #include "Checker.h"
 #include "Globals.h"
+#include "State.h"
 
 class Board
 {
@@ -28,6 +29,7 @@ private:
 
 	sf::Vector2f m_targetPos = { 400.f, 350.f };
 	sf::Vector2f m_viewSize;
+
 	sf::View v;
 
 	int m_boarder = 15;
@@ -37,5 +39,7 @@ private:
 
 	/// Testing
 	sf::CircleShape m_circ;
+
+	State state;
 };
 #endif
