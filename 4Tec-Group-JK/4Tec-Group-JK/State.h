@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
+#include <array>
 
 enum class CheckerType
 {
@@ -22,6 +23,13 @@ class State
 {
 private:
 	std::vector<CheckerType> m_pieces;
+
+	GameOver checkHorizontals();
+	GameOver checkVerticals();
+	GameOver checkStraightDown();
+	GameOver checkDiagonals();
+	GameOver checkForDraw();
+	GameOver checkForWinForPieces(std::array<CheckerType, 4> checkers);
 public:
 	State();
 	CheckerType getPieceAtPosition(int row, int col, int board);
