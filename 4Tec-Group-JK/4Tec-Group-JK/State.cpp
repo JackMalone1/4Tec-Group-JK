@@ -27,12 +27,27 @@ GameOver State::checkDiagonals()
 
 GameOver State::checkForDraw()
 {
-	return GameOver();
+	for (auto& piece : m_pieces)
+	{
+		if (piece == CheckerType::None)
+		{
+			return GameOver::None;
+		}
+	}
+	return GameOver::Tie;
 }
 
 GameOver State::checkForWinForPieces(std::array<CheckerType, 4> checkers)
 {
-	return GameOver::None;
+	CheckerType type = checkers.at(0);
+	if (type == CheckerType::None) return GameOver::None;
+
+	for (int i = 1; i < checkers.size(); i++)
+	{
+		if (checkers.at(i) != type) return GameOver::None;
+	}
+	GameOver result = (type == CheckerType::Red) ? GameOver::Red : GameOver::Yellow;
+	return result;
 }
 
 State::State()
