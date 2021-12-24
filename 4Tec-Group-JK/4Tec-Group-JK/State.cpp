@@ -3,10 +3,26 @@
 
 GameOver State::checkHorizontals()
 {
-	//for (int board = 0; board < 4; board++)
-	//{
-	//	for(int piece = 0 + (board * 16);board < )
-	//}
+	int offset = ROW_SIZE;
+	for (int initialPosition = 0; initialPosition <= (BOARD_SIZE * NUM_BOARDS) - ROW_SIZE; initialPosition += offset)
+	{
+		std::array<CheckerType, ROW_SIZE> arr;
+		std::copy(m_pieces.begin() + initialPosition, m_pieces.begin() + initialPosition + offset - 1, arr);
+		GameOver state = checkForWinForPieces(arr);
+		if (state != GameOver::None) return state;
+	}
+
+	//horizontals between boards
+	for (int i = 0; i < BOARD_SIZE; i += ROW_SIZE)
+	{
+		std::array<CheckerType, ROW_SIZE> arr;
+		for (int j = 0; j < 4; j++)
+		{
+			arr.at(j) = m_pieces.at(i + ((BOARD_SIZE + 1) * j));
+		}
+		GameOver state = checkForWinForPieces(arr);
+		if (state != GameOver::None) return state;
+	}
 	return GameOver::None;
 }
 
@@ -37,7 +53,7 @@ GameOver State::checkForDraw()
 	return GameOver::Tie;
 }
 
-GameOver State::checkForWinForPieces(std::array<CheckerType, 4> checkers)
+GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)
 {
 	CheckerType type = checkers.at(0);
 	if (type == CheckerType::None) return GameOver::None;
@@ -52,7 +68,7 @@ GameOver State::checkForWinForPieces(std::array<CheckerType, 4> checkers)
 
 State::State()
 {
-	for (int z = 0; z < 64; z++)
+	for (int z = 0; z < BOARD_SIZE * NUM_BOARDS; z++)
 	{
 		m_pieces.push_back(CheckerType::None);
 	}
@@ -61,12 +77,12 @@ State::State()
 
 CheckerType State::getPieceAtPosition(int row, int col, int board)
 {
-	return m_pieces.at((row * 4 + col) + (board * 16));
+	return m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE));
 }
 
 void State::setPieceAtPosition(int row, int col, int board, CheckerType type)
 {
-	m_pieces.at((row * 4 + col) + (board * 16)) = type;
+	m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) = type;
 }
 
 GameOver State::checkVictory()
