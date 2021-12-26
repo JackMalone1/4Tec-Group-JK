@@ -30,7 +30,7 @@ GameOver State::checkVerticals()
 {
 	int index = 0;
 	//check for verticals on each column for a specific board and then go on to the next board and check all of the verticals there
-	while (index < BOARD_SIZE * NUM_BOARDS - 1)
+	while (index < (BOARD_SIZE * NUM_BOARDS) - 1)
 	{
 		for (int i = index; i < (index + ROW_SIZE); ++i)
 		{
@@ -77,6 +77,28 @@ GameOver State::checkStraightDown()
 
 GameOver State::checkDiagonals()
 {
+	for (int i = 0; i < (BOARD_SIZE * NUM_BOARDS) - 1; i += BOARD_SIZE)
+	{
+		std::array<CheckerType, ROW_SIZE> arr;
+		for (int j = 0; j < ROW_SIZE; ++j)
+		{
+			int index = i + (j * (ROW_SIZE + 1));
+			arr.at(j) = m_pieces.at(index);
+		}
+		GameOver state = checkForWinForPieces(arr);
+		if (state != GameOver::None) return state;
+	}
+	for (int i = ROW_SIZE - 1; i < (BOARD_SIZE * NUM_BOARDS) - 1; i += BOARD_SIZE)
+	{
+		std::array<CheckerType, ROW_SIZE> arr;
+		for (int j = 0; j < ROW_SIZE; ++j)
+		{
+			int index = i + (j * (ROW_SIZE - 1));
+			arr.at(j) = m_pieces.at(index);
+		}
+		GameOver state = checkForWinForPieces(arr);
+		if (state != GameOver::None) return state;
+	}
 	return GameOver::None;
 }
 
