@@ -16,7 +16,7 @@ GameOver State::checkHorizontals()
 	for (int i = 0; i < BOARD_SIZE; i += ROW_SIZE)
 	{
 		std::array<CheckerType, ROW_SIZE> arr;
-		for (int j = 0; j < 4; j++)
+		for (int j = 0; j < ROW_SIZE; j++)
 		{
 			arr.at(j) = m_pieces.at(i + ((BOARD_SIZE + 1) * j));
 		}
@@ -28,17 +28,56 @@ GameOver State::checkHorizontals()
 
 GameOver State::checkVerticals()
 {
+	int index = 0;
+	//check for verticals on each column for a specific board and then go on to the next board and check all of the verticals there
+	while (index < BOARD_SIZE * NUM_BOARDS - 1)
+	{
+		for (int i = index; i < (index + ROW_SIZE); ++i)
+		{
+			std::array<CheckerType, COL_SIZE> arr;
+			for (int j = 0; j < COL_SIZE; ++j)
+			{
+				int index = i + (j * COL_SIZE);
+				arr.at(j) = m_pieces.at(index);
+			}
+			GameOver state = checkForWinForPieces(arr);
+			if (state != GameOver::None) return state;
+		}
+		index += (ROW_SIZE * 3) + 1;//skip past 3 rows so this should be equal to 13 to get to the next board
+	}
+	for (int i = 0; i < ROW_SIZE; ++i)
+	{
+		std::array<CheckerType, ROW_SIZE> arr;
+		for (int j = 0; j < ROW_SIZE; ++j)
+		{
+			int index = i + (j * (BOARD_SIZE + ROW_SIZE));
+			arr.at(j) = m_pieces.at(index);
+		}
+		GameOver state = checkForWinForPieces(arr);
+		if (state != GameOver::None) return state;
+	}
 	return GameOver::None;
 }
 
 GameOver State::checkStraightDown()
 {
+	for (int i = 0; i < BOARD_SIZE; ++i)
+	{
+		std::array<CheckerType, ROW_SIZE> arr;
+		for (int j = 0; j < 4; ++j)
+		{
+			int index = i + (j * 16);
+			arr.at(j) = m_pieces.at(index);
+		}
+		GameOver state = checkForWinForPieces(arr);
+		if (state != GameOver::None) return state;
+	}
 	return GameOver::None;
 }
 
 GameOver State::checkDiagonals()
 {
-	return GameOver();
+	return GameOver::None;
 }
 
 GameOver State::checkForDraw()

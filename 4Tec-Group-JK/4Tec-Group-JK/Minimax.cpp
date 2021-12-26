@@ -22,7 +22,7 @@ Move Minimax::getBestMove(State state, CheckerType player)
 		{
 			return Move(10);
 		}
-		else
+		else //loss
 		{
 			return Move(-10);
 		}

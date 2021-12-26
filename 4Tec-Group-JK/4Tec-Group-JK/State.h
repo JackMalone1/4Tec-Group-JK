@@ -23,10 +23,10 @@ class State
 {
 private:
 	std::vector<CheckerType> m_pieces;
-	const int BOARD_SIZE = 16;
-	const int NUM_BOARDS = 4;
-	static constexpr int ROW_SIZE = 4;
-	static constexpr int COL_SIZE = 4;
+	static constexpr size_t BOARD_SIZE = 16;
+	static constexpr size_t NUM_BOARDS = 4;
+	static constexpr size_t ROW_SIZE = 4;
+	static constexpr size_t COL_SIZE = 4;
 	GameOver checkHorizontals();
 	GameOver checkVerticals();
 	GameOver checkStraightDown();
