@@ -102,13 +102,13 @@ GameOver State::checkDiagonals()
 	std::array<CheckerType, ROW_SIZE> arr;
 	for (int i = 0; i < ROW_SIZE; ++i)
 	{
-		arr.at(i) = m_pieces.at(i + (i * 21));
+		arr.at(i) = m_pieces.at(i + (i * (BOARD_SIZE + ROW_SIZE + 1)));
 	}
 	GameOver state = checkForWinForPieces(arr);
 	if (state != GameOver::None) return state;
 	for (int i = 0; i < ROW_SIZE; ++i)
 	{
-		int index = ROW_SIZE - 1 + (i * 19);
+		int index = ROW_SIZE - 1 + (i * (BOARD_SIZE + ROW_SIZE - 1));
 		arr.at(i) = m_pieces.at(index);
 	}
 	state = checkForWinForPieces(arr);
