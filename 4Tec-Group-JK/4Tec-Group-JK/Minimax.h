@@ -20,9 +20,11 @@ struct Move
 class Minimax
 {
 public:
-	void doMove(State& state);
+	void doMove(State& state, int currentDepth);
 private:
 	Move getBestMove(State state, CheckerType player);
 	CheckerType m_aiColour;
+	Move evaluate(State state, CheckerType player);
+	static constexpr int MAX_DEPTH = 10;
 };
 

@@ -1,7 +1,8 @@
 #include "Minimax.h"
 
-void Minimax::doMove(State& state)
+void Minimax::doMove(State& state, int currentDepth)
 {
+	//minimax function
 }
 
 Move Minimax::getBestMove(State state, CheckerType player)
@@ -27,7 +28,10 @@ Move Minimax::getBestMove(State state, CheckerType player)
 			return Move(-10);
 		}
 	}
+	return Move();
+}
 
-
+Move Minimax::evaluate(State state, CheckerType player)
+{
 	return Move();
 }
