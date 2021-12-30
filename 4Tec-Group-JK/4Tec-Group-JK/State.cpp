@@ -7,7 +7,12 @@ GameOver State::checkHorizontals()
 	for (int initialPosition = 0; initialPosition <= (BOARD_SIZE * NUM_BOARDS) - ROW_SIZE; initialPosition += offset)
 	{
 		std::array<CheckerType, ROW_SIZE> arr;
-		std::copy(m_pieces.begin() + initialPosition, m_pieces.begin() + initialPosition + offset - 1, arr);
+		int index = 0;
+		for (int i = initialPosition; i < ROW_SIZE + initialPosition && index < arr.size(); ++i)
+		{
+			arr.at(index) = m_pieces.at(i);
+			index++;
+		}
 		GameOver state = checkForWinForPieces(arr);
 		if (state != GameOver::None) return state;
 	}
@@ -38,6 +43,7 @@ GameOver State::checkVerticals()
 			for (int j = 0; j < COL_SIZE; ++j)
 			{
 				int index = i + (j * COL_SIZE);
+				if (index >= m_pieces.size()) index = m_pieces.size() - 1;
 				arr.at(j) = m_pieces.at(index);
 			}
 			GameOver state = checkForWinForPieces(arr);
@@ -99,10 +105,11 @@ GameOver State::checkDiagonals()
 		GameOver state = checkForWinForPieces(arr);
 		if (state != GameOver::None) return state;
 	}
-	std::array<CheckerType, ROW_SIZE> arr;
+	/*std::array<CheckerType, ROW_SIZE> arr;
 	for (int i = 0; i < ROW_SIZE; ++i)
 	{
-		arr.at(i) = m_pieces.at(i + (i * (BOARD_SIZE + ROW_SIZE + 1)));
+		int index = i + (i * (BOARD_SIZE + ROW_SIZE + 1));
+		arr.at(i) = m_pieces.at(index);
 	}
 	GameOver state = checkForWinForPieces(arr);
 	if (state != GameOver::None) return state;
@@ -112,7 +119,7 @@ GameOver State::checkDiagonals()
 		arr.at(i) = m_pieces.at(index);
 	}
 	state = checkForWinForPieces(arr);
-	if (state != GameOver::None) return state;
+	if (state != GameOver::None) return state;*/
 	return GameOver::None;
 }
 
@@ -138,7 +145,7 @@ GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)
 		if (checkers.at(i) != type) return GameOver::None;
 	}
 	GameOver result = (type == CheckerType::Red) ? GameOver::Red : GameOver::Yellow;
-	return result;
+	return GameOver();
 }
 
 State::State()

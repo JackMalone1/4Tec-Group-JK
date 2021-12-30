@@ -112,9 +112,28 @@ void Game::updateGUI()
 	{
 		std::cout << col << std::endl;
 	}
+
+	if (ImGui::SliderInt("Board", &board, 1, 4))
+	{
+		std::cout << board << std::endl;
+	}
+
 	if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
 	{
-		std::cout << "Button Pressed";
+		m_board.placePiece(input - 1, col - 1, board - 1);
+		if (m_board.gameOver()) m_window.close();
+		std::cout << "Placed piece at row: " << input << " at col: " << col << " on board: " << board << std::endl;
+		m_board.aiTurn();
+		if (m_board.gameOver()) m_window.close();
+	}
+
+	ImGui::End();
+
+	ImGui::Begin("Quit Game");
+	
+	if (ImGui::Button("Quit Game"))
+	{
+		m_window.close();
 	}
 	ImGui::End();
 }

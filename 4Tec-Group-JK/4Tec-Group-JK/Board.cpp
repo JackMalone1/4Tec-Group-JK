@@ -10,12 +10,12 @@ Board::Board(sf::RenderWindow& t_window) :
 	m_board.setScale(2, 2);
 	m_board.setPosition(m_board.getGlobalBounds().width / 2 + m_boarder, m_board.getGlobalBounds().height / 2 + m_boarder);
 
-	m_circ.setFillColor(sf::Color::Red);
+	/*m_circ.setFillColor(sf::Color::Red);
 	m_circ.setRadius(10);
-	m_circ.setPosition(400.f, 350.f);
+	m_circ.setPosition(400.f, 350.f);*/
 
 	v = t_window.getDefaultView();
-	for (int i = 0; i < m_boards.size(); i++)
+	/*for (int i = 0; i < m_boards.size(); i++)
 	{
 		for (int j = 0; j < m_boards.at(i).size(); j++)
 		{
@@ -24,7 +24,7 @@ Board::Board(sf::RenderWindow& t_window) :
 				m_boards.at(i).at(j).at(k) = new Checker(Colour::None);
 			}
 		}
-	}
+	}*/
 }
 
 Board::~Board()
@@ -37,43 +37,43 @@ void Board::update()
 
 void Board::render(sf::RenderWindow& t_window)
 {
-	if (m_viewOn)
-	{ 
-		v.setCenter(v.getSize() * .5f);
-		t_window.setView(v);
+	//if (m_viewOn)
+	//{ 
+	//	v.setCenter(v.getSize() * .5f);
+	//	t_window.setView(v);
 
-		if (!m_inPosition)
-		{			
-			if ((int)m_board.getPosition().x < m_targetPos.x)
-			{
-				m_board.setPosition(m_board.getPosition().x + m_boardMoveSpeed, m_board.getPosition().y);
-			}
-			else if ((int)m_board.getPosition().y < m_targetPos.y)
-			{
-				m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y + m_boardMoveSpeed);
-			}
-			else if ((int)m_board.getPosition().x > m_targetPos.x)
-			{
-				m_board.setPosition(m_board.getPosition().x - m_boardMoveSpeed, m_board.getPosition().y);
-			}
-			else if ((int)m_board.getPosition().y > m_targetPos.y)
-			{
-				m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y - m_boardMoveSpeed);
-			}
-			else if ((int)m_board.getRotation() < 45.0f)
-			{
-				m_board.setRotation(m_board.getRotation() + .035f);
-				v.setSize(v.getSize().x, v.getSize().y + .8);
-			}
-			else
-			{
-				m_inPosition = true;
-			}
-		}
-	}
+	//	if (!m_inPosition)
+	//	{			
+	//		if ((int)m_board.getPosition().x < m_targetPos.x)
+	//		{
+	//			m_board.setPosition(m_board.getPosition().x + m_boardMoveSpeed, m_board.getPosition().y);
+	//		}
+	//		else if ((int)m_board.getPosition().y < m_targetPos.y)
+	//		{
+	//			m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y + m_boardMoveSpeed);
+	//		}
+	//		else if ((int)m_board.getPosition().x > m_targetPos.x)
+	//		{
+	//			m_board.setPosition(m_board.getPosition().x - m_boardMoveSpeed, m_board.getPosition().y);
+	//		}
+	//		else if ((int)m_board.getPosition().y > m_targetPos.y)
+	//		{
+	//			m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y - m_boardMoveSpeed);
+	//		}
+	//		else if ((int)m_board.getRotation() < 45.0f)
+	//		{
+	//			m_board.setRotation(m_board.getRotation() + .035f);
+	//			v.setSize(v.getSize().x, v.getSize().y + .8);
+	//		}
+	//		else
+	//		{
+	//			m_inPosition = true;
+	//		}
+	//	}
+	//}
 
 	t_window.draw(m_board);
-	t_window.draw(m_circ);
+	/*t_window.draw(m_circ);
 
 	if (m_viewOn)
 	{
@@ -92,7 +92,7 @@ void Board::render(sf::RenderWindow& t_window)
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void Board::placePiece(sf::Vector2i t_mousePosition)
@@ -117,4 +117,18 @@ void Board::switchView()
 		m_board.setPosition(m_board.getGlobalBounds().width / 2 + m_boarder, m_board.getGlobalBounds().height / 2 + m_boarder);
 		m_board.setRotation(0.f);
 	}
+}
+
+void Board::placePiece(int row, int col, int board)
+{
+	state.setPieceAtPosition(row, col, board, CheckerType::Red);
+}
+
+void Board::aiTurn()
+{
+}
+
+bool Board::gameOver()
+{
+	return state.checkVictory() != GameOver::None;
 }
