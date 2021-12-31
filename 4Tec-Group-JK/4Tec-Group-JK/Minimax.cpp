@@ -31,11 +31,17 @@ Move Minimax::getBestMove(State state, CheckerType player)
 	return Move();
 }
 
-int Minimax::evaluate(State state, CheckerType player)
+int Minimax::evaluate(State state, CheckerType player, Move move)
 {
 	int score = 0;
 	//check if you are one move from winning
-
+	state.setPieceAtPosition(move.row, move.col, move.board, player);
+	if (state.checkVictory() != GameOver::None && state.checkVictory() != GameOver::Tie)
+	{
+		score = std::numeric_limits<int>::max();
+		return;
+	}
 	//check if you're opponent is still close to winning
+	state.setPieceAtPosition(move.row, move.col, move.board, CheckerType::None);
 	return score;
 }

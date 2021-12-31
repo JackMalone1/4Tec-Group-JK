@@ -24,7 +24,7 @@ public:
 private:
 	Move getBestMove(State state, CheckerType player);
 	CheckerType m_aiColour;
-	int evaluate(State state, CheckerType player);
+	int evaluate(State state, CheckerType player, Move move);
 	static constexpr int MAX_DEPTH = 10;
 };
 
