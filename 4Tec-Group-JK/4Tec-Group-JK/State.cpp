@@ -167,6 +167,11 @@ void State::setPieceAtPosition(int row, int col, int board, CheckerType type)
 	m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) = type;
 }
 
+bool State::isMoveLegal(int row, int col, int board)
+{
+	return m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) == CheckerType::None;
+}
+
 GameOver State::checkVictory()
 {
 	GameOver result = GameOver::None;

@@ -31,7 +31,11 @@ Move Minimax::getBestMove(State state, CheckerType player)
 	return Move();
 }
 
-Move Minimax::evaluate(State state, CheckerType player)
+int Minimax::evaluate(State state, CheckerType player)
 {
-	return Move();
+	int score = 0;
+	//check if you are one move from winning
+
+	//check if you're opponent is still close to winning
+	return score;
 }

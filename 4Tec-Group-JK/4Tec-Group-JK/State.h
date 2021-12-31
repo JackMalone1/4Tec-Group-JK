@@ -38,6 +38,7 @@ public:
 	State();
 	CheckerType getPieceAtPosition(int row, int col, int board);
 	void setPieceAtPosition(int row, int col, int board, CheckerType type);
+	bool isMoveLegal(int row, int col, int board);
 	GameOver checkVictory();
 };
 
