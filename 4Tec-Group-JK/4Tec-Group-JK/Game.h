@@ -30,6 +30,7 @@ private:
     sf::Time m_deltaTime;
     int input = 1;
     int col = 1;
+    int board = 1;
     const float fps{ 60.0f };
 };
 #endif // !GAME_HPP

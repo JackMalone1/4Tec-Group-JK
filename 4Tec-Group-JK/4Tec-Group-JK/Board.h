@@ -18,10 +18,12 @@ public:
 	void render(sf::RenderWindow& t_window);
 	void placePiece(sf::Vector2i t_mousePosition);
 	void switchView();
-
+	void placePiece(int row, int col, int board);
+	void aiTurn();
+	bool gameOver();
 private:
 
-	std::array<std::array<std::array<Checker*, 4>, 4>, 4> m_boards;
+	//std::array<std::array<std::array<Checker*, 4>, 4>, 4> m_boards;
 	sf::Texture m_boardTexture;
 	sf::Sprite m_board;
 	std::string m_directory;
