@@ -17,7 +17,20 @@
 int main()
 {
 	srand(static_cast<unsigned>(time(nullptr)));
-
+	for (int i = 0; i < 64; i++)
+	{
+		//std::cout << i << ": " << (i % 16) /*% 4*/ << std::endl;
+		int boardNumber = i / 16;
+		int diagonalCheck = (boardNumber > 0) ? i % 16 : i;
+		if (diagonalCheck % 5 == 0)
+		{
+			std::cout << "Diagonal found on board: " << boardNumber << " for index: " << i << std::endl;
+		}
+		if (diagonalCheck % 3 == 0 && diagonalCheck % 5 != 0)
+		{
+			std::cout << "Other Diagonal found on board: " << boardNumber << " for index: " << i << std::endl;
+		}
+	}
 	Game game;
 	game.run();
 

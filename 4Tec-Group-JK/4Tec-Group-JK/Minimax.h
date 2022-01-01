@@ -11,16 +11,14 @@ struct Move
 	}
 	Move(int t_score) : score{t_score} {};
 
-	int row;
-	int col;
-	int board;
+	int index;
 	int score;
 };
 
 class Minimax
 {
 public:
-	void doMove(State& state, int currentDepth);
+	Move doMove(State& state, int currentDepth);
 private:
 	Move getBestMove(State state, CheckerType player);
 	CheckerType m_aiColour;

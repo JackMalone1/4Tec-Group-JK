@@ -167,6 +167,16 @@ void State::setPieceAtPosition(int row, int col, int board, CheckerType type)
 	m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) = type;
 }
 
+CheckerType State::getPieceAtPosition(int index)
+{
+	return m_pieces.at(index);
+}
+
+void State::setPieceAtPosition(int index, CheckerType type)
+{
+	m_pieces.at(index) = type;
+}
+
 bool State::isMoveLegal(int row, int col, int board)
 {
 	return m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) == CheckerType::None;
@@ -203,4 +213,139 @@ std::vector<int> State::getLegalSpotsToPlay()
 		}
 	}
 	return availableSpots;
+}
+
+std::array<CheckerType, 3> State::getAllOnSameRow(int index)
+{
+	std::array<CheckerType, 3> arr{};
+	int amountAdded = 0;
+	int amountToLeft = index % ROW_SIZE;
+	int amountToRight = (ROW_SIZE - 1) - amountToLeft;
+	for (int i = 0; i < amountToLeft; i++)
+	{
+		arr.at(amountAdded) = m_pieces.at(i - 1);
+		amountAdded++;
+	}
+	for (int i = 0; i < amountToRight; i++)
+	{
+		arr.at(amountAdded) = m_pieces.at(i + 1);
+		amountAdded++;
+	}
+	return arr;
+}
+
+std::array<CheckerType, 3> State::getAllOnSameColumn(int index)
+{
+	std::array<CheckerType, 3> arr{};
+	int boardNumber = (index / BOARD_SIZE);
+	int columnNumber = (index % ROW_SIZE);
+	int currentIndex = 0;
+	for (int i = 0; i < BOARD_SIZE * NUM_BOARDS; ++i)
+	{
+		if (boardNumber == (i / BOARD_SIZE) && columnNumber == (i % ROW_SIZE) && index != i)
+		{
+			arr.at(currentIndex) = m_pieces.at(i);
+			currentIndex++;
+		}
+	}
+	return std::array<CheckerType, COL_SIZE - 1>();
+}
+
+std::array<CheckerType, 3> State::getAllStraightDown(int index)
+{
+	return std::array<CheckerType, ROW_SIZE - 1>();
+}
+
+std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index)
+{
+	//for (int i = 0; i < 64; i++)
+	//{
+	//	//std::cout << i << ": " << (i % 16) /*% 4*/ << std::endl;
+	//	int boardNumber = i / 16;
+	//	int diagonalCheck = (boardNumber > 0) ? i % 16 : i;
+	//	if (diagonalCheck % 5 == 0)
+	//	{
+	//		std::cout << "Diagonal found on board: " << boardNumber << " for index: " << i << std::endl;
+	//	}
+	//	if (diagonalCheck % 3 == 0 && diagonalCheck % 5 != 0)
+	//	{
+	//		std::cout << "Other Diagonal found on board: " << boardNumber << " for index: " << i << std::endl;
+	//	}
+	//}
+
+	std::array<CheckerType, 3> arr{};
+	int boardNumber = (index / BOARD_SIZE);
+	int diagonalForBoard = (boardNumber > 0) ? index % 16 : index;
+	bool isFirstDiagonal = (diagonalForBoard % 5 == 0) ? true : false;
+	bool isSecondDiagonal = (diagonalForBoard % 3 == 0 && !isFirstDiagonal) ? true : false;
+	int currentIndex = 0;
+	for (int i = 0; i < BOARD_SIZE * NUM_BOARDS; ++i)
+	{
+		if (boardNumber == (i / BOARD_SIZE) && index != i)
+		{
+			int diagonal = (boardNumber > 0) ? i % 16 : i;
+			if (isFirstDiagonal)
+			{
+				if (diagonal % 5 == 0)
+				{
+					arr.at(currentIndex) = m_pieces.at(i);
+				}				
+			}
+			else if (isSecondDiagonal)
+			{
+				if (diagonal % 3 == 0)
+				{
+					arr.at(currentIndex) = m_pieces.at(i);
+				}
+			}
+		}
+	}
+	return arr;
+}
+
+std::array<CheckerType, 3> State::getAllOnSameDiagonal(int index)
+{
+	bool onFirstDiagonal = std::find(m_diagonalIndices.begin(), m_diagonalIndices.end(), index) != m_diagonalIndices.end();
+	bool onSecondDiagonal = std::find(m_oppositeDiagonalIndices.begin(), m_oppositeDiagonalIndices.end(), index) != m_oppositeDiagonalIndices.end();
+	std::array<CheckerType, 3> arr{};
+	int currentIndex = 0;
+	if (onFirstDiagonal)
+	{
+		for (int num : m_diagonalIndices)
+		{
+			if (num != index)
+			{
+				arr.at(currentIndex) = m_pieces.at(num);
+				currentIndex++;
+			}
+		}
+	}
+	else if (onSecondDiagonal)
+	{
+		for (int num : m_oppositeDiagonalIndices)
+		{
+			if (num != index)
+			{
+				arr.at(currentIndex) = m_pieces.at(num);
+				currentIndex++;
+			}
+		}
+	}
+	return arr;
+}
+
+bool State::isOnBoardDiagonal(int index)
+{
+	int boardNumber = (index / BOARD_SIZE);
+	int diagonalForBoard = (boardNumber > 0) ? index % 16 : index;
+	bool isFirstDiagonal = (diagonalForBoard % 5 == 0) ? true : false;
+	bool isSecondDiagonal = (diagonalForBoard % 3 == 0 && !isFirstDiagonal) ? true : false;
+	return isFirstDiagonal || isSecondDiagonal;
+}
+
+bool State::isOnDiagonal(int index)
+{
+	bool onFirstDiagonal = std::find(m_diagonalIndices.begin(), m_diagonalIndices.end(), index) != m_diagonalIndices.end();
+	bool onSecondDiagonal = std::find(m_oppositeDiagonalIndices.begin(), m_oppositeDiagonalIndices.end(), index) != m_oppositeDiagonalIndices.end();
+	return onFirstDiagonal || onSecondDiagonal;
 }

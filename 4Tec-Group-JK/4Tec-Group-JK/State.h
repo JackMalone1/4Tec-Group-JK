@@ -23,11 +23,16 @@ enum class GameOver
 class State
 {
 private:
-	std::vector<CheckerType> m_pieces;
 	static constexpr size_t BOARD_SIZE = 16;
 	static constexpr size_t NUM_BOARDS = 4;
 	static constexpr size_t ROW_SIZE = 4;
 	static constexpr size_t COL_SIZE = 4;
+private:
+	std::vector<CheckerType> m_pieces;
+	std::array<int, 4> m_diagonalIndices = { 0,21,42,63 };
+	std::array<int, 4> m_oppositeDiagonalIndices = { 3,22,41,60 };
+private:
+
 	GameOver checkHorizontals();
 	GameOver checkVerticals();
 	GameOver checkStraightDown();
@@ -38,9 +43,18 @@ public:
 	State();
 	CheckerType getPieceAtPosition(int row, int col, int board);
 	void setPieceAtPosition(int row, int col, int board, CheckerType type);
+	CheckerType getPieceAtPosition(int index);
+	void setPieceAtPosition(int index, CheckerType type);
 	bool isMoveLegal(int row, int col, int board);
 	bool isMoveLegal(int index);
 	GameOver checkVictory();
 	std::vector<int> getLegalSpotsToPlay();
+	std::array<CheckerType, 3> getAllOnSameRow(int index);
+	std::array<CheckerType, 3> getAllOnSameColumn(int index);
+	std::array<CheckerType, 3> getAllStraightDown(int index);
+	std::array<CheckerType, 3> getAllOnSameBoardDiagonal(int index);
+	std::array<CheckerType, 3> getAllOnSameDiagonal(int index);
+	bool isOnBoardDiagonal(int index);
+	bool isOnDiagonal(int index);
 };
 

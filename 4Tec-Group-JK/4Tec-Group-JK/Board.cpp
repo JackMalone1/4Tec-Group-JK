@@ -37,62 +37,49 @@ void Board::update()
 
 void Board::render(sf::RenderWindow& t_window)
 {
-	//if (m_viewOn)
-	//{ 
-	//	v.setCenter(v.getSize() * .5f);
-	//	t_window.setView(v);
+	if (m_viewOn)
+	{ 
+		v.setCenter(v.getSize() * .5f);
+		t_window.setView(v);
 
-	//	if (!m_inPosition)
-	//	{			
-	//		if ((int)m_board.getPosition().x < m_targetPos.x)
-	//		{
-	//			m_board.setPosition(m_board.getPosition().x + m_boardMoveSpeed, m_board.getPosition().y);
-	//		}
-	//		else if ((int)m_board.getPosition().y < m_targetPos.y)
-	//		{
-	//			m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y + m_boardMoveSpeed);
-	//		}
-	//		else if ((int)m_board.getPosition().x > m_targetPos.x)
-	//		{
-	//			m_board.setPosition(m_board.getPosition().x - m_boardMoveSpeed, m_board.getPosition().y);
-	//		}
-	//		else if ((int)m_board.getPosition().y > m_targetPos.y)
-	//		{
-	//			m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y - m_boardMoveSpeed);
-	//		}
-	//		else if ((int)m_board.getRotation() < 45.0f)
-	//		{
-	//			m_board.setRotation(m_board.getRotation() + .035f);
-	//			v.setSize(v.getSize().x, v.getSize().y + .8);
-	//		}
-	//		else
-	//		{
-	//			m_inPosition = true;
-	//		}
-	//	}
-	//}
+		if (!m_inPosition)
+		{			
+			if ((int)m_board.getPosition().x < m_targetPos.x)
+			{
+				m_board.setPosition(m_board.getPosition().x + m_boardMoveSpeed, m_board.getPosition().y);
+			}
+			else if ((int)m_board.getPosition().y < m_targetPos.y)
+			{
+				m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y + m_boardMoveSpeed);
+			}
+			else if ((int)m_board.getPosition().x > m_targetPos.x)
+			{
+				m_board.setPosition(m_board.getPosition().x - m_boardMoveSpeed, m_board.getPosition().y);
+			}
+			else if ((int)m_board.getPosition().y > m_targetPos.y)
+			{
+				m_board.setPosition(m_board.getPosition().x, m_board.getPosition().y - m_boardMoveSpeed);
+			}
+			else if ((int)m_board.getRotation() < 45.0f)
+			{
+				m_board.setRotation(m_board.getRotation() + .035f);
+				v.setSize(v.getSize().x, v.getSize().y + .8);
+			}
+			else
+			{
+				m_inPosition = true;
+			}
+		}
+	}
 
 	t_window.draw(m_board);
-	/*t_window.draw(m_circ);
+	t_window.draw(m_circ);
 
 	if (m_viewOn)
 	{
 		t_window.setView(t_window.getDefaultView());
 	}
 
-	for (auto& board : m_boards)
-	{
-		for (auto& row : board)
-		{
-			for (Checker* checker : row)
-			{
-				if (checker != nullptr)
-				{
-					checker->render(t_window, m_viewOn);
-				}
-			}
-		}
-	}*/
 }
 
 void Board::placePiece(sf::Vector2i t_mousePosition)

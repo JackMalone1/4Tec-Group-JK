@@ -1,9 +1,12 @@
 #include "Minimax.h"
 
-void Minimax::doMove(State& state, int currentDepth)
+Move Minimax::doMove(State& state, int currentDepth)
 {
 	//minimax function
 	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
+
+
+	return Move();
 }
 
 Move Minimax::getBestMove(State state, CheckerType player)
@@ -36,13 +39,18 @@ int Minimax::evaluate(State state, CheckerType player, Move move)
 {
 	int score = 0;
 	//check if you are one move from winning
-	state.setPieceAtPosition(move.row, move.col, move.board, player);
+	//should get more points 
+	state.setPieceAtPosition(move.index, player);
 	if (state.checkVictory() != GameOver::None && state.checkVictory() != GameOver::Tie)
 	{
 		score = std::numeric_limits<int>::max();
-		return;
+		return score;
 	}
 	//check if you're opponent is still close to winning
-	state.setPieceAtPosition(move.row, move.col, move.board, CheckerType::None);
+	state.setPieceAtPosition(move.index, CheckerType::None);
+	//get horizontal for board
+	//get column for board
+	//get straight down for move
+	//if on a board diagonal or diagonal between boards check all of those diagonals
 	return score;
 }
