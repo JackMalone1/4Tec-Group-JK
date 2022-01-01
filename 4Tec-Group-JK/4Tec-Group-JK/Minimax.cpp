@@ -3,6 +3,7 @@
 void Minimax::doMove(State& state, int currentDepth)
 {
 	//minimax function
+	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
 }
 
 Move Minimax::getBestMove(State state, CheckerType player)

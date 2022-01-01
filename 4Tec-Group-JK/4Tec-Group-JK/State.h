@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <array>
+#include <vector>
 
 enum class CheckerType
 {
@@ -33,7 +34,6 @@ private:
 	GameOver checkDiagonals();
 	GameOver checkForDraw();
 	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers);
-
 public:
 	State();
 	CheckerType getPieceAtPosition(int row, int col, int board);
@@ -41,5 +41,6 @@ public:
 	bool isMoveLegal(int row, int col, int board);
 	bool isMoveLegal(int index);
 	GameOver checkVictory();
+	std::vector<int> getLegalSpotsToPlay();
 };
 

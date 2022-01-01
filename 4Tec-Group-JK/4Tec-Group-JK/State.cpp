@@ -191,3 +191,16 @@ GameOver State::checkVictory()
 	result = checkForDraw();
 	return result;
 }
+
+std::vector<int> State::getLegalSpotsToPlay()
+{
+	std::vector<int> availableSpots;
+	for (int i = 0; i < m_pieces.size(); ++i)
+	{
+		if (m_pieces.at(i) == CheckerType::None)
+		{
+			availableSpots.push_back(i);
+		}
+	}
+	return availableSpots;
+}
