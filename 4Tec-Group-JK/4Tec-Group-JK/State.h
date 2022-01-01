@@ -31,6 +31,7 @@ private:
 	std::vector<CheckerType> m_pieces;
 	std::array<int, 4> m_diagonalIndices = { 0,21,42,63 };
 	std::array<int, 4> m_oppositeDiagonalIndices = { 3,22,41,60 };
+	std::array<int, 16> m_corners = { 0,3,12,15,16,19,28,31,32,35,44,47,48,51,60,63 };
 private:
 
 	GameOver checkHorizontals();
@@ -56,5 +57,6 @@ public:
 	std::array<CheckerType, 3> getAllOnSameDiagonal(int index);
 	bool isOnBoardDiagonal(int index);
 	bool isOnDiagonal(int index);
+	bool isCorner(int index);
 };
 

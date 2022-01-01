@@ -253,26 +253,23 @@ std::array<CheckerType, 3> State::getAllOnSameColumn(int index)
 
 std::array<CheckerType, 3> State::getAllStraightDown(int index)
 {
-	return std::array<CheckerType, ROW_SIZE - 1>();
+	std::array<CheckerType, 3> arr{};
+	int boardNumber = (index / BOARD_SIZE);
+	int currentIndex = 0;
+	for (int i = 0; i < boardNumber; ++i)
+	{
+		arr.at(currentIndex) = m_pieces.at(index - (BOARD_SIZE * (i + 1)));
+	}
+
+	for (int i = 0; i < 3 - boardNumber; ++i)
+	{
+		arr.at(currentIndex) = m_pieces.at(index + (BOARD_SIZE * (i + 1)));
+	}
+	return arr;
 }
 
 std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index)
 {
-	//for (int i = 0; i < 64; i++)
-	//{
-	//	//std::cout << i << ": " << (i % 16) /*% 4*/ << std::endl;
-	//	int boardNumber = i / 16;
-	//	int diagonalCheck = (boardNumber > 0) ? i % 16 : i;
-	//	if (diagonalCheck % 5 == 0)
-	//	{
-	//		std::cout << "Diagonal found on board: " << boardNumber << " for index: " << i << std::endl;
-	//	}
-	//	if (diagonalCheck % 3 == 0 && diagonalCheck % 5 != 0)
-	//	{
-	//		std::cout << "Other Diagonal found on board: " << boardNumber << " for index: " << i << std::endl;
-	//	}
-	//}
-
 	std::array<CheckerType, 3> arr{};
 	int boardNumber = (index / BOARD_SIZE);
 	int diagonalForBoard = (boardNumber > 0) ? index % 16 : index;
@@ -348,4 +345,9 @@ bool State::isOnDiagonal(int index)
 	bool onFirstDiagonal = std::find(m_diagonalIndices.begin(), m_diagonalIndices.end(), index) != m_diagonalIndices.end();
 	bool onSecondDiagonal = std::find(m_oppositeDiagonalIndices.begin(), m_oppositeDiagonalIndices.end(), index) != m_oppositeDiagonalIndices.end();
 	return onFirstDiagonal || onSecondDiagonal;
+}
+
+bool State::isCorner(int index)
+{
+	return std::find(m_corners.begin(), m_corners.end(), index) != m_corners.end();;
 }
