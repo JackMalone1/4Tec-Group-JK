@@ -2,11 +2,25 @@
 
 Move Minimax::doMove(State& state, int currentDepth)
 {
+	int bestScore = -std::numeric_limits<int>::max();
+	Move bestMove;
+	bestMove.index = -1;
+	bestMove.score = bestScore;
 	//minimax function
 	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
+	for (int availableMove : availableMoves)
+	{
+		Move move;
+		move.index = availableMove;
+		move.score = evaluate(state, CheckerType::Yellow, move);
+		if (move.score > bestMove.score)
+		{
+			bestMove.score = move.score;
+			bestMove.index = move.index;
+		}
+	}
 
-
-	return Move();
+	return bestMove;
 }
 
 Move Minimax::getBestMove(State state, CheckerType player)

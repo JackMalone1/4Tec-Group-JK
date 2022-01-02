@@ -7,6 +7,7 @@
 #include "Checker.h"
 #include "Globals.h"
 #include "State.h"
+#include "Minimax.h"
 
 class Board
 {
@@ -18,9 +19,10 @@ public:
 	void render(sf::RenderWindow& t_window);
 	void placePiece(sf::Vector2i t_mousePosition);
 	void switchView();
-	void placePiece(int row, int col, int board);
+	bool placePiece(int row, int col, int board);
 	void aiTurn();
 	bool gameOver();
+	void updateDisplayOfBoard();
 private:
 
 	//std::array<std::array<std::array<Checker*, 4>, 4>, 4> m_boards;
@@ -41,7 +43,7 @@ private:
 
 	/// Testing
 	sf::CircleShape m_circ;
-
+	Minimax m_ai;
 	State state;
 };
 #endif

@@ -219,11 +219,11 @@ std::array<CheckerType, 3> State::getAllOnSameRow(int index)
 {
 	std::array<CheckerType, 3> arr{};
 	int amountAdded = 0;
-	int amountToLeft = index % ROW_SIZE;
+	int amountToLeft = (index >= ROW_SIZE) ? index % ROW_SIZE : index;
 	int amountToRight = (ROW_SIZE - 1) - amountToLeft;
 	for (int i = 0; i < amountToLeft; i++)
 	{
-		arr.at(amountAdded) = m_pieces.at(i - 1);
+		arr.at(amountAdded) = m_pieces.at(i);
 		amountAdded++;
 	}
 	for (int i = 0; i < amountToRight; i++)
@@ -350,4 +350,9 @@ bool State::isOnDiagonal(int index)
 bool State::isCorner(int index)
 {
 	return std::find(m_corners.begin(), m_corners.end(), index) != m_corners.end();;
+}
+
+std::vector<CheckerType> State::getPieces()
+{
+	return m_pieces;
 }

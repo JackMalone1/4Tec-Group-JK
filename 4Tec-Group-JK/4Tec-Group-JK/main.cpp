@@ -16,9 +16,15 @@
 
 int main()
 {
+	for (int i = 0; i < 64; i++)
+	{
+		if (i % 4 == 0)
+		{
+			std::cout << i << std::endl;
+		}
+	}
 	srand(static_cast<unsigned>(time(nullptr)));
 	Game game;
 	game.run();
-
 	return 1; // success
 }

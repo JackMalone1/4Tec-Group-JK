@@ -80,6 +80,7 @@ void Board::render(sf::RenderWindow& t_window)
 		t_window.setView(t_window.getDefaultView());
 	}
 
+
 }
 
 void Board::placePiece(sf::Vector2i t_mousePosition)
@@ -106,16 +107,64 @@ void Board::switchView()
 	}
 }
 
-void Board::placePiece(int row, int col, int board)
+bool Board::placePiece(int row, int col, int board)
 {
-	state.setPieceAtPosition(row, col, board, CheckerType::Red);
+	if (state.getPieceAtPosition(row, col, board) == CheckerType::None)
+	{
+		state.setPieceAtPosition(row, col, board, CheckerType::Red);
+		return true;
+	}
+	return false;
 }
 
 void Board::aiTurn()
 {
+	Move move = m_ai.doMove(state, 0);
+	state.setPieceAtPosition(move.index, CheckerType::Yellow);
+	updateDisplayOfBoard();
 }
 
 bool Board::gameOver()
 {
 	return state.checkVictory() != GameOver::None;
+}
+
+void Board::updateDisplayOfBoard()
+{
+	std::vector<CheckerType> pieces = state.getPieces();
+	system("cls");
+	int numberPlaced = 0;
+	for (int i = 0; i < pieces.size(); ++i)
+	{
+		if (i % 16 == 0)
+		{
+			std::cout << std::endl << "-----------------------" << std::endl;
+			std::cout << "|";
+		}
+		else if (numberPlaced == 0)
+		{
+			std::cout << std::endl << "|";
+		}
+		switch (pieces.at(i))
+		{
+		case CheckerType::None:
+			std::cout << "-|";
+			break;
+		case CheckerType::Red:
+			std::cout << "X|";
+			break;
+		case CheckerType::Yellow:
+			std::cout << "O|";
+			break;
+		default:
+			break;
+		}
+		numberPlaced++;
+		if (numberPlaced == 4)
+		{
+			
+			numberPlaced = 0;
+		}
+	}
+
 }

@@ -58,5 +58,6 @@ public:
 	bool isOnBoardDiagonal(int index);
 	bool isOnDiagonal(int index);
 	bool isCorner(int index);
+	std::vector<CheckerType> getPieces();
 };
 

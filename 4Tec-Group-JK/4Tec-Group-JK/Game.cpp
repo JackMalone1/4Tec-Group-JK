@@ -8,7 +8,7 @@ Game::Game() :
 {
 	m_window.setFramerateLimit(fps);
 	ImGui::SFML::Init(m_window);
-
+	m_board.updateDisplayOfBoard();
 	//updateGUI();
 }
 
@@ -120,11 +120,14 @@ void Game::updateGUI()
 
 	if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
 	{
-		m_board.placePiece(input - 1, col - 1, board - 1);
-		if (m_board.gameOver()) m_window.close();
-		std::cout << "Placed piece at row: " << input << " at col: " << col << " on board: " << board << std::endl;
-		m_board.aiTurn();
-		if (m_board.gameOver()) m_window.close();
+		if (m_board.placePiece(input - 1, col - 1, board - 1))
+		{
+			m_board.updateDisplayOfBoard();
+			if (m_board.gameOver()) m_window.close();
+			std::cout << "Placed piece at row: " << input << " at col: " << col << " on board: " << board << std::endl;
+			m_board.aiTurn();
+			if (m_board.gameOver()) m_window.close();
+		}
 	}
 
 	ImGui::End();
