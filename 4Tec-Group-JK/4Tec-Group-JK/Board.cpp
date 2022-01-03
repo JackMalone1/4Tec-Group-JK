@@ -119,8 +119,8 @@ bool Board::placePiece(int row, int col, int board)
 
 void Board::aiTurn()
 {
-	Move move = m_ai.doMove(state, 0);
-	state.setPieceAtPosition(move.index, CheckerType::Yellow);
+	Move move = m_ai.doMove(state);
+	//state.setPieceAtPosition(move.index, CheckerType::Yellow);
 	updateDisplayOfBoard();
 }
 

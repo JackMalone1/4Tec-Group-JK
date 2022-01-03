@@ -13,18 +13,22 @@ struct Move
 
 	int index;
 	int score;
+
+	int z, y, x;
 };
 
 class Minimax
 {
 public:
-	Move doMove(State& state, int currentDepth);
+	Move doMove(State& state);
 private:
-	Move getBestMove(State state, CheckerType player);
+	Move getBestMove(State& state, CheckerType player);
 	CheckerType m_aiColour;
 	int evaluate(State state, CheckerType player, Move move);
 	void evaluateGroup(CheckerType player, int& score, std::array<CheckerType, 3> group);
 	bool areAllColour(CheckerType colour, std::array<CheckerType, 3> arr);
 	static constexpr int MAX_DEPTH = 10;
+
+	std::vector<Move> moves;
 };
 
