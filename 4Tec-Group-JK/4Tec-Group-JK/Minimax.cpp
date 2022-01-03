@@ -1,115 +1,83 @@
 #include "Minimax.h"
 
-Move Minimax::doMove(State& state)
+Move Minimax::doMove(State state)
 {
-	/*int bestScore = -std::numeric_limits<int>::max();
-	Move bestMove;
-	bestMove.index = -1;
-	bestMove.score = bestScore;
-	minimax function
-	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
-	for (int availableMove : availableMoves)
-	{
-		Move move;
-		move.index = availableMove;
-		move.score = evaluate(state, CheckerType::Yellow, move);
-		if (move.score > bestMove.score)
-		{
-			bestMove.score = move.score;
-			bestMove.index = move.index;
-		}
-	}
+	//int bestScore = -std::numeric_limits<int>::max();
+	//Move bestMove;
+	//bestMove.index = -1;
+	//bestMove.score = bestScore;
+	////minimax function
+	//std::vector<int> availableMoves = state.getLegalSpotsToPlay();
+	//for (int availableMove : availableMoves)
+	//{
+	//	Move move;
+	//	move.index = availableMove;
+	//	move.score = evaluate(state, CheckerType::Yellow, move);
+	//	if (move.score > bestMove.score)
+	//	{
+	//		bestMove.score = move.score;
+	//		bestMove.index = move.index;
+	//	}
+	//}
 
-	return bestMove;*/
-	Move bestmove = getBestMove(state, CheckerType::Yellow);
+	//return bestMove;
+	Move bestmove = getBestMove(state, CheckerType::Yellow, 0, Move());
 	state.setPieceAtPosition(bestmove.index, CheckerType::Yellow);
 	moves.clear();
 	return bestmove;
 }
 
-Move Minimax::getBestMove(State& state, CheckerType player)
+Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move)
 {
-	//GameOver gameOver = state.checkVictory();
-
-	//if (gameOver != GameOver::None)
-	//{
-	//	if (gameOver == GameOver::Tie)
-	//	{
-	//		return Move(0);
-	//	}
-	//	else if (gameOver == GameOver::Red && m_aiColour == CheckerType::Red)
-	//	{
-	//		return Move(10);
-	//	}
-	//	else if (gameOver == GameOver::Yellow && m_aiColour == CheckerType::Yellow)
-	//	{
-	//		return Move(10);
-	//	}
-	//	else //loss
-	//	{
-	//		return Move(-10);
-	//	}
-	//}
-	//return Move();
 
 	GameOver gameover = state.checkVictory();
 	if (gameover == GameOver::Yellow)
 	{
-			return Move(10);
+			return Move(10000000);
 	}
 	else if(gameover == GameOver::Red)	
 	{
-		return Move(-10);
+		return Move(-10000000);
 	}
 	else if (gameover == GameOver::Tie)
 	{
 		return Move(0);
 	}
 
-	/*for (int z = 0; z < 4; z++)
+	if (depth == MAX_DEPTH)
 	{
-		if (currentDepth >= MAX_DEPTH)
-		{
-			break;
-		}
-		for (int y = 0; y < 4; y++)
-		{
-			if (currentDepth >= MAX_DEPTH)
-			{
-				break;
-			}
-			for (int x = 0; x < 4; x++)
-			{*/
+		Move newMove;
+		newMove.score = evaluate(state, player, move);
+		newMove.index = move.index;
+		return newMove;
+	}
+
 	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
 	for (int availableMove : availableMoves)
 	{
-		Move move;
+		Move move(0);
 		move.index = availableMove;
 		if (state.getPieceAtPosition(availableMove) == CheckerType::None)
 		{
-
-			//move.x = x;
-			//move.y = y;
-			//move.z = z;
-			//move.index = (x * 4 + y) + (z * 16);
-
 			state.setPieceAtPosition(availableMove, player);
 			if (player == CheckerType::Yellow) //ai
 			{
-				move.score = evaluate(state, CheckerType::Red, move);
-				//move.score = getBestMove(state, CheckerType::Red).score;
+				//move.score = evaluate(state, player, move);
+				move.score = getBestMove(state, CheckerType::Red, depth + 1, move).score;
+				if (move.score == 10000000) return move;
 			}
 			else
 			{
-				move.score = evaluate(state, CheckerType::Yellow, move);
-				//move.score = getBestMove(state, CheckerType::Yellow).score;
+				move.score = getBestMove(state, CheckerType::Yellow, depth + 1, move).score;
+				if (move.score == -10000000) return move;
+				//move.score = evaluate(state, player, move);
 			}
 			moves.push_back(move);
 			state.setPieceAtPosition(availableMove, CheckerType::None);
 		}
 	}
 	int bestMove = 0;
-	if (player == CheckerType::Yellow)
+	if (player == CheckerType::Red)
 	{
 		int bestScore = -10000000;
 		for (int i = 0; i < moves.size(); i++)
@@ -136,48 +104,44 @@ Move Minimax::getBestMove(State& state, CheckerType player)
 	return moves[bestMove];
 }
 
-int Minimax::evaluate(State state, CheckerType player, Move move)
+int Minimax::evaluate(const State& state, CheckerType player, Move& move)
 {
 	CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
 	int score = 0;
-	//check if you are one move from winning
-	//should get more points 
-	state.setPieceAtPosition(move.index, player);
-	if (state.checkVictory() != GameOver::None && state.checkVictory() != GameOver::Tie)
+	if ((state.checkVictory() == GameOver::Red && player == CheckerType::Red) || (state.checkVictory() == GameOver::Yellow && player == CheckerType::Yellow))
 	{
-		score = std::numeric_limits<int>::max();
+		score = 10000000;
 		return score;
 	}
-	//check if you're opponent is still close to winning
-	state.setPieceAtPosition(move.index, CheckerType::None);
-	//get horizontal for board
+	if ((state.checkVictory() == GameOver::Red && oppositeColour == CheckerType::Red) || (state.checkVictory() == GameOver::Yellow && oppositeColour == CheckerType::Yellow))
+	{
+		score = -10000000;
+		return score;
+	}
 	std::array<CheckerType, 3> row = state.getAllOnSameRow(move.index);
 	if (areAllColour(oppositeColour, row))
 	{
-		score = std::numeric_limits<int>::max();
+		score = 10000000;
 		return score;
 	}
-	//get column for board
 	std::array<CheckerType, 3> col = state.getAllOnSameColumn(move.index);
 	if (areAllColour(oppositeColour, col))
 	{
-		score = std::numeric_limits<int>::max();
+		score = 10000000;
 		return score;
 	}
-	//get straight down for move
 	std::array<CheckerType, 3> straightDown = state.getAllStraightDown(move.index);
 	if (areAllColour(oppositeColour, straightDown))
 	{
-		score = std::numeric_limits<int>::max();
+		score = 10000000;
 		return score;
 	}
-	//if on a board diagonal or diagonal between boards check all of those diagonals
 	if (state.isOnBoardDiagonal(move.index))
 	{
 		std::array<CheckerType, 3> diagonal = state.getAllOnSameBoardDiagonal(move.index);
 		if (areAllColour(oppositeColour, diagonal))
 		{
-			score = std::numeric_limits<int>::max();
+			score = 10000000;
 			return score;
 		}
 	}
@@ -186,7 +150,7 @@ int Minimax::evaluate(State state, CheckerType player, Move move)
 		std::array<CheckerType, 3> diagonal = state.getAllOnSameDiagonal(move.index);
 		if (areAllColour(oppositeColour, diagonal))
 		{
-			score = std::numeric_limits<int>::max();
+			score = 10000000;
 			return score;
 		}
 		evaluateGroup(player, score, diagonal);
@@ -196,7 +160,7 @@ int Minimax::evaluate(State state, CheckerType player, Move move)
 	evaluateGroup(player, score, straightDown);
 	if (state.isCorner(move.index))
 	{
-		score += 1;
+		score += 20;
 	}
 	return score;
 }
@@ -207,11 +171,11 @@ void Minimax::evaluateGroup(CheckerType player, int& score, std::array<CheckerTy
 	{
 		if (type == player)
 		{
-			score += 2;
+			score += 30;
 		}
 		else if (type == CheckerType::None)
 		{
-			score += 1;
+			score += 15;
 		}
 		else//opposite colour so we want to remove one from the score
 		{

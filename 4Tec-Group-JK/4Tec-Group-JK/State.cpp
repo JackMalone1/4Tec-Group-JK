@@ -1,7 +1,7 @@
 #include "State.h"
 #include <iostream>
 
-GameOver State::checkHorizontals()
+GameOver State::checkHorizontals()const
 {
 	int offset = ROW_SIZE;
 	for (int initialPosition = 0; initialPosition <= (BOARD_SIZE * NUM_BOARDS) - ROW_SIZE; initialPosition += offset)
@@ -31,7 +31,7 @@ GameOver State::checkHorizontals()
 	return GameOver::None;
 }
 
-GameOver State::checkVerticals()
+GameOver State::checkVerticals()const
 {
 	int index = 0;
 	//check for verticals on each column for a specific board and then go on to the next board and check all of the verticals there
@@ -65,7 +65,7 @@ GameOver State::checkVerticals()
 	return GameOver::None;
 }
 
-GameOver State::checkStraightDown()
+GameOver State::checkStraightDown()const
 {
 	for (int i = 0; i < BOARD_SIZE; ++i)
 	{
@@ -81,7 +81,7 @@ GameOver State::checkStraightDown()
 	return GameOver::None;
 }
 
-GameOver State::checkDiagonals()
+GameOver State::checkDiagonals()const
 {
 	for (int i = 0; i < (BOARD_SIZE * NUM_BOARDS) - 1; i += BOARD_SIZE)
 	{
@@ -123,7 +123,7 @@ GameOver State::checkDiagonals()
 	return GameOver::None;
 }
 
-GameOver State::checkForDraw()
+GameOver State::checkForDraw()const
 {
 	for (auto& piece : m_pieces)
 	{
@@ -135,7 +135,7 @@ GameOver State::checkForDraw()
 	return GameOver::Tie;
 }
 
-GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)
+GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)const
 {
 	CheckerType type = checkers.at(0);
 	if (type == CheckerType::None) return GameOver::None;
@@ -157,7 +157,7 @@ State::State()
 	std::cout << "\n";
 }
 
-CheckerType State::getPieceAtPosition(int row, int col, int board)
+CheckerType State::getPieceAtPosition(int row, int col, int board) const
 {
 	return m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE));
 }
@@ -167,27 +167,31 @@ void State::setPieceAtPosition(int row, int col, int board, CheckerType type)
 	m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) = type;
 }
 
-CheckerType State::getPieceAtPosition(int index)
+CheckerType State::getPieceAtPosition(int index) const
 {
 	return m_pieces.at(index);
 }
 
 void State::setPieceAtPosition(int index, CheckerType type)
 {
-	m_pieces.at(index) = type;
+	if (index >= 0 && index < m_pieces.size())
+	{
+		m_pieces.at(index) = type;
+	}
+
 }
 
-bool State::isMoveLegal(int row, int col, int board)
+bool State::isMoveLegal(int row, int col, int board) const
 {
 	return m_pieces.at((row * ROW_SIZE + col) + (board * BOARD_SIZE)) == CheckerType::None;
 }
 
-bool State::isMoveLegal(int index)
+bool State::isMoveLegal(int index) const
 {
 	return m_pieces.at(index) == CheckerType::None;
 }
 
-GameOver State::checkVictory()
+GameOver State::checkVictory() const
 {
 	GameOver result = GameOver::None;
 	result = checkDiagonals();
@@ -202,7 +206,7 @@ GameOver State::checkVictory()
 	return result;
 }
 
-std::vector<int> State::getLegalSpotsToPlay()
+std::vector<int> State::getLegalSpotsToPlay() const
 {
 	std::vector<int> availableSpots;
 	for (int i = 0; i < m_pieces.size(); ++i)
@@ -215,7 +219,7 @@ std::vector<int> State::getLegalSpotsToPlay()
 	return availableSpots;
 }
 
-std::array<CheckerType, 3> State::getAllOnSameRow(int index)
+std::array<CheckerType, 3> State::getAllOnSameRow(int index) const
 {
 	std::array<CheckerType, 3> arr{};
 	int amountAdded = 0;
@@ -234,7 +238,7 @@ std::array<CheckerType, 3> State::getAllOnSameRow(int index)
 	return arr;
 }
 
-std::array<CheckerType, 3> State::getAllOnSameColumn(int index)
+std::array<CheckerType, 3> State::getAllOnSameColumn(int index) const
 {
 	std::array<CheckerType, 3> arr{};
 	int boardNumber = (index / BOARD_SIZE);
@@ -251,7 +255,7 @@ std::array<CheckerType, 3> State::getAllOnSameColumn(int index)
 	return std::array<CheckerType, COL_SIZE - 1>();
 }
 
-std::array<CheckerType, 3> State::getAllStraightDown(int index)
+std::array<CheckerType, 3> State::getAllStraightDown(int index) const
 {
 	std::array<CheckerType, 3> arr{};
 	int boardNumber = (index / BOARD_SIZE);
@@ -268,7 +272,7 @@ std::array<CheckerType, 3> State::getAllStraightDown(int index)
 	return arr;
 }
 
-std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index)
+std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index) const
 {
 	std::array<CheckerType, 3> arr{};
 	int boardNumber = (index / BOARD_SIZE);
@@ -300,7 +304,7 @@ std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index)
 	return arr;
 }
 
-std::array<CheckerType, 3> State::getAllOnSameDiagonal(int index)
+std::array<CheckerType, 3> State::getAllOnSameDiagonal(int index) const
 {
 	bool onFirstDiagonal = std::find(m_diagonalIndices.begin(), m_diagonalIndices.end(), index) != m_diagonalIndices.end();
 	bool onSecondDiagonal = std::find(m_oppositeDiagonalIndices.begin(), m_oppositeDiagonalIndices.end(), index) != m_oppositeDiagonalIndices.end();
@@ -331,7 +335,7 @@ std::array<CheckerType, 3> State::getAllOnSameDiagonal(int index)
 	return arr;
 }
 
-bool State::isOnBoardDiagonal(int index)
+bool State::isOnBoardDiagonal(int index) const
 {
 	int boardNumber = (index / BOARD_SIZE);
 	int diagonalForBoard = (boardNumber > 0) ? index % 16 : index;
@@ -340,19 +344,19 @@ bool State::isOnBoardDiagonal(int index)
 	return isFirstDiagonal || isSecondDiagonal;
 }
 
-bool State::isOnDiagonal(int index)
+bool State::isOnDiagonal(int index) const
 {
 	bool onFirstDiagonal = std::find(m_diagonalIndices.begin(), m_diagonalIndices.end(), index) != m_diagonalIndices.end();
 	bool onSecondDiagonal = std::find(m_oppositeDiagonalIndices.begin(), m_oppositeDiagonalIndices.end(), index) != m_oppositeDiagonalIndices.end();
 	return onFirstDiagonal || onSecondDiagonal;
 }
 
-bool State::isCorner(int index)
+bool State::isCorner(int index) const
 {
 	return std::find(m_corners.begin(), m_corners.end(), index) != m_corners.end();;
 }
 
-std::vector<CheckerType> State::getPieces()
+std::vector<CheckerType> State::getPieces() const
 {
 	return m_pieces;
 }

@@ -34,30 +34,30 @@ private:
 	std::array<int, 16> m_corners = { 0,3,12,15,16,19,28,31,32,35,44,47,48,51,60,63 };
 private:
 
-	GameOver checkHorizontals();
-	GameOver checkVerticals();
-	GameOver checkStraightDown();
-	GameOver checkDiagonals();
-	GameOver checkForDraw();
-	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers);
+	GameOver checkHorizontals()const;
+	GameOver checkVerticals()const;
+	GameOver checkStraightDown()const;
+	GameOver checkDiagonals()const;
+	GameOver checkForDraw()const;
+	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)const;
 public:
 	State();
-	CheckerType getPieceAtPosition(int row, int col, int board);
+	CheckerType getPieceAtPosition(int row, int col, int board) const;
 	void setPieceAtPosition(int row, int col, int board, CheckerType type);
-	CheckerType getPieceAtPosition(int index);
+	CheckerType getPieceAtPosition(int index)const;
 	void setPieceAtPosition(int index, CheckerType type);
-	bool isMoveLegal(int row, int col, int board);
-	bool isMoveLegal(int index);
-	GameOver checkVictory();
-	std::vector<int> getLegalSpotsToPlay();
-	std::array<CheckerType, 3> getAllOnSameRow(int index);
-	std::array<CheckerType, 3> getAllOnSameColumn(int index);
-	std::array<CheckerType, 3> getAllStraightDown(int index);
-	std::array<CheckerType, 3> getAllOnSameBoardDiagonal(int index);
-	std::array<CheckerType, 3> getAllOnSameDiagonal(int index);
-	bool isOnBoardDiagonal(int index);
-	bool isOnDiagonal(int index);
-	bool isCorner(int index);
-	std::vector<CheckerType> getPieces();
+	bool isMoveLegal(int row, int col, int board)const;
+	bool isMoveLegal(int index)const;
+	GameOver checkVictory()const;
+	std::vector<int> getLegalSpotsToPlay()const;
+	std::array<CheckerType, 3> getAllOnSameRow(int index)const;
+	std::array<CheckerType, 3> getAllOnSameColumn(int index)const;
+	std::array<CheckerType, 3> getAllStraightDown(int index)const;
+	std::array<CheckerType, 3> getAllOnSameBoardDiagonal(int index)const;
+	std::array<CheckerType, 3> getAllOnSameDiagonal(int index)const;
+	bool isOnBoardDiagonal(int index)const;
+	bool isOnDiagonal(int index)const;
+	bool isCorner(int index)const;
+	std::vector<CheckerType> getPieces()const;
 };
 
