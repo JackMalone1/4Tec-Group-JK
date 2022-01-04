@@ -34,12 +34,12 @@ private:
 	std::array<int, 16> m_corners = { 0,3,12,15,16,19,28,31,32,35,44,47,48,51,60,63 };
 private:
 
-	GameOver checkHorizontals()const;
-	GameOver checkVerticals()const;
-	GameOver checkStraightDown()const;
-	GameOver checkDiagonals()const;
+	GameOver checkHorizontals();
+	GameOver checkVerticals();
+	GameOver checkStraightDown();
+	GameOver checkDiagonals();
 	GameOver checkForDraw()const;
-	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)const;
+	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers);
 public:
 	State();
 	CheckerType getPieceAtPosition(int row, int col, int board) const;
@@ -48,7 +48,7 @@ public:
 	void setPieceAtPosition(int index, CheckerType type);
 	bool isMoveLegal(int row, int col, int board)const;
 	bool isMoveLegal(int index)const;
-	GameOver checkVictory()const;
+	GameOver checkVictory();
 	std::vector<int> getLegalSpotsToPlay()const;
 	std::array<CheckerType, 3> getAllOnSameRow(int index)const;
 	std::array<CheckerType, 3> getAllOnSameColumn(int index)const;
