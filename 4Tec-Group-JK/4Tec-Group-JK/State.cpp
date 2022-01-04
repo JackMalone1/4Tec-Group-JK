@@ -145,7 +145,7 @@ GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)
 		if (checkers.at(i) != type) return GameOver::None;
 	}
 	GameOver result = (type == CheckerType::Red) ? GameOver::Red : GameOver::Yellow;
-	return GameOver();
+	return result;
 }
 
 State::State()

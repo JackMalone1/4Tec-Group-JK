@@ -31,15 +31,15 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 {
 
 	GameOver gameover = state.checkVictory();
-	if (gameover == GameOver::Yellow)
-	{
-			return Move(10000000);
-	}
-	else if(gameover == GameOver::Red)	
-	{
-		return Move(-10000000);
-	}
-	else if (gameover == GameOver::Tie)
+	//if (gameover == GameOver::Yellow && player == CheckerType::Yellow || gameover == GameOver::Red && CheckerType::Red == player)
+	//{
+	//		return Move(10000000);
+	//}
+	//else if(gameover == GameOver::Yellow && player != CheckerType::Yellow || gameover == GameOver::Red && CheckerType::Red != player)
+	//{
+	//	return Move(-10000000);
+	//}
+	if (gameover == GameOver::Tie)
 	{
 		return Move(0);
 	}
@@ -64,12 +64,12 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 			{
 				//move.score = evaluate(state, player, move);
 				move.score = getBestMove(state, CheckerType::Red, depth + 1, move).score;
-				if (move.score == 10000000 - 1) return move;
+				//if (move.score == 10000000 - 1) return move;
 			}
 			else
 			{
 				move.score = getBestMove(state, CheckerType::Yellow, depth + 1, move).score;
-				if (move.score == -10000000 + 1) return move;
+				//if (move.score == 10000000 - 1) return move;
 				//move.score = evaluate(state, player, move);
 			}
 			moves.push_back(move);
@@ -77,7 +77,7 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		}
 	}
 	int bestMove = 0;
-	if (player == CheckerType::Red)
+	if (depth % 2 == 0)
 	{
 		int bestScore = -10000000;
 		for (int i = 0; i < moves.size(); i++)
@@ -101,6 +101,7 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 			}
 		}
 	}
+	std::cout << moves[bestMove].score << std::endl;
 	return moves[bestMove];
 }
 
