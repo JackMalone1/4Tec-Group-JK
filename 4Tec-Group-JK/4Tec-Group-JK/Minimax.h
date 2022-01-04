@@ -27,7 +27,7 @@ private:
 	int evaluate(const State& state, CheckerType player, Move& move);
 	void evaluateGroup(CheckerType player, int& score, std::array<CheckerType, 3> group);
 	bool areAllColour(CheckerType colour, std::array<CheckerType, 3> arr);
-	static constexpr int MAX_DEPTH = 2;
+	static constexpr int MAX_DEPTH = 3;
 
 	std::vector<Move> moves;
 };

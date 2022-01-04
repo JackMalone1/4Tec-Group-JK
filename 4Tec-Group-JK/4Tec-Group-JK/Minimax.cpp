@@ -64,12 +64,12 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 			{
 				//move.score = evaluate(state, player, move);
 				move.score = getBestMove(state, CheckerType::Red, depth + 1, move).score;
-				if (move.score == 10000000) return move;
+				if (move.score == 10000000 - 1) return move;
 			}
 			else
 			{
 				move.score = getBestMove(state, CheckerType::Yellow, depth + 1, move).score;
-				if (move.score == -10000000) return move;
+				if (move.score == -10000000 + 1) return move;
 				//move.score = evaluate(state, player, move);
 			}
 			moves.push_back(move);
@@ -110,30 +110,30 @@ int Minimax::evaluate(const State& state, CheckerType player, Move& move)
 	int score = 0;
 	if ((state.checkVictory() == GameOver::Red && player == CheckerType::Red) || (state.checkVictory() == GameOver::Yellow && player == CheckerType::Yellow))
 	{
-		score = 10000000;
+		score = 10000000 - 1;
 		return score;
 	}
 	if ((state.checkVictory() == GameOver::Red && oppositeColour == CheckerType::Red) || (state.checkVictory() == GameOver::Yellow && oppositeColour == CheckerType::Yellow))
 	{
-		score = -10000000;
+		score = -10000000 + 1;
 		return score;
 	}
 	std::array<CheckerType, 3> row = state.getAllOnSameRow(move.index);
 	if (areAllColour(oppositeColour, row))
 	{
-		score = 10000000;
+		score = 10000000 - 1;
 		return score;
 	}
 	std::array<CheckerType, 3> col = state.getAllOnSameColumn(move.index);
 	if (areAllColour(oppositeColour, col))
 	{
-		score = 10000000;
+		score = 10000000 - 1;
 		return score;
 	}
 	std::array<CheckerType, 3> straightDown = state.getAllStraightDown(move.index);
 	if (areAllColour(oppositeColour, straightDown))
 	{
-		score = 10000000;
+		score = 10000000 - 1;
 		return score;
 	}
 	if (state.isOnBoardDiagonal(move.index))
@@ -141,7 +141,7 @@ int Minimax::evaluate(const State& state, CheckerType player, Move& move)
 		std::array<CheckerType, 3> diagonal = state.getAllOnSameBoardDiagonal(move.index);
 		if (areAllColour(oppositeColour, diagonal))
 		{
-			score = 10000000;
+			score = 10000000 - 1;
 			return score;
 		}
 	}
@@ -150,7 +150,7 @@ int Minimax::evaluate(const State& state, CheckerType player, Move& move)
 		std::array<CheckerType, 3> diagonal = state.getAllOnSameDiagonal(move.index);
 		if (areAllColour(oppositeColour, diagonal))
 		{
-			score = 10000000;
+			score = 10000000 - 1;
 			return score;
 		}
 		evaluateGroup(player, score, diagonal);
@@ -160,7 +160,7 @@ int Minimax::evaluate(const State& state, CheckerType player, Move& move)
 	evaluateGroup(player, score, straightDown);
 	if (state.isCorner(move.index))
 	{
-		score += 20;
+		score += 35;
 	}
 	return score;
 }
@@ -179,7 +179,7 @@ void Minimax::evaluateGroup(CheckerType player, int& score, std::array<CheckerTy
 		}
 		else//opposite colour so we want to remove one from the score
 		{
-			score -= 1;
+			score -= 10;
 		}
 	}
 }
