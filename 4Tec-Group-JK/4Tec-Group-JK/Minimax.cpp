@@ -50,6 +50,7 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		newMove.score = evaluate(state, player, move);
 		CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
 		newMove.score += -evaluate(state, oppositeColour, move);
+		if (oppositeColour == CheckerType::Red) newMove.score *= -1;
 		//if (player == CheckerType::Yellow) newMove.score *= -1;
 		return newMove;
 	}
