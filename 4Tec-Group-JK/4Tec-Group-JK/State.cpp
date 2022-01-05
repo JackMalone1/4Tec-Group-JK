@@ -220,19 +220,6 @@ std::vector<int> State::getLegalSpotsToPlay() const
 std::array<CheckerType, 3> State::getAllOnSameRow(int index) const
 {
 	std::array<CheckerType, 3> arr{};
-	//int amountAdded = 0;
-	//int amountToLeft = (index >= ROW_SIZE) ? index % ROW_SIZE : index;
-	//int amountToRight = (ROW_SIZE - 1) - amountToLeft;
-	//for (int i = 0; i < amountToLeft; i++)
-	//{
-	//	arr.at(amountAdded) = m_pieces.at(i);
-	//	amountAdded++;
-	//}
-	//for (int i = 0; i < amountToRight; i++)
-	//{
-	//	arr.at(amountAdded) = m_pieces.at(i + 1);
-	//	amountAdded++;
-	//}
 	int rowNumber = (index / 4);
 	int positionInRow = (index % 4);
 	int currentIndex = 0;
@@ -274,17 +261,31 @@ std::array<CheckerType, 3> State::getAllOnSameColumn(int index) const
 std::array<CheckerType, 3> State::getAllStraightDown(int index) const
 {
 	std::array<CheckerType, 3> arr{};
+	if (index == 16)
+	{
+		std::cout << "";
+	}
 	int boardNumber = (index / BOARD_SIZE);
 	int currentIndex = 0;
 	for (int i = 0; i < boardNumber; ++i)
 	{
-		arr.at(currentIndex) = m_pieces.at(index - (BOARD_SIZE * (i + 1)));
+		int value = index - (BOARD_SIZE * (i + 1));
+		arr.at(currentIndex) = m_pieces.at(value);
+		currentIndex++;
 	}
 
 	for (int i = 0; i < 3 - boardNumber; ++i)
 	{
-		arr.at(currentIndex) = m_pieces.at(index + (BOARD_SIZE * (i + 1)));
+		int value = index + (BOARD_SIZE * (i + 1));
+		arr.at(currentIndex) = m_pieces.at(value);
+		currentIndex++;
 	}
+	//std::vector<int> indices;
+	//int amountBelow = 3 - (index / 16);
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	indices.push_back(index + (16 * i));
+	//}
 	return arr;
 }
 
@@ -296,7 +297,7 @@ std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index) const
 	bool isFirstDiagonal = (diagonalForBoard % 5 == 0) ? true : false;
 	bool isSecondDiagonal = (diagonalForBoard % 3 == 0 && !isFirstDiagonal) ? true : false;
 	int currentIndex = 0;
-	for (int i = 0; i < BOARD_SIZE * NUM_BOARDS; ++i)
+	for (int i = 0; i < BOARD_SIZE * NUM_BOARDS && currentIndex < 3; ++i)
 	{
 		if (boardNumber == (i / BOARD_SIZE) && index != i)
 		{
@@ -306,6 +307,7 @@ std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index) const
 				if (diagonal % 5 == 0)
 				{
 					arr.at(currentIndex) = m_pieces.at(i);
+					currentIndex++;
 				}				
 			}
 			else if (isSecondDiagonal)
@@ -313,6 +315,7 @@ std::array<CheckerType, 3> State::getAllOnSameBoardDiagonal(int index) const
 				if (diagonal % 3 == 0)
 				{
 					arr.at(currentIndex) = m_pieces.at(i);
+					currentIndex++;
 				}
 			}
 		}
@@ -348,6 +351,8 @@ std::array<CheckerType, 3> State::getAllOnSameDiagonal(int index) const
 			}
 		}
 	}
+	std::vector<int> indices;
+	//for(int i = 0; )
 	return arr;
 }
 

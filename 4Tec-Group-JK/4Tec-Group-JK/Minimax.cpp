@@ -48,10 +48,17 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		Move newMove;
 		newMove.index = move.index;
 		newMove.score = evaluate(state, player, move);
-		CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
-		newMove.score += -evaluate(state, oppositeColour, move);
-		if (oppositeColour == CheckerType::Red) newMove.score *= -1;
-		//if (player == CheckerType::Yellow) newMove.score *= -1;
+		if (depth % 2 == 0)
+		{
+			CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
+			newMove.score += -evaluate(state, oppositeColour, move);
+			if (oppositeColour == CheckerType::Red) newMove.score *= -1;
+		}
+		else
+		{
+			CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
+			newMove.score = evaluate(state, oppositeColour, move);
+		}
 		return newMove;
 	}
 
@@ -61,27 +68,20 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		Move move(0);
 		move.index = availableMove;
 		if (state.getPieceAtPosition(availableMove) == CheckerType::None)
-		{
-			state.setPieceAtPosition(availableMove, player);
+		{			
 			if (player == CheckerType::Red) //ai
 			{
-				//move.score = evaluate(state, player, move);
-				//if (move.score == 10000000 - 1) return move;
 				move.score = getBestMove(state, CheckerType::Yellow, depth + 1, move).score;
-
 			}
 			else
 			{
-
-				//move.score = evaluate(state, player, move);
-				//if (move.score == 10000000 - 1) return move;
 				move.score = getBestMove(state, CheckerType::Red, depth + 1, move).score;
 			}
 			moves.push_back(move);
-			state.setPieceAtPosition(availableMove, CheckerType::None);
 		}
 	}
 	int bestMove = 0;
+
 	if (player == CheckerType::Red)
 	{
 		int bestScore = -10000000;
@@ -106,24 +106,15 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 			}
 		}
 	}
-	//std::cout << moves[bestMove].score << std::endl;
 	return moves[bestMove];
 }
 
 int Minimax::evaluate(State& state, CheckerType player, Move& move)
 {
+	player = CheckerType::Red;
 	CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
 	int score = 0;
-	if ((state.checkVictory() == GameOver::Red && player == CheckerType::Red) || (state.checkVictory() == GameOver::Yellow && player == CheckerType::Yellow))
-	{
-		score = 10000000 - 1;
-		return score;
-	}
-	if ((state.checkVictory() == GameOver::Red && oppositeColour == CheckerType::Red) || (state.checkVictory() == GameOver::Yellow && oppositeColour == CheckerType::Yellow))
-	{
-		score = -10000000 + 1;
-		return score;
-	}
+
 	std::array<CheckerType, 3> row = state.getAllOnSameRow(move.index);
 	if (areAllColour(oppositeColour, row))
 	{
@@ -167,6 +158,10 @@ int Minimax::evaluate(State& state, CheckerType player, Move& move)
 	if (state.isCorner(move.index))
 	{
 		score += 35;
+	}
+	if (player == CheckerType::Red)
+	{
+		score *= -1;
 	}
 	return score;
 }
