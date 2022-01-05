@@ -220,18 +220,33 @@ std::vector<int> State::getLegalSpotsToPlay() const
 std::array<CheckerType, 3> State::getAllOnSameRow(int index) const
 {
 	std::array<CheckerType, 3> arr{};
-	int amountAdded = 0;
-	int amountToLeft = (index >= ROW_SIZE) ? index % ROW_SIZE : index;
-	int amountToRight = (ROW_SIZE - 1) - amountToLeft;
-	for (int i = 0; i < amountToLeft; i++)
+	//int amountAdded = 0;
+	//int amountToLeft = (index >= ROW_SIZE) ? index % ROW_SIZE : index;
+	//int amountToRight = (ROW_SIZE - 1) - amountToLeft;
+	//for (int i = 0; i < amountToLeft; i++)
+	//{
+	//	arr.at(amountAdded) = m_pieces.at(i);
+	//	amountAdded++;
+	//}
+	//for (int i = 0; i < amountToRight; i++)
+	//{
+	//	arr.at(amountAdded) = m_pieces.at(i + 1);
+	//	amountAdded++;
+	//}
+	int rowNumber = (index / 4);
+	int positionInRow = (index % 4);
+	int currentIndex = 0;
+	for (int i = 0; i < 64; ++i)
 	{
-		arr.at(amountAdded) = m_pieces.at(i);
-		amountAdded++;
-	}
-	for (int i = 0; i < amountToRight; i++)
-	{
-		arr.at(amountAdded) = m_pieces.at(i + 1);
-		amountAdded++;
+		if (rowNumber == i / 4 && positionInRow != i % 4)
+		{
+			arr.at(currentIndex) = m_pieces.at(i);
+			currentIndex++;
+			if (currentIndex >= 3)
+			{
+				return arr;
+			}
+		}
 	}
 	return arr;
 }

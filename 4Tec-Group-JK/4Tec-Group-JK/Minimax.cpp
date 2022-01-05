@@ -2,29 +2,29 @@
 
 Move Minimax::doMove(State state)
 {
-	int bestScore = -std::numeric_limits<int>::max();
-	Move bestMove;
-	bestMove.index = -1;
-	bestMove.score = bestScore;
-	//minimax function
-	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
-	for (int availableMove : availableMoves)
-	{
-		Move move;
-		move.index = availableMove;
-		move.score = evaluate(state, CheckerType::Yellow, move);
-		if (move.score > bestMove.score)
-		{
-			bestMove.score = move.score;
-			bestMove.index = move.index;
-		}
-	}
+	//int bestScore = -std::numeric_limits<int>::max();
+	//Move bestMove;
+	//bestMove.index = -1;
+	//bestMove.score = bestScore;
+	////minimax function
+	//std::vector<int> availableMoves = state.getLegalSpotsToPlay();
+	//for (int availableMove : availableMoves)
+	//{
+	//	Move move;
+	//	move.index = availableMove;
+	//	move.score = evaluate(state, CheckerType::Yellow, move);
+	//	if (move.score > bestMove.score)
+	//	{
+	//		bestMove.score = move.score;
+	//		bestMove.index = move.index;
+	//	}
+	//}
 
-	return bestMove;
-	//Move bestmove = getBestMove(state, CheckerType::Yellow, 0, Move());
-	//state.setPieceAtPosition(bestmove.index, CheckerType::Yellow);
-	//moves.clear();
-	//return bestmove;
+	//return bestMove;
+	Move bestmove = getBestMove(state, CheckerType::Yellow, 0, Move());
+	state.setPieceAtPosition(bestmove.index, CheckerType::Yellow);
+	moves.clear();
+	return bestmove;
 }
 
 Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move)
@@ -48,6 +48,9 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		Move newMove;
 		newMove.index = move.index;
 		newMove.score = evaluate(state, player, move);
+		CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
+		newMove.score += -evaluate(state, oppositeColour, move);
+		//if (player == CheckerType::Yellow) newMove.score *= -1;
 		return newMove;
 	}
 
@@ -78,7 +81,7 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		}
 	}
 	int bestMove = 0;
-	if (player == CheckerType::Yellow)
+	if (player == CheckerType::Red)
 	{
 		int bestScore = -10000000;
 		for (int i = 0; i < moves.size(); i++)

@@ -18,10 +18,11 @@ int main()
 {
 	for (int i = 0; i < 64; i++)
 	{
-		if (i % 4 == 0)
-		{
-			std::cout << i << std::endl;
-		}
+		//std::cout << (i >= 4) ? i % 4 : i;
+		int boardNumber = (i / 4);
+		int columnNumber = (i % 4);
+		std::cout << std::endl;
+		std::cout << boardNumber << " " << columnNumber << std::endl;
 	}
 	srand(static_cast<unsigned>(time(nullptr)));
 	Game game;
