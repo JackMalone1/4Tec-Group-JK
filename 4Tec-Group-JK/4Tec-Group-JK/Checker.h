@@ -6,21 +6,16 @@
 
 #include "Globals.h"
 
-enum class Colour
-{
-	Red = 0,
-	Yellow = 1,
-	None = 2
-};
-
 class Checker
 {
 public:
 
-	Checker(Colour t_color);
+	Checker();
 	~Checker();
 	void update();
-	void render(sf::RenderWindow& t_window, bool t_viewOn);
+	void render(sf::RenderWindow& t_window);
+	void setColour(CheckerType t_colour);
+	void setPosition(sf::Vector2f t_pos);
 
 private:
 	
@@ -30,6 +25,6 @@ private:
 	sf::Sprite m_checker;
 	std::string m_directory;
 
-	Colour m_color;
+	CheckerType m_color;
 };
 #endif

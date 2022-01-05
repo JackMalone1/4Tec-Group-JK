@@ -3,13 +3,12 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
-	m_exitGame{ false }, //when true game will exit,
 	m_board{ m_window }
 {
 	m_window.setFramerateLimit(fps);
 	ImGui::SFML::Init(m_window);
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	m_board.updateDisplayOfBoard();
-	//updateGUI();
 }
 
 Game::~Game()
@@ -31,7 +30,6 @@ void Game::run()
 		updateGUI();
 		render();
 	}
-
 }
 
 void Game::processEvents()
@@ -42,7 +40,7 @@ void Game::processEvents()
 		ImGui::SFML::ProcessEvent(m_window, event);
 		if (sf::Event::Closed == event.type) // window message
 		{
-			m_exitGame = true;
+			m_window.close();
 		}
 		if (sf::Event::KeyPressed == event.type ||
 			sf::Event::MouseButtonReleased == event.type) //user pressed a key
@@ -68,7 +66,7 @@ void Game::processKeys(sf::Event t_event)
 {
 	if (sf::Keyboard::Escape == t_event.key.code)
 	{
-		m_exitGame = true;
+		m_window.close();
 	}
 
 	if (sf::Mouse::Left == t_event.key.code)
@@ -81,62 +79,83 @@ void Game::processKeys(sf::Event t_event)
 
 void Game::update(sf::Time t_deltaTime)
 {
-	if (m_exitGame)
-	{
-		m_window.close();
-	}
 	m_deltaTime = t_deltaTime;
-	//ImGui::SFML::Update(m_window, m_deltaTime);
 }
 
 void Game::render()
 {
-	//updateGUI();
 	m_window.clear(sf::Color::White);
-
-	m_board.render(m_window);
-
 	ImGui::SFML::Render(m_window);
+	m_board.render(m_window);
 	m_window.display();
 }
 
 void Game::updateGUI()
 {
-	ImGui::Begin("Hello, world!");
-	if (ImGui::SliderInt("Row", &input, 1, 4))
+	static ImGuiID dockspaceID = 0;
+	static bool winOpenWish = true;
+
+	ImGui::SetNextWindowPos(sf::Vector2f(0, 0));
+	ImGui::SetNextWindowSize(sf::Vector2f(G_WINDOW_WIDTH, G_WINDOW_HEIGHT));
+	if (ImGui::Begin("Master Window", &winOpenWish))
 	{
-		std::cout << input << std::endl;
+		ImGui::TextUnformatted("Boards");
 	}
 
-	if (ImGui::SliderInt("Col", &col, 1, 4))
+	// Declare Central dockspace
+	dockspaceID = ImGui::GetID("HUB_DockSpace");
+	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode);
+
+	ImGui::End();
+
+	if (!winOpenWish)
 	{
-		std::cout << col << std::endl;
+		ImGui::OpenPopup("Popup");
 	}
 
-	if (ImGui::SliderInt("Board", &board, 1, 4))
+	//ImGui::SetNextWindowFocus();
+	if (ImGui::BeginPopupModal("Popup"))
 	{
-		std::cout << board << std::endl;
+		ImGui::TextUnformatted("a popup");
+		ImGui::EndPopup();
 	}
 
-	if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
+	ImGui::SetNextWindowDockID(dockspaceID, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin("Place a piece"))
 	{
-		if (m_board.placePiece(input - 1, col - 1, board - 1))
+		if (ImGui::SliderInt("Row", &input, 1, 4))
 		{
-			m_board.updateDisplayOfBoard();
+			std::cout << input << std::endl;
+		}
+
+		if (ImGui::SliderInt("Col", &col, 1, 4))
+		{
+			std::cout << col << std::endl;
+		}
+
+		if (ImGui::SliderInt("Board", &board, 1, 4))
+		{
+			std::cout << board << std::endl;
+		}
+
+		if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
+		{
+			m_board.placePiece(input - 1, col - 1, board - 1);
 			if (m_board.gameOver()) m_window.close();
 			std::cout << "Placed piece at row: " << input << " at col: " << col << " on board: " << board << std::endl;
 			m_board.aiTurn();
 			if (m_board.gameOver()) m_window.close();
 		}
 	}
-
 	ImGui::End();
 
-	ImGui::Begin("Quit Game");
-	
-	if (ImGui::Button("Quit Game"))
+	ImGui::SetNextWindowDockID(dockspaceID, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin("Settings"))
 	{
-		m_window.close();
+		if (ImGui::Button("Quit Game"))
+		{
+			m_window.close();
+		}
 	}
 	ImGui::End();
-}
+ }

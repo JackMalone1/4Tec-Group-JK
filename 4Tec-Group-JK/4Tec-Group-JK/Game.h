@@ -24,7 +24,6 @@ private:
     void render();
     void updateGUI();
     sf::RenderWindow m_window; // main SFML window
-    bool m_exitGame; // control exiting game
     Board m_board;
     sf::Vector2i m_mousePos;
     sf::Time m_deltaTime;

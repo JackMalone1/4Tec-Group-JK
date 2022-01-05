@@ -4,13 +4,7 @@
 #include <map>
 #include <array>
 #include <vector>
-
-enum class CheckerType
-{
-	None = 0,
-	Yellow,
-	Red
-};
+#include "Globals.h"
 
 enum class GameOver
 {
@@ -22,11 +16,6 @@ enum class GameOver
 
 class State
 {
-private:
-	static constexpr size_t BOARD_SIZE = 16;
-	static constexpr size_t NUM_BOARDS = 4;
-	static constexpr size_t ROW_SIZE = 4;
-	static constexpr size_t COL_SIZE = 4;
 private:
 	std::vector<CheckerType> m_pieces;
 	std::array<int, 4> m_diagonalIndices = { 0,21,42,63 };
