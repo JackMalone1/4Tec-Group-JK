@@ -15,7 +15,7 @@ Move Minimax::doMove(State state)
 
 Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move)
 {
-	std::vector<Move> rankedMoves;
+	/*std::vector<Move> rankedMoves;
 	if (depth == MAX_DEPTH)
 	{
 		move.score = evaluate(state, player, move);
@@ -26,13 +26,89 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		std::vector<int> availableMoves = state.getLegalSpotsToPlay();
 		for (int i : availableMoves)
 		{
+			state.setPieceAtPosition(i, player);
 			move.index = i;
 			CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
 			move = getBestMove(state, oppositeColour, depth + 1, move);
 			rankedMoves.push_back(move);
+			state.setPieceAtPosition(i, CheckerType::None);
 		}
 	}
-	return *std::max_element(rankedMoves.begin(), rankedMoves.end(), compare);
+	Move i = *std::max_element(rankedMoves.begin(), rankedMoves.end(), compare);
+	return *std::max_element(rankedMoves.begin(), rankedMoves.end(), compare);*/
+
+	GameOver gameover = state.checkVictory();
+	if (gameover == GameOver::Yellow && player == CheckerType::Yellow || gameover == GameOver::Red && CheckerType::Red == player)
+	{
+		return Move(10000000);
+	}
+	else if (gameover == GameOver::Yellow && player != CheckerType::Yellow || gameover == GameOver::Red && CheckerType::Red != player)
+	{
+		return Move(-10000000);
+	}
+	else if (gameover == GameOver::Tie)
+	{
+		return Move(0);
+	}
+	if (depth >= MAX_DEPTH)
+	{
+		Move newMove;
+		newMove.index = move.index;
+		newMove.score = evaluate(state, player, move);
+		CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
+		newMove.score += -evaluate(state, oppositeColour, move);
+		if (oppositeColour == CheckerType::Red) newMove.score *= -1;
+		return newMove;
+	}
+
+	std::vector<int> availableMoves = state.getLegalSpotsToPlay();
+	for (int availableMove : availableMoves)
+	{
+		Move move(0);
+		move.index = availableMove;
+		if (state.getPieceAtPosition(availableMove) == CheckerType::None)
+		{
+			state.setPieceAtPosition(availableMove, player);
+			if (player == CheckerType::Red) //ai
+			{
+				move.score = getBestMove(state, CheckerType::Yellow, depth + 1, move).score;
+
+			}
+			else
+			{
+
+				move.score = getBestMove(state, CheckerType::Red, depth + 1, move).score;
+			}
+			moves.push_back(move);
+			state.setPieceAtPosition(availableMove, CheckerType::None);
+		}
+	}
+	int bestMove = 0;
+	if (player == CheckerType::Red)
+	{
+		int bestScore = -10000000;
+		for (int i = 0; i < moves.size(); i++)
+		{
+			if (moves[i].score >= bestScore)
+			{
+				bestMove = i;
+				bestScore = moves[i].score;
+			}
+		}
+	}
+	else
+	{
+		int bestScore = 10000000;
+		for (int i = 0; i < moves.size(); i++)
+		{
+			if (moves[i].score <= bestScore)
+			{
+				bestMove = i;
+				bestScore = moves[i].score;
+			}
+		}
+	}
+	return moves[bestMove];
 }
 
 int Minimax::evaluate(State& state, CheckerType player, Move& move)
