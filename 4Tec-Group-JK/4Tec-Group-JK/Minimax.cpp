@@ -51,25 +51,33 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 			if (player == CheckerType::Red) //maximiser
 			{
 				int score = getBestMove(state, CheckerType::Yellow, depth + 1, move, alpha, beta).score;
-				beta = std::min(beta, score);
-				//if (alpha >= beta)
-				//{
-				//	move.score = beta;
-				//	return move;
-				//}
-				move.score = beta;
+				alpha = std::max(alpha, score);
+				if (alpha >= beta)
+				{
+					move.score = alpha;
+					move.depth = depth;
+					moves.push_back(move);
+					state.setPieceAtPosition(availableMove, CheckerType::None);
+					break;
+				}
+				move.score = score;
 			}
 			else//minimiser
 			{
 				int score = getBestMove(state, CheckerType::Red, depth + 1, move, alpha, beta).score;
-				alpha = std::max(alpha, score);
-				//if (alpha >= beta)
-				//{
-				//	move.score = alpha;
-				//	return move;
-				//}
-				move.score = alpha;
+				beta = std::min(beta, score);
+				
+				if (alpha >= beta)
+				{
+					move.score = beta;
+					move.depth = depth;
+					moves.push_back(move);
+					state.setPieceAtPosition(availableMove, CheckerType::None);
+					break;
+				}
+				move.score = score;
 			}
+			move.depth = depth;
 			moves.push_back(move);
 			state.setPieceAtPosition(availableMove, CheckerType::None);
 		}
@@ -85,7 +93,7 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		int bestScore = -10000000;
 		for (int i = 0; i < moves.size(); i++)
 		{
-			if (moves[i].score >= bestScore/* && move.depth <= bestDepth*/)
+			if (moves[i].score >= bestScore/* && moves[i].depth <= bestDepth*/)
 			{
 				bestMove = i;
 				bestScore = moves[i].score;
@@ -98,7 +106,7 @@ Move Minimax::getBestMove(State& state, CheckerType player, int depth, Move move
 		int bestScore = 10000000;
 		for (int i = 0; i < moves.size(); i++)
 		{
-			if (moves[i].score <= bestScore/* && move.depth <= bestDepth*/)
+			if (moves[i].score <= bestScore/* && moves[i].depth <= bestDepth*/)
 			{
 				bestMove = i;
 				bestScore = moves[i].score;
