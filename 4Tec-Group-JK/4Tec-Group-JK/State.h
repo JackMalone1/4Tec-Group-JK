@@ -39,7 +39,7 @@ private:
 	GameOver checkStraightDown();
 	GameOver checkDiagonals();
 	GameOver checkForDraw()const;
-	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers);
+	GameOver checkForWinForPieces(std::array<CheckerType, ROW_SIZE>& checkers);
 public:
 	State();
 	CheckerType getPieceAtPosition(int row, int col, int board) const;

@@ -132,7 +132,7 @@ bool Board::gameOver()
 void Board::updateDisplayOfBoard()
 {
 	std::vector<CheckerType> pieces = state.getPieces();
-	system("cls");
+	//system("cls");
 	int numberPlaced = 0;
 	for (int i = 0; i < pieces.size(); ++i)
 	{

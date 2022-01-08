@@ -133,7 +133,7 @@ GameOver State::checkForDraw()const
 	return GameOver::Tie;
 }
 
-GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE> checkers)
+GameOver State::checkForWinForPieces(std::array<CheckerType, ROW_SIZE>& checkers)
 {
 	CheckerType type = checkers.at(0);
 	if (type == CheckerType::None) return GameOver::None;
