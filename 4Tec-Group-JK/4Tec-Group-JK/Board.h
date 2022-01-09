@@ -24,6 +24,7 @@ public:
 	bool gameOver();
 	void updateDisplayOfBoard();
 	void setCheckerPosition();
+	void setCheckerRotation();
 
 private:
 

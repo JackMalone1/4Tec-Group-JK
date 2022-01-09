@@ -1,5 +1,12 @@
 #include "Board.h"
 
+/// <summary>
+/// This is the constructor for the Board class:
+/// Initializes values for needed variables
+/// Creates 4 boards
+/// Creates all checkers
+/// </summary>
+/// <param name="t_window"> We pass the window in to the constructor to help us manipulate the view that the board and pieces are being displayed at.</param>
 Board::Board(sf::RenderWindow& t_window) :
 	m_window(t_window)
 {
@@ -66,8 +73,14 @@ Board::Board(sf::RenderWindow& t_window) :
 	v = t_window.getDefaultView();
 }
 
+/// <summary>
+/// setCheckerPosition is used to set each checker in their correct place on the correct board by using just an index.
+/// We will use this for easier complete manipulation when changing the views from 2d to 3d.
+/// </summary>
 void Board::setCheckerPosition()
 {
+	row = 0;
+
 	for (int i = 0; i < 64; i++)
 	{
 		if (i % 4 == 0)
@@ -102,6 +115,43 @@ void Board::setCheckerPosition()
 				/*X*/ (m_board.at(3).getGlobalBounds().width / 4 * (i % 4) + m_board.at(3).getPosition().x - (m_board.at(3).getGlobalBounds().width / 2) + 2.5),
 				/*Y*/ (m_board.at(3).getGlobalBounds().height / 4 * (row - 12)) + m_board.at(3).getPosition().y - (m_board.at(3).getGlobalBounds().height / 2) - 47.5));
 		}
+
+		m_checkers.at(i).setOrigin(m_checkers.at(i).getPosition());
+	}
+}
+
+void Board::setCheckerRotation()
+{
+	for (int i = 0; i < 64; i++)
+	{		
+		if(m_checkers.at(i).getRotation() < -45.0f)
+		{
+			continue;
+		}
+
+		if (i < 16 && i >= 0)
+		{
+			m_checkers.at(i).setOrigin(m_targetPos.at(0));
+			m_checkers.at(i).setRotation(m_board.at(0).getRotation() - m_boardMoveSpeed);
+		}
+
+		if (i < 32 && i >= 16)
+		{
+			m_checkers.at(i).setOrigin(m_targetPos.at(1));
+			m_checkers.at(i).setRotation(m_board.at(1).getRotation() - m_boardMoveSpeed);
+		}
+
+		if (i < 48 && i >= 32)
+		{
+			m_checkers.at(i).setOrigin(m_targetPos.at(2));
+			m_checkers.at(i).setRotation(m_board.at(2).getRotation() - m_boardMoveSpeed);
+		}
+
+		if (i < 64 && i >= 48)
+		{
+			m_checkers.at(i).setOrigin(m_targetPos.at(3));
+			m_checkers.at(i).setRotation(m_board.at(3).getRotation() - m_boardMoveSpeed);
+		}
 	}
 }
 
@@ -113,39 +163,48 @@ void Board::update()
 {
 }
 
+/// <summary>
+/// This is called in the games render function, 
+/// it renders the board and all the checkers to the screen, 
+/// alongside the ui that allows you to play the game. 
+/// </summary>
+/// <param name="t_window">We need to pass in the game window to display all necessary objects to the player</param>
 void Board::render(sf::RenderWindow& t_window)
 {
 	if (m_viewOn)
-	{		
-		v.setCenter(v.getSize() * .5f);
-		t_window.setView(v);
-
+	{
 		if (!m_inPosition)
 		{
+			v.setCenter(v.getSize() * .5f);
+			t_window.setView(v);
 			for (int i = 0; i < 4; i++)
 			{
 				// If the boards X position is less than the Target X position
 				if ((int)m_board.at(i).getPosition().x < m_targetPos.at(i).x)
 				{
 					m_board.at(i).setPosition(m_board.at(i).getPosition().x + m_boardMoveSpeed, m_board.at(i).getPosition().y);
+					setCheckerPosition();
 				}
 				// If the boards Y position is less than the Target Y position
 				else if ((int)m_board.at(i).getPosition().y < m_targetPos.at(i).y)
 				{
 					m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y + m_boardMoveSpeed);
+					setCheckerPosition();
 				}
 				// If the boards X position is greater than the Target X position
 				else if ((int)m_board.at(i).getPosition().x > m_targetPos.at(i).x)
 				{
 					m_board.at(i).setPosition(m_board.at(i).getPosition().x - m_boardMoveSpeed, m_board.at(i).getPosition().y);
+					setCheckerPosition();
 				}
 				// If the boards Y position is greater than the Target Y position
 				else if ((int)m_board.at(i).getPosition().y > m_targetPos.at(i).y)
 				{
 					m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y - m_boardMoveSpeed);
+					setCheckerPosition();
 				}
-				setCheckerPosition();
-				
+
+
 				// If the boards rotation is less than 45 degrees
 				if ((int)m_board.at(0).getPosition().x == m_targetPos.at(0).x &&
 					(int)m_board.at(0).getPosition().y == m_targetPos.at(0).y &&
@@ -159,14 +218,16 @@ void Board::render(sf::RenderWindow& t_window)
 					(int)m_board.at(3).getPosition().x == m_targetPos.at(3).x &&
 					(int)m_board.at(3).getPosition().y == m_targetPos.at(3).y &&
 
-					(int)m_board.at(i).getRotation() < 45.0f)
+					(int)m_board.at(i).getRotation() < 45.0f /*&&
+					(int)m_checkers.at(63).getRotation() < 45.0f*/)
 				{
 					m_board.at(i).setRotation(m_board.at(i).getRotation() + m_boardMoveSpeed);
+					setCheckerRotation();
 					v.setSize(v.getSize().x, v.getSize().y + (m_boardMoveSpeed * m_boardRotSpeed));
 				}
 				else
 				{
-					m_inPosition = false;
+					//m_inPosition = true;
 				}
 			}
 		}
@@ -197,7 +258,6 @@ void Board::placePiece(sf::Vector2i t_mousePosition)
 			if (m_board.at(i).getGlobalBounds().contains((float)t_mousePosition.x, (float)t_mousePosition.y))
 			{
 				std::cout << "clicked on board" << std::endl;
-				sf::Vector2f size = sf::Vector2f(m_board.at(i).getGlobalBounds().width, m_board.at(i).getGlobalBounds().height);
 			}
 		}
 	}
@@ -211,12 +271,13 @@ void Board::switchView()
 	{
 		if (!m_viewOn)
 		{
-			m_inPosition = false;
 			m_board.at(0).setPosition(m_defaultPos1.x, m_defaultPos1.y);
 			m_board.at(1).setPosition(m_defaultPos2.x, m_defaultPos2.y);
 			m_board.at(2).setPosition(m_defaultPos3.x, m_defaultPos3.y);
 			m_board.at(3).setPosition(m_defaultPos4.x, m_defaultPos4.y);
 			m_board.at(i).setRotation(0.f);
+			//setCheckerRotation();
+			//setCheckerPosition();
 		}
 		else
 		{

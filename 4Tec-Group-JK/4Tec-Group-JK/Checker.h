@@ -16,6 +16,11 @@ public:
 	void render(sf::RenderWindow& t_window);
 	void setColour(CheckerType t_colour);
 	void setPosition(sf::Vector2f t_pos);
+	void setRotation(float t_rot);
+	void setOrigin(sf::Vector2f t_pos);
+	float getRotation();
+	sf::Vector2f getPosition();
+	sf::Vector2f getOrigin();
 
 private:
 	

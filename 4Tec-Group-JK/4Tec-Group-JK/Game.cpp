@@ -80,6 +80,7 @@ void Game::processKeys(sf::Event t_event)
 void Game::update(sf::Time t_deltaTime)
 {
 	m_deltaTime = t_deltaTime;
+	m_board.update();
 }
 
 void Game::render()

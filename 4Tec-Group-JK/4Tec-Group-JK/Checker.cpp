@@ -34,6 +34,31 @@ void Checker::setPosition(sf::Vector2f t_pos)
 	m_checker.setPosition(t_pos);
 }
 
+void Checker::setRotation(float t_rot)
+{
+	m_checker.setRotation(t_rot);
+}
+
+sf::Vector2f Checker::getPosition()
+{
+	return m_checker.getPosition();
+}
+
+float Checker::getRotation()
+{
+	return m_checker.getRotation();
+}
+
+sf::Vector2f Checker::getOrigin()
+{
+	return m_checker.getOrigin();
+}
+
+void Checker::setOrigin(sf::Vector2f t_pos)
+{
+	m_checker.setOrigin(t_pos);
+}
+
 void Checker::colorPicker()
 {
 	if (m_color == CheckerType::Red)
