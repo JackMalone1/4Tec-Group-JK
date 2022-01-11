@@ -9,6 +9,9 @@
 #include "Checker.h"
 #include "Globals.h"
 
+/// <summary>
+/// This class Controls the main game loop of the game.
+/// </summary>
 class Game
 {
 public:

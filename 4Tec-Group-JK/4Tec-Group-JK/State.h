@@ -5,6 +5,9 @@
 #include <array>
 #include <vector>
 
+/// <summary>
+/// Used By the state to be able to tell if there is a piece at a certain position as well as what colour it is
+/// </summary>
 enum class CheckerType
 {
 	None = 0,
@@ -12,6 +15,9 @@ enum class CheckerType
 	Red
 };
 
+/// <summary>
+/// Used to be able to check if either of the players won the game, if there was a tie or if the game is still on going
+/// </summary>
 enum class GameOver
 {
 	Tie,
@@ -20,6 +26,11 @@ enum class GameOver
 	None
 };
 
+/// <summary>
+/// Used to store where all of the pieces are on the current board as well as being able to check for a win on the board
+/// it also has some functionality for getting all of the other pieces on a particular axis as a particular index for the evaluation function so that it 
+/// is able to check how good a move is
+/// </summary>
 class State
 {
 private:

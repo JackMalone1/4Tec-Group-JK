@@ -1,10 +1,10 @@
 #include "Minimax.h"
 
-static bool compare(Move move, Move other)
-{
-	return move.score > other.score;
-}
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="state"></param>
+/// <returns></returns>
 Move Minimax::doMove(State state)
 {
 	Move move;
@@ -20,12 +20,22 @@ Move Minimax::doMove(State state)
 	auto stop = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(stop - start);
 	std::cout << "Time taken by function: "
-		<< duration.count() << " microseconds" << std::endl;
+		<< duration.count() / 1000000 << "." << duration.count() / 100000 << " seconds" << std::endl;
 	state.setPieceAtPosition(bestmove.index, CheckerType::Yellow);
 	moves.clear();
 	return bestmove;
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="state"></param>
+/// <param name="player"></param>
+/// <param name="depth"></param>
+/// <param name="move"></param>
+/// <param name="alpha"></param>
+/// <param name="beta"></param>
+/// <returns></returns>
 Move Minimax::getBestMove(State& state, CheckerType& player, int depth, Move& move, int alpha, int beta)
 {
 	GameOver gameover = state.checkVictory();
@@ -136,6 +146,13 @@ Move Minimax::getBestMove(State& state, CheckerType& player, int depth, Move& mo
 	return moves[bestMove];
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="state"></param>
+/// <param name="player"></param>
+/// <param name="move"></param>
+/// <returns></returns>
 int Minimax::evaluate(State& state, CheckerType player, Move& move)
 {
 	CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
@@ -192,6 +209,12 @@ int Minimax::evaluate(State& state, CheckerType player, Move& move)
 	return score;
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="player"></param>
+/// <param name="score"></param>
+/// <param name="group"></param>
 void Minimax::evaluateGroup(CheckerType& player, int score, std::array<CheckerType, 3>& group)
 {
 	for (CheckerType type : group)
@@ -211,6 +234,12 @@ void Minimax::evaluateGroup(CheckerType& player, int score, std::array<CheckerTy
 	}
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="colour"></param>
+/// <param name="arr"></param>
+/// <returns></returns>
 bool Minimax::areAllColour(CheckerType& colour, std::array<CheckerType, 3>& arr)
 {
 	for (CheckerType type : arr)

@@ -5,12 +5,21 @@
 #include <chrono>
 using namespace std::chrono;
 
+/// <summary>
+/// 
+/// </summary>
 struct Move
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	Move() : score{0}
 	{
 
 	}
+	/// <summary>
+	/// 
+	/// </summary>
 	Move(int t_score) : score{t_score} {};
 
 	int index;
@@ -18,6 +27,9 @@ struct Move
 	int depth;
 };
 
+/// <summary>
+/// 
+/// </summary>
 class Minimax
 {
 public:
@@ -29,7 +41,6 @@ private:
 	void evaluateGroup(CheckerType& player, int score, std::array<CheckerType, 3>& group);
 	bool areAllColour(CheckerType& colour, std::array<CheckerType, 3>& arr);
 	static constexpr int MAX_DEPTH = 4;
-
 	std::vector<Move> moves;
 };
 
