@@ -100,18 +100,17 @@ void Game::updateGUI()
 		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode);
 
 		ImGui::End(); // Ends the creation of the window and its functionality
-
-		if (!winOpenWish)
+		if (ImGui::Begin("Perspective")) // Creates an Exit window that we have docked in the UI
 		{
-			ImGui::OpenPopup("Popup");
-		}
+			ImGui::TextUnformatted("Press 'A' to change perspective\nor press the button"); // Creates informative text
 
-		//ImGui::SetNextWindowFocus();
-		if (ImGui::BeginPopupModal("Popup"))
-		{
-			ImGui::TextUnformatted("a popup");
-			ImGui::EndPopup();
+			if (ImGui::Button("2D | 3D")) // Creates a button called "Quit Game"
+			{
+				m_audio.playSelectionSFX(); // Plays a selection sound effect 
+				m_board->switchView(); // Changes the view of the board during gametime
+			}
 		}
+		ImGui::End(); // Ends the creation of the window and its functionality
 
 		ImGui::SetNextWindowDockID(dockspaceID, ImGuiCond_FirstUseEver);
 		if (ImGui::Begin("Place a piece"))
@@ -136,13 +135,24 @@ void Game::updateGUI()
 				if (m_board->placePiece(row - 1, col - 1, board - 1)) // Places a piece on the board
 				{
 					m_audio.playCheckerSFX(); // Play a sound effect for placing a piece on the board
-					if (m_board->gameOver()) playingGame = false; // Needs to check if the game is over after each players turn
+
+					if (m_board->gameOver())
+					{
+						playingGame = false; // Needs to check if the game is over after each players turn
+						m_results = "You Win!\nView debug window to view last game board";
+					}
+
 					m_board->aiTurn(); // The AI takes its turn 
-					if (m_board->gameOver()) playingGame = false; // Needs to check if the game is over after each players turn
+					if (m_board->gameOver() && playingGame)
+					{
+						playingGame = false; // Needs to check if the game is over after each players turn
+						m_results = "The AI Wins\nView debug window to view last game board";
+					}
 				}
 			}
 		}
 		ImGui::End(); // Ends the creation of the window and its functionality
+
 
 		if (ImGui::Begin("Exit")) // Creates an Exit window that we have docked in the UI
 		{
@@ -175,6 +185,8 @@ void Game::updateGUI()
 	if (!playingGame)
     {
         ImGui::Begin("Difficulty level"); // Creates a window called "Difficulty Level"
+
+		ImGui::TextUnformatted(m_results.c_str());
 
         if (ImGui::Button("Easy", sf::Vector2f(100.0f, 100.0f))) // Creates a button called "Easy"
         {
@@ -212,6 +224,12 @@ void Game::updateGUI()
 
 			m_audio.playSelectionSFX(); // Plays a selection sound effect 
         }
+
+		if (ImGui::Button("Quit Game")) // Creates a button called "Quit Game"
+		{
+			m_audio.playSelectionSFX(); // Plays a selection sound effect 
+			m_window.close(); // Closes the window
+		}
 
         ImGui::End(); // Ends the creation of the window and its functionality
     }

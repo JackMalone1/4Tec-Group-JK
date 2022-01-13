@@ -25,6 +25,7 @@ private:
     sf::Time m_deltaTime;
     sf::Vector2i m_mousePos;
     sf::RenderWindow m_window; // main SFML window
+    std::string m_results = "Play Game!";
 
     Board* m_board;
     Audio m_audio;
