@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Checker.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Checker.h" />
     <ClInclude Include="Game.h" />

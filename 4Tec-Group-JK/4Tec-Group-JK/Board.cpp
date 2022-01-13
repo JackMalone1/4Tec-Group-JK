@@ -128,7 +128,7 @@ void Board::setCheckerPosition()
 
 void Board::setCheckerOrigin()
 {
-	if ((int)m_checks.getRotation() == 45.0f)
+	if ((int)m_checks.getRotation() == 315.0f)
 	{
 		row = 0;
 
@@ -275,9 +275,9 @@ void Board::render(sf::RenderWindow& t_window)
 				(int)m_board.at(3).getPosition().x == m_targetPos.at(3).x &&
 				(int)m_board.at(3).getPosition().y == m_targetPos.at(3).y &&
 
-				(int)m_board.at(i).getRotation() < 45.0f)
+				(int)m_board.at(i).getRotation() != 315.0f)
 			{
-				m_board.at(i).setRotation(m_board.at(i).getRotation() + m_boardMoveSpeed);
+				m_board.at(i).setRotation(m_board.at(i).getRotation() - m_boardMoveSpeed);
 				setCheckerPosition();
 				v.setSize(v.getSize().x, v.getSize().y + (m_boardMoveSpeed * m_boardRotSpeed));
 			}
@@ -418,7 +418,7 @@ bool Board::gameOver()
 void Board::updateDisplayOfBoard()
 {
 	std::vector<CheckerType> pieces = state.getPieces();
-	system("cls");
+	//system("cls");
 	int numberPlaced = 0;
 	for (int i = 0; i < pieces.size(); ++i)
 	{

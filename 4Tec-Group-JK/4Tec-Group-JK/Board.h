@@ -37,7 +37,7 @@ private:
 	std::string m_directory;
 	sf::RenderWindow& m_window;
 
-	std::vector<sf::Vector2f> m_targetPos; // 300.0f, 200.0f
+	std::vector<sf::Vector2f> m_targetPos;
 	sf::Vector2f m_defaultPos1 = { 150.0f, 250.0f };
 	sf::Vector2f m_defaultPos2 = { 450.0f, 250.0f };
 	sf::Vector2f m_defaultPos3 = { 150.0f, 550.0f };

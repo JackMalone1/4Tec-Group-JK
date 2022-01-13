@@ -2,7 +2,7 @@
 #include <iostream>
 
 Game::Game() :
-	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
+	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC", sf::Style::None },
 	m_exitGame{ false } //when true game will exit
 {
 	m_window.setFramerateLimit(fps);
@@ -41,7 +41,7 @@ void Game::processEvents()
 		ImGui::SFML::ProcessEvent(m_window, event);
 		if (sf::Event::Closed == event.type) // window message
 		{
-			m_window.close();
+m_window.close();
 		}
 		if (sf::Event::KeyPressed == event.type ||
 			sf::Event::MouseButtonReleased == event.type) //user pressed a key
@@ -74,7 +74,7 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	ImGui::SFML::Render(m_window);
-	if(playingGame)	m_board->render(m_window);
+	if (playingGame)	m_board->render(m_window);
 	m_window.display();
 }
 
@@ -86,9 +86,8 @@ void Game::updateGUI()
 	ImGui::SetNextWindowPos(sf::Vector2f(0, 0));
 	ImGui::SetNextWindowSize(sf::Vector2f(G_WINDOW_WIDTH, G_WINDOW_HEIGHT));
 
-	if(playingGame)
+	if (playingGame)
 	{
-
 		if (ImGui::Begin("Master Window", &winOpenWish))
 		{
 			ImGui::TextUnformatted("Boards");
@@ -115,16 +114,26 @@ void Game::updateGUI()
 		ImGui::SetNextWindowDockID(dockspaceID, ImGuiCond_FirstUseEver);
 		if (ImGui::Begin("Place a piece"))
 		{
-			ImGui::SliderInt("Row", &input, 1, 4);
+			if (ImGui::SliderInt("Row", &row, 1, 4))
+			{
+				m_audio.playSelectionSFX();
+			}
 
-			ImGui::SliderInt("Col", &col, 1, 4);
+			if (ImGui::SliderInt("Col", &col, 1, 4))
+			{
+				m_audio.playSelectionSFX();
+			}
 
-			ImGui::SliderInt("Board", &board, 1, 4);
+			if(ImGui::SliderInt("Board", &board, 1, 4))
+			{
+				m_audio.playSelectionSFX();
+			}
 
 			if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
 			{
-				if (m_board->placePiece(input - 1, col - 1, board - 1))
+				if (m_board->placePiece(row - 1, col - 1, board - 1))
 				{
+					m_audio.playCheckerSFX();
 					if (m_board->gameOver()) playingGame = false;
 					m_board->aiTurn();
 					if (m_board->gameOver()) playingGame = false;
@@ -132,6 +141,33 @@ void Game::updateGUI()
 			}
 		}
 		ImGui::End();
+
+		if (ImGui::Begin("Exit"))
+		{
+			if (ImGui::Button("Quit Game"))
+			{
+				m_audio.playSelectionSFX();
+				m_window.close();
+			}
+		}
+		ImGui::End();
+
+		ImGui::SetNextWindowDockID(dockspaceID, ImGuiCond_FirstUseEver);
+		if (ImGui::Begin("Settings"))
+		{
+			if (ImGui::SliderInt("Music Volume", &musicVol, 0, 100))
+			{
+				m_audio.playSelectionSFX();
+				m_audio.setMusicVolume(musicVol);
+			}
+
+			if (ImGui::SliderInt("SFX Volume", &sfxVol, 0, 100))
+			{
+				m_audio.playSelectionSFX();
+				m_audio.setSFXVolume(sfxVol);
+			}
+		}
+		ImGui::End();		
 	}
 
 	if (!playingGame)
@@ -147,6 +183,8 @@ void Game::updateGUI()
 
             m_board->m_ai.SetMaxDepth(2);
             playingGame = true;
+
+			m_audio.playSelectionSFX();
         }
         else if (ImGui::Button("Medium", sf::Vector2f(100.0f, 100.0f)))
         {
@@ -157,6 +195,8 @@ void Game::updateGUI()
 
             m_board->m_ai.SetMaxDepth(1);
             playingGame = true;
+
+			m_audio.playSelectionSFX();
         }
         else if (ImGui::Button("Hard", sf::Vector2f(100.0f, 100.0f)))
         {
@@ -167,18 +207,10 @@ void Game::updateGUI()
 
             m_board->m_ai.SetMaxDepth(3);
             playingGame = true;
+
+			m_audio.playSelectionSFX();
         }
 
         ImGui::End();
     }
-
-	ImGui::SetNextWindowDockID(dockspaceID, ImGuiCond_FirstUseEver);
-	if (ImGui::Begin("Settings"))
-	{
-		if (ImGui::Button("Quit Game"))
-		{
-			m_window.close();
-		}
-	}
-	ImGui::End();
  }
