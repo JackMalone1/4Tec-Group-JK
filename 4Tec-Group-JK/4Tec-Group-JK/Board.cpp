@@ -71,6 +71,11 @@ Board::Board(sf::RenderWindow& t_window) :
 	}
 
 	v = t_window.getDefaultView();
+
+	m_checkerGroup1.create(208, 208);
+	m_checkerGroup2.create(208, 208);
+	m_checkerGroup3.create(208, 208);
+	m_checkerGroup4.create(208, 208);
 }
 
 /// <summary>
@@ -123,12 +128,7 @@ void Board::setCheckerPosition()
 void Board::setCheckerRotation()
 {
 	for (int i = 0; i < 64; i++)
-	{		
-		if(m_checkers.at(i).getRotation() < -45.0f)
-		{
-			continue;
-		}
-
+	{
 		if (i < 16 && i >= 0)
 		{
 			m_checkers.at(i).setOrigin(m_targetPos.at(0));
@@ -153,6 +153,33 @@ void Board::setCheckerRotation()
 			m_checkers.at(i).setRotation(m_board.at(3).getRotation() - m_boardMoveSpeed);
 		}
 	}
+}
+
+void Board::setRenderTexture()
+{
+	//for (int i = 0; i < 64; i++)
+	//{
+	//	m_checkerGroup1.clear(sf::Color::Transparent);
+	//	if (i < 16 && i >= 0)
+	//	{
+	//		m_checkerGroup1.draw(m_checkers.at(i).render(t_window));
+	//	}
+
+	//	if (i < 32 && i >= 16)
+	//	{
+
+	//	}
+
+	//	if (i < 48 && i >= 32)
+	//	{
+
+	//	}
+
+	//	if (i < 64 && i >= 48)
+	//	{
+
+	//	}
+	//}
 }
 
 Board::~Board()
@@ -203,7 +230,7 @@ void Board::render(sf::RenderWindow& t_window)
 					m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y - m_boardMoveSpeed);
 					setCheckerPosition();
 				}
-
+				
 
 				// If the boards rotation is less than 45 degrees
 				if ((int)m_board.at(0).getPosition().x == m_targetPos.at(0).x &&
@@ -218,11 +245,12 @@ void Board::render(sf::RenderWindow& t_window)
 					(int)m_board.at(3).getPosition().x == m_targetPos.at(3).x &&
 					(int)m_board.at(3).getPosition().y == m_targetPos.at(3).y &&
 
-					(int)m_board.at(i).getRotation() < 45.0f /*&&
-					(int)m_checkers.at(63).getRotation() < 45.0f*/)
+					(int)m_board.at(i).getRotation() < 45.0f &&
+					(int)m_checkers.at(63).getRotation() < 45.0f)
 				{
 					m_board.at(i).setRotation(m_board.at(i).getRotation() + m_boardMoveSpeed);
-					setCheckerRotation();
+					setCheckerPosition();
+					//setCheckerRotation();
 					v.setSize(v.getSize().x, v.getSize().y + (m_boardMoveSpeed * m_boardRotSpeed));
 				}
 				else
@@ -238,10 +266,45 @@ void Board::render(sf::RenderWindow& t_window)
 		t_window.draw(m_board.at(i));
 	}
 
+	m_checkerGroup1.clear(sf::Color::Transparent);
 	for (int i = 0; i < 64; i++)
 	{
-		m_checkers.at(i).render(t_window);
+		if (i < 16 && i >= 0)
+		{
+			m_checkerGroup1.draw(m_checkers.at(i).m_checker);
+		}
+
+		if (i < 32 && i >= 16)
+		{
+			m_checkerGroup2.draw(m_checkers.at(i).m_checker);
+		}
+
+		if (i < 48 && i >= 32)
+		{
+			m_checkerGroup3.draw(m_checkers.at(i).m_checker);
+		}
+
+		if (i < 64 && i >= 48)
+		{
+			m_checkerGroup4.draw(m_checkers.at(i).m_checker);
+		}
 	}
+	
+	m_checkerGroup1.display();
+	m_checks.setTexture(m_checkerGroup1.getTexture());
+	m_window.draw(m_checks);
+
+	m_checkerGroup2.display();
+	m_checks.setTexture(m_checkerGroup2.getTexture());
+	m_window.draw(m_checks);
+
+	m_checkerGroup3.display();
+	m_checks.setTexture(m_checkerGroup3.getTexture());
+	m_window.draw(m_checks);
+
+	m_checkerGroup4.display();
+	m_checks.setTexture(m_checkerGroup4.getTexture());
+	m_window.draw(m_checks);
 
 	if (m_viewOn)
 	{
@@ -249,6 +312,11 @@ void Board::render(sf::RenderWindow& t_window)
 	}
 }
 
+/// <summary>
+/// Checks if the user has clicked on the board with their mouse
+/// Incomplete: Needs to place a piece at that location
+/// </summary>
+/// <param name="t_mousePosition">passing in the position of the cursor</param>
 void Board::placePiece(sf::Vector2i t_mousePosition)
 {
 	if (!m_viewOn)
@@ -263,6 +331,9 @@ void Board::placePiece(sf::Vector2i t_mousePosition)
 	}
 }
 
+/// <summary>
+/// This checks to see if we need to be changing the view from 2D to (fake) 3D
+/// </summary>
 void Board::switchView()
 {
 	m_viewOn = !m_viewOn;
@@ -286,6 +357,15 @@ void Board::switchView()
 	}
 }
 
+/// <summary>
+/// This checks if there is a piece already in the position on the board
+/// you are trying to place a piece on, if there is no piece in the position
+/// then you will place a red piece in that position
+/// </summary>
+/// <param name="row"></param>
+/// <param name="col"></param>
+/// <param name="board"></param>
+/// <returns></returns>
 bool Board::placePiece(int row, int col, int board)
 {
 	if (state.getPieceAtPosition(row, col, board) == CheckerType::None)

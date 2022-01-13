@@ -28,6 +28,8 @@ public:
 
 private:
 
+	void setRenderTexture();
+
 	sf::Texture m_boardTexture;
 	std::vector<Checker> m_checkers;
 	std::vector<sf::Sprite> m_board;
@@ -42,6 +44,13 @@ private:
 	sf::Vector2f m_viewSize;
 
 	sf::View v;
+
+	sf::RenderTexture m_checkerGroup1;
+	sf::RenderTexture m_checkerGroup2;
+	sf::RenderTexture m_checkerGroup3;
+	sf::RenderTexture m_checkerGroup4;
+
+	sf::Sprite m_checks;
 
 	int row = 0;
 	int col = 0;

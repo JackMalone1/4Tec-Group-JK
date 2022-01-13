@@ -21,13 +21,11 @@ public:
 	float getRotation();
 	sf::Vector2f getPosition();
 	sf::Vector2f getOrigin();
+	sf::Sprite m_checker;
 
 private:
-	
-	void colorPicker();
 
 	sf::Texture m_checkerTexture;
-	sf::Sprite m_checker;
 	std::string m_directory;
 
 	CheckerType m_color;
