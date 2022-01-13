@@ -1,10 +1,11 @@
 #include "Minimax.h"
 
 /// <summary>
-/// 
+/// Sets the intial stuff that minimax needs and calls minimax than returns the best move
+/// As well as sets all the necessary stuff for Alpha Beta pruning
 /// </summary>
-/// <param name="state"></param>
-/// <returns></returns>
+/// <param name="state">state(game board)</param>
+/// <returns>The best possible move</returns>
 Move Minimax::doMove(State state)
 {
 	Move move;
@@ -22,15 +23,17 @@ Move Minimax::doMove(State state)
 }
 
 /// <summary>
-/// 
+/// Runs the minimax algorithm for the passed in player, depth abnd move on the current board
+/// It goes through all the possible moves for each player and places the piece temporarily to
+/// to get the best possible move for the current player at the time
 /// </summary>
-/// <param name="state"></param>
-/// <param name="player"></param>
-/// <param name="depth"></param>
-/// <param name="move"></param>
-/// <param name="alpha"></param>
-/// <param name="beta"></param>
-/// <returns></returns>
+/// <param name="state"> Reference to the state(game board)</param>
+/// <param name="player">refernce to the player</param>
+/// <param name="depth">current depth</param>
+/// <param name="move">refernce to the current move</param>
+/// <param name="alpha">best move found so far for maximiser</param>
+/// <param name="beta">best move found so far for minimiser</param>
+/// <returns>returns the best move possible</returns>
 Move Minimax::getBestMove(State& state, CheckerType& player, int depth, Move& move, int alpha, int beta)
 {
 	GameOver gameover = state.checkVictory();
@@ -205,12 +208,13 @@ int Minimax::evaluate(State& state, CheckerType player, Move& move)
 }
 
 /// <summary>
-/// 
+/// Evaluates the current group of 3 checkers on an axis and compares them to the passed
+/// in player type to check if this axis is a good move for similar pieces
 /// </summary>
-/// <param name="player"></param>
-/// <param name="score"></param>
-/// <param name="group"></param>
-void Minimax::evaluateGroup(CheckerType& player, int score, std::array<CheckerType, 3>& group)
+/// <param name="player">refrence to the current player</param>
+/// <param name="score">refrence current score</param>
+/// <param name="group">refernce to a group of 3 checkers on one of the axis</param>
+void Minimax::evaluateGroup(CheckerType& player, int& score, std::array<CheckerType, 3>& group)
 {
 	for (CheckerType type : group)
 	{
@@ -230,11 +234,12 @@ void Minimax::evaluateGroup(CheckerType& player, int score, std::array<CheckerTy
 }
 
 /// <summary>
-/// 
+/// Checks if all the checkers in the group that are on the same axis are 
+/// the same as the colour passed in
 /// </summary>
-/// <param name="colour"></param>
-/// <param name="arr"></param>
-/// <returns></returns>
+/// <param name="colour">refrence to the current colour of the checkers</param>
+/// <param name="arr">array of 3 checkers on the current axis</param>
+/// <returns>returns if all the checkers in the group are the same colour</returns>
 bool Minimax::areAllColour(CheckerType& colour, std::array<CheckerType, 3>& arr)
 {
 	for (CheckerType type : arr)

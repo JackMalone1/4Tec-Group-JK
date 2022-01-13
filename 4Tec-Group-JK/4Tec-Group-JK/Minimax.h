@@ -40,7 +40,7 @@ private:
 	Move getBestMove(State& state, CheckerType& player, int depth, Move& move, int alpha, int beta);
 	CheckerType m_aiColour;
 	int evaluate(State& state, CheckerType player, Move& move);
-	void evaluateGroup(CheckerType& player, int score, std::array<CheckerType, 3>& group);
+	void evaluateGroup(CheckerType& player, int& score, std::array<CheckerType, 3>& group);
 	bool areAllColour(CheckerType& colour, std::array<CheckerType, 3>& arr);
 	int MAX_DEPTH = 1;
 	std::vector<Move> moves;
