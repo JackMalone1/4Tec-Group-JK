@@ -24,11 +24,10 @@ public:
 	bool gameOver();
 	void updateDisplayOfBoard();
 	void setCheckerPosition();
-	void setCheckerRotation();
 
 private:
 
-	void setRenderTexture();
+	void setCheckerOrigin();
 
 	sf::Texture m_boardTexture;
 	std::vector<Checker> m_checkers;

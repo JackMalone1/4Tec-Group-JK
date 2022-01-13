@@ -72,10 +72,10 @@ Board::Board(sf::RenderWindow& t_window) :
 
 	v = t_window.getDefaultView();
 
-	m_checkerGroup1.create(808, 808);
-	m_checkerGroup2.create(808, 808);
-	m_checkerGroup3.create(808, 808);
-	m_checkerGroup4.create(808, 808);
+	m_checkerGroup1.create(900, 980);
+	m_checkerGroup2.create(900, 980);
+	m_checkerGroup3.create(900, 980);
+	m_checkerGroup4.create(900, 980);
 }
 
 /// <summary>
@@ -120,66 +120,42 @@ void Board::setCheckerPosition()
 				/*X*/ (m_board.at(3).getGlobalBounds().width / 4 * (i % 4) + m_board.at(3).getPosition().x - (m_board.at(3).getGlobalBounds().width / 2) + 2.5),
 				/*Y*/ (m_board.at(3).getGlobalBounds().height / 4 * (row - 12)) + m_board.at(3).getPosition().y - (m_board.at(3).getGlobalBounds().height / 2) - 47.5));
 		}
-
-		m_checkers.at(i).setOrigin(m_checkers.at(i).getPosition());
 	}
 }
 
-void Board::setCheckerRotation()
+void Board::setCheckerOrigin()
 {
-	for (int i = 0; i < 64; i++)
+	if ((int)m_checks.getRotation() == 45.0f)
 	{
-		if (i < 16 && i >= 0)
+		row = 0;
+		for (int i = 0; i < 64; i++)
 		{
-			m_checkers.at(i).setOrigin(m_targetPos.at(0));
-			m_checkers.at(i).setRotation(m_board.at(0).getRotation() - m_boardMoveSpeed);
-		}
+			if (i % 4 == 0)
+			{
+				row++;
+			}
 
-		if (i < 32 && i >= 16)
-		{
-			m_checkers.at(i).setOrigin(m_targetPos.at(1));
-			m_checkers.at(i).setRotation(m_board.at(1).getRotation() - m_boardMoveSpeed);
-		}
+			if (i < 16 && i >= 0)
+			{
+				m_checkers.at(i).setOrigin(m_checkers.at(i).getPosition());
+			}
 
-		if (i < 48 && i >= 32)
-		{
-			m_checkers.at(i).setOrigin(m_targetPos.at(2));
-			m_checkers.at(i).setRotation(m_board.at(2).getRotation() - m_boardMoveSpeed);
-		}
+			if (i < 32 && i >= 16)
+			{
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x, m_checkers.at(i).getPosition().y - m_targetPos.at(0).y));
+			}
 
-		if (i < 64 && i >= 48)
-		{
-			m_checkers.at(i).setOrigin(m_targetPos.at(3));
-			m_checkers.at(i).setRotation(m_board.at(3).getRotation() - m_boardMoveSpeed);
+			if (i < 48 && i >= 32)
+			{
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x, m_checkers.at(i).getPosition().y - m_targetPos.at(1).y));
+			}
+
+			if (i < 64 && i >= 48)
+			{
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x, m_checkers.at(i).getPosition().y - m_targetPos.at(2).y));
+			}
 		}
 	}
-}
-
-void Board::setRenderTexture()
-{
-	//for (int i = 0; i < 64; i++)
-	//{
-	//	m_checkerGroup1.clear(sf::Color::Transparent);
-	//	if (i < 16 && i >= 0)
-	//	{
-	//		m_checkerGroup1.draw(m_checkers.at(i).render(t_window));
-	//	}
-
-	//	if (i < 32 && i >= 16)
-	//	{
-
-	//	}
-
-	//	if (i < 48 && i >= 32)
-	//	{
-
-	//	}
-
-	//	if (i < 64 && i >= 48)
-	//	{
-
-	//	}
-	//}
 }
 
 Board::~Board()
@@ -200,66 +176,63 @@ void Board::render(sf::RenderWindow& t_window)
 {
 	if (m_viewOn)
 	{
-		if (!m_inPosition)
+		v.setCenter(v.getSize() * .5f);
+		t_window.setView(v);
+		for (int i = 0; i < 4; i++)
 		{
-			v.setCenter(v.getSize() * .5f);
-			t_window.setView(v);
-			for (int i = 0; i < 4; i++)
+			// If the boards X position is less than the Target X position
+			if ((int)m_board.at(i).getPosition().x < m_targetPos.at(i).x)
 			{
-				// If the boards X position is less than the Target X position
-				if ((int)m_board.at(i).getPosition().x < m_targetPos.at(i).x)
-				{
-					m_board.at(i).setPosition(m_board.at(i).getPosition().x + m_boardMoveSpeed, m_board.at(i).getPosition().y);
-					setCheckerPosition();
-				}
-				// If the boards Y position is less than the Target Y position
-				else if ((int)m_board.at(i).getPosition().y < m_targetPos.at(i).y)
-				{
-					m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y + m_boardMoveSpeed);
-					setCheckerPosition();
-				}
-				// If the boards X position is greater than the Target X position
-				else if ((int)m_board.at(i).getPosition().x > m_targetPos.at(i).x)
-				{
-					m_board.at(i).setPosition(m_board.at(i).getPosition().x - m_boardMoveSpeed, m_board.at(i).getPosition().y);
-					setCheckerPosition();
-				}
-				// If the boards Y position is greater than the Target Y position
-				else if ((int)m_board.at(i).getPosition().y > m_targetPos.at(i).y)
-				{
-					m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y - m_boardMoveSpeed);
-					setCheckerPosition();
-				}
-				
+				m_board.at(i).setPosition(m_board.at(i).getPosition().x + m_boardMoveSpeed, m_board.at(i).getPosition().y);
+				setCheckerPosition();
+			}
+			// If the boards Y position is less than the Target Y position
+			else if ((int)m_board.at(i).getPosition().y < m_targetPos.at(i).y)
+			{
+				m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y + m_boardMoveSpeed);
+				setCheckerPosition();
+			}
+			// If the boards X position is greater than the Target X position
+			else if ((int)m_board.at(i).getPosition().x > m_targetPos.at(i).x)
+			{
+				m_board.at(i).setPosition(m_board.at(i).getPosition().x - m_boardMoveSpeed, m_board.at(i).getPosition().y);
+				setCheckerPosition();
+			}
+			// If the boards Y position is greater than the Target Y position
+			else if ((int)m_board.at(i).getPosition().y > m_targetPos.at(i).y)
+			{
+				m_board.at(i).setPosition(m_board.at(i).getPosition().x, m_board.at(i).getPosition().y - m_boardMoveSpeed);
+				setCheckerPosition();
+			}
 
-				// If the boards rotation is less than 45 degrees
-				if ((int)m_board.at(0).getPosition().x == m_targetPos.at(0).x &&
-					(int)m_board.at(0).getPosition().y == m_targetPos.at(0).y &&
+			// If the boards rotation is less than 45 degrees
+			if ((int)m_board.at(0).getPosition().x == m_targetPos.at(0).x &&
+				(int)m_board.at(0).getPosition().y == m_targetPos.at(0).y &&
 
-					(int)m_board.at(1).getPosition().x == m_targetPos.at(1).x &&
-					(int)m_board.at(1).getPosition().y == m_targetPos.at(1).y &&
+				(int)m_board.at(1).getPosition().x == m_targetPos.at(1).x &&
+				(int)m_board.at(1).getPosition().y == m_targetPos.at(1).y &&
 
-					(int)m_board.at(2).getPosition().x == m_targetPos.at(2).x &&
-					(int)m_board.at(2).getPosition().y == m_targetPos.at(2).y &&
+				(int)m_board.at(2).getPosition().x == m_targetPos.at(2).x &&
+				(int)m_board.at(2).getPosition().y == m_targetPos.at(2).y &&
 
-					(int)m_board.at(3).getPosition().x == m_targetPos.at(3).x &&
-					(int)m_board.at(3).getPosition().y == m_targetPos.at(3).y &&
+				(int)m_board.at(3).getPosition().x == m_targetPos.at(3).x &&
+				(int)m_board.at(3).getPosition().y == m_targetPos.at(3).y &&
 
-					(int)m_board.at(i).getRotation() < 45.0f &&
-					(int)m_checkers.at(63).getRotation() < 45.0f)
-				{
-					m_board.at(i).setRotation(m_board.at(i).getRotation() + m_boardMoveSpeed);
-					setCheckerPosition();
-					//setCheckerRotation();
-					v.setSize(v.getSize().x, v.getSize().y + (m_boardMoveSpeed * m_boardRotSpeed));
-				}
-				else
-				{
-					//m_inPosition = true;
-				}
+				(int)m_board.at(i).getRotation() < 45.0f)
+			{
+				m_board.at(i).setRotation(m_board.at(i).getRotation() + m_boardMoveSpeed);
+				setCheckerPosition();
+				v.setSize(v.getSize().x, v.getSize().y + (m_boardMoveSpeed * m_boardRotSpeed));
 			}
 		}
 	}
+
+	std::cout << "1st Board - 1st Checker = " << m_checkers.at(0).getPosition().x << ", " << m_checkers.at(0).getPosition().y << std::endl;
+	std::cout << "2nd Board - 1st Checker = " << m_checkers.at(16).getPosition().x << ", " << m_checkers.at(16).getPosition().y << std::endl;
+	std::cout << "3rd Board - 1st Checker = " << m_checkers.at(32).getPosition().x << ", " << m_checkers.at(32).getPosition().y << std::endl;
+	std::cout << "4th Board - 1st Checker = " << m_checkers.at(48).getPosition().x << ", " << m_checkers.at(48).getPosition().y << std::endl;
+
+	setCheckerOrigin();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -270,10 +243,12 @@ void Board::render(sf::RenderWindow& t_window)
 	m_checkerGroup2.clear(sf::Color::Transparent);
 	m_checkerGroup3.clear(sf::Color::Transparent);
 	m_checkerGroup4.clear(sf::Color::Transparent);
+
 	for (auto& checker : m_checkers)
 	{
 		checker.resetTexture();
 	}
+
 	for (int i = 0; i < 64; i++)
 	{
 		if (i < 16 && i >= 0)
@@ -300,24 +275,28 @@ void Board::render(sf::RenderWindow& t_window)
 	m_checkerGroup1.display();
 	m_checks.setTexture(m_checkerGroup1.getTexture());
 	m_checks.setRotation(45);
+	m_checks.setOrigin(m_board.at(0).getPosition());
 	m_checks.setPosition(m_board.at(0).getPosition());
 	m_checks.setRotation(m_board.at(0).getRotation());
 	m_window.draw(m_checks);
 
 	m_checkerGroup2.display();
 	m_checks.setTexture(m_checkerGroup2.getTexture());
+	m_checks.setOrigin(m_board.at(1).getPosition());
 	m_checks.setPosition(m_board.at(1).getPosition());
 	m_checks.setRotation(m_board.at(1).getRotation());
 	m_window.draw(m_checks);
 
 	m_checkerGroup3.display();
 	m_checks.setTexture(m_checkerGroup3.getTexture());
+	m_checks.setOrigin(m_board.at(2).getPosition());
 	m_checks.setPosition(m_board.at(2).getPosition());
 	m_checks.setRotation(m_board.at(2).getRotation());
 	m_window.draw(m_checks);
 
 	m_checkerGroup4.display();
 	m_checks.setTexture(m_checkerGroup4.getTexture());
+	m_checks.setOrigin(m_board.at(3).getPosition());
 	m_checks.setPosition(m_board.at(3).getPosition());
 	m_checks.setRotation(m_board.at(3).getRotation());
 	m_window.draw(m_checks);
