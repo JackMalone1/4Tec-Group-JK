@@ -4,12 +4,15 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
+/// <summary>
+/// This class is made to play and control sound effects and music.
+/// </summary>
 class Audio
 {
 public:
 
 	Audio();
-	~Audio();
+	~Audio(){};
 
 	void playCheckerSFX();
 	void playSelectionSFX();

@@ -1,38 +1,27 @@
-To-Do:
-
-1. Fix 2D - 3D repeated transition error
-2. Implement 2D connect 4 in the debug window
-3. 
-
-Done:
-
-1. Checkers Showing
-2. Board Showing
-3. Camera Rotating
-4. UI (Buttons, Panel, More)
-
 Work Distribution: (Excluding Fluctuation)
 
-Jack: (32.5)
+Jack: (33.4)
 
 - General Algorithm (7.5)
 - Evaluation Function (7.5)
 - Internal World Representation (5)
 - Efficiency Considerations (7.5)
 - Doxygen (5)
+- Code Quality (1.6)
 
-Kiernen: (32.5)
+Kiernen: (33.3)
 
 - Piece Movement (10)
 - Player Interface (10)
 - Efficiency Considerations (2.5)
 - Enjoyability (5)
 - Extra (5)
+- Code Quality (1.6)
 
-Szymon: (35)
+Szymon: (33.3)
 
 - Difficulty Level (10)
 - General Algorithm (7.5)
 - Evaluation Function (7.5)
 - Internal World Representation (5)
-- Code Quality (5)
+- Code Quality (1.6)

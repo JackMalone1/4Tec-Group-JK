@@ -9,6 +9,9 @@
 #include "State.h"
 #include "Minimax.h"
 
+/// <summary>
+/// This class holds the checkers and all 4 boards
+/// </summary>
 class Board
 {
 public:

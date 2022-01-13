@@ -5,6 +5,7 @@
 /// </summary>
 const int G_WINDOW_WIDTH = 900;
 const int G_WINDOW_HEIGHT = 980;
+
 /// <summary>
 /// width of the grids used to display the board
 /// </summary>
