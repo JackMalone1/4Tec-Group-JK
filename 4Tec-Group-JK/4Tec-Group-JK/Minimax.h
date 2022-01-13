@@ -6,19 +6,19 @@
 using namespace std::chrono;
 
 /// <summary>
-/// 
+/// Struct that represents a single move that the minimax algorithm could play
 /// </summary>
 struct Move
 {
 	/// <summary>
-	/// 
+	/// sets the score to 0
 	/// </summary>
 	Move() : score{0}
 	{
 
 	}
 	/// <summary>
-	/// 
+	/// takes in a score to set up the move
 	/// </summary>
 	Move(int t_score) : score{t_score} {};
 
@@ -28,7 +28,8 @@ struct Move
 };
 
 /// <summary>
-/// 
+/// Class used to work out the correct moves to play for the ai
+/// It uses the minimax alogrithm to evaluate a certain board position and return the best move for the ai
 /// </summary>
 class Minimax
 {
