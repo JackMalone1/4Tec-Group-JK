@@ -11,16 +11,11 @@ Move Minimax::doMove(State state)
 	move.index = -1;
 	move.depth = 100;
 	move.score = -10000000000;
-	auto start = high_resolution_clock::now();
 	CheckerType player = CheckerType::Yellow;
 	int currentDepth = 0;
 	int alpha = -10000000;
 	int beta = 10000000;
 	Move bestmove = getBestMove(state, player, currentDepth, move, alpha, beta);
-	auto stop = high_resolution_clock::now();
-	auto duration = duration_cast<microseconds>(stop - start);
-	std::cout << "Time taken by function: "
-		<< duration.count() / 1000000 << "." << duration.count() / 100000 << " seconds" << std::endl;
 	state.setPieceAtPosition(bestmove.index, CheckerType::Yellow);
 	moves.clear();
 	return bestmove;
@@ -112,10 +107,6 @@ Move Minimax::getBestMove(State& state, CheckerType& player, int depth, Move& mo
 	}
 	int bestMove = 0;
 	int bestDepth = MAX_DEPTH + 1;
-	if (depth == 0)
-	{
-		std::cout << "Moves checked" << moves.size();
-	}
 	
 	if (player == CheckerType::Red)
 	{
@@ -252,5 +243,4 @@ bool Minimax::areAllColour(CheckerType& colour, std::array<CheckerType, 3>& arr)
 void Minimax::SetMaxDepth(int t_maxDepth)
 {
 	MAX_DEPTH = t_maxDepth;
-	std::cout << "Max Depth: " << MAX_DEPTH;
 }

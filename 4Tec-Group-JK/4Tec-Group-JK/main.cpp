@@ -16,10 +16,6 @@
 
 int main()
 {
-	for (int i = 0; i < 64; i++)
-	{
-		std::cout << i / 16 << std::endl;
-	}
 	srand(static_cast<unsigned>(time(nullptr)));
 	Game game;
 	game.run();

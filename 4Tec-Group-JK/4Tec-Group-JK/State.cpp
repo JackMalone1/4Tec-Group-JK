@@ -185,7 +185,6 @@ State::State()
 	{
 		m_pieces.push_back(CheckerType::None);
 	}
-	std::cout << "\n";
 }
 
 /// <summary>
@@ -354,10 +353,6 @@ std::array<CheckerType, 3> State::getAllOnSameColumn(int index) const
 std::array<CheckerType, 3> State::getAllStraightDown(int index) const
 {
 	std::array<CheckerType, 3> arr{};
-	if (index == 16)
-	{
-		std::cout << "";
-	}
 	int boardNumber = (index / BOARD_SIZE);
 	int currentIndex = 0;
 	for (int i = 0; i < boardNumber; ++i)
