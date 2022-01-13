@@ -7,6 +7,7 @@
 #include "Checker.h"
 #include "Globals.h"
 #include "State.h"
+#include "Minimax.h"
 
 class Board
 {
@@ -16,32 +17,52 @@ public:
 	~Board();
 	void update();
 	void render(sf::RenderWindow& t_window);
-	void placePiece(sf::Vector2i t_mousePosition);
 	void switchView();
-	void placePiece(int row, int col, int board);
+	bool placePiece(int row, int col, int board);
 	void aiTurn();
 	bool gameOver();
+	void updateDisplayOfBoard();
+
+	Minimax m_ai;
+	void setCheckerPosition();
+
 private:
 
-	//std::array<std::array<std::array<Checker*, 4>, 4>, 4> m_boards;
+	void setCheckerOrigin();
+	void resetCheckers();
+
 	sf::Texture m_boardTexture;
-	sf::Sprite m_board;
+	std::vector<Checker> m_checkers;
+	std::vector<sf::Sprite> m_board;
 	std::string m_directory;
 	sf::RenderWindow& m_window;
 
-	sf::Vector2f m_targetPos = { 400.f, 350.f };
+	std::vector<sf::Vector2f> m_targetPos; // 300.0f, 200.0f
+	sf::Vector2f m_defaultPos1 = { 150.0f, 250.0f };
+	sf::Vector2f m_defaultPos2 = { 450.0f, 250.0f };
+	sf::Vector2f m_defaultPos3 = { 150.0f, 550.0f };
+	sf::Vector2f m_defaultPos4 = { 450.0f, 550.0f };
+	sf::Vector2f m_offset = { 2.5f , 47.5f };
 	sf::Vector2f m_viewSize;
 
 	sf::View v;
 
-	int m_boarder = 15;
-	float m_boardMoveSpeed = 0.2f;
+	sf::RenderTexture m_checkerGroup1;
+	sf::RenderTexture m_checkerGroup2;
+	sf::RenderTexture m_checkerGroup3;
+	sf::RenderTexture m_checkerGroup4;
+
+	sf::Sprite m_checks;
+
+	int row = 0;
+	int col = 0;
+	float m_boardMoveSpeed = 5.0f;
+	float m_boardRotSpeed = 5.0f;
 	bool m_viewOn = false;
 	bool m_inPosition = false;
 
-	/// Testing
-	sf::CircleShape m_circ;
-
+	sf::Vector2f m_boardOffset = sf::Vector2f(0, 0);
+	sf::Vector2f m_checkerOffset;
 	State state;
 };
 #endif

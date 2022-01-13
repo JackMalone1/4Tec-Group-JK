@@ -19,7 +19,7 @@ Jack: (32.5)
 - Evaluation Function (7.5)
 - Internal World Representation (5)
 - Efficiency Considerations (7.5)
-- Extra (5)
+- Doxygen (5)
 
 Kiernen: (32.5)
 
@@ -27,7 +27,7 @@ Kiernen: (32.5)
 - Player Interface (10)
 - Efficiency Considerations (2.5)
 - Enjoyability (5)
-- Doxygen (5)
+- Extra (5)
 
 Szymon: (35)
 
