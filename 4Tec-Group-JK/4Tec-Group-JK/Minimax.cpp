@@ -138,11 +138,15 @@ Move Minimax::getBestMove(State& state, CheckerType& player, int depth, Move& mo
 }
 
 /// <summary>
-/// 
+/// Takes in a state and returns a static evaluation of the position for the colour passed in.
+/// It generates a score based on if the move that they played will result in a win for them or if it will stop the opponent from winning
+/// If the player has lost in this position then the position is marked badly
+/// A move is marked better if they play either in a corner or beside more of their own pieces and reduces the score
+/// if they play directly beside the opponent if it is not blocking them from winning
 /// </summary>
-/// <param name="state"></param>
-/// <param name="player"></param>
-/// <param name="move"></param>
+/// <param name="state">the current board state</param>
+/// <param name="player">the player who's move it is</param>
+/// <param name="move">the move that was played last in this position</param>
 /// <returns></returns>
 int Minimax::evaluate(State& state, CheckerType player, Move& move)
 {
