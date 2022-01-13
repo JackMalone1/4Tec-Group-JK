@@ -147,7 +147,7 @@ Move Minimax::getBestMove(State& state, CheckerType& player, int depth, Move& mo
 /// <param name="state">the current board state</param>
 /// <param name="player">the player who's move it is</param>
 /// <param name="move">the move that was played last in this position</param>
-/// <returns></returns>
+/// <returns>returns a score representing the evaluation of the position for the current player</returns>
 int Minimax::evaluate(State& state, CheckerType player, Move& move)
 {
 	CheckerType oppositeColour = (player == CheckerType::Red) ? CheckerType::Yellow : CheckerType::Red;
