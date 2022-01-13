@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['board_2ecpp_0',['Board.cpp',['../_board_8cpp.html',1,'']]],
-  ['board_2eh_1',['Board.h',['../_board_8h.html',1,'']]]
+  ['audio_2ecpp_0',['Audio.cpp',['../_audio_8cpp.html',1,'']]],
+  ['audio_2eh_1',['Audio.h',['../_audio_8h.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['checker_0',['Checker',['../class_checker.html',1,'']]]
+  ['board_0',['Board',['../class_board.html',1,'']]]
 ];

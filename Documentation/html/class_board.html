@@ -5,14 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>4Tec: Board Class Reference</title>
+<title>4Tec-Jack-Kiernen-Szymon: Board Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtreedata.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -25,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">4Tec<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">4Tec-Jack-Kiernen-Szymon<span id="projectnumber">&#160;v1.0.0</span>
    </div>
    <div id="projectbrief">Software implementation of the board game 4Tec</div>
   </td>
@@ -51,23 +47,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('class_board.html',''); initResizable(); });
-/* @license-end */
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -82,42 +61,59 @@ $(document).ready(function(){initNavTree('class_board.html',''); initResizable()
 </iframe>
 </div>
 
+</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_board-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Board Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class holds the checkers and all 4 boards  
+ <a href="class_board.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_board_8h_source.html">Board.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aedb98f6950b5da17ae147a8a9b441e1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#aedb98f6950b5da17ae147a8a9b441e1a">Board</a> (sf::RenderWindow &amp;t_window)</td></tr>
+<tr class="memdesc:aedb98f6950b5da17ae147a8a9b441e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the constructor for the <a class="el" href="class_board.html" title="This class holds the checkers and all 4 boards">Board</a> class: Initializes values for needed variables Creates 4 boards Creates all checkers  <a href="class_board.html#aedb98f6950b5da17ae147a8a9b441e1a">More...</a><br /></td></tr>
 <tr class="separator:aedb98f6950b5da17ae147a8a9b441e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af73f45730119a1fd8f6670f53f959e68"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#af73f45730119a1fd8f6670f53f959e68">~Board</a> ()</td></tr>
 <tr class="separator:af73f45730119a1fd8f6670f53f959e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa170cb05bb38de48e19a72b51d898eca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#aa170cb05bb38de48e19a72b51d898eca">update</a> ()</td></tr>
 <tr class="separator:aa170cb05bb38de48e19a72b51d898eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb65e8ad2b6e23c2f81c20ea7d1505c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#acb65e8ad2b6e23c2f81c20ea7d1505c9">render</a> (sf::RenderWindow &amp;t_window)</td></tr>
+<tr class="memdesc:acb65e8ad2b6e23c2f81c20ea7d1505c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is called in the games render function, it renders the board and all the checkers to the screen, alongside the ui that allows you to play the game.  <a href="class_board.html#acb65e8ad2b6e23c2f81c20ea7d1505c9">More...</a><br /></td></tr>
 <tr class="separator:acb65e8ad2b6e23c2f81c20ea7d1505c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8833be65b5b1ea1bb9246f76a8f6a2de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a8833be65b5b1ea1bb9246f76a8f6a2de">placePiece</a> (sf::Vector2i t_mousePosition)</td></tr>
-<tr class="separator:a8833be65b5b1ea1bb9246f76a8f6a2de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14beff758ecb0b3d8771197e9379e367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a14beff758ecb0b3d8771197e9379e367">switchView</a> ()</td></tr>
+<tr class="memdesc:a14beff758ecb0b3d8771197e9379e367"><td class="mdescLeft">&#160;</td><td class="mdescRight">This checks to see if we need to be changing the view from 2D to (fake) 3D  <a href="class_board.html#a14beff758ecb0b3d8771197e9379e367">More...</a><br /></td></tr>
 <tr class="separator:a14beff758ecb0b3d8771197e9379e367"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6fdfd4b4b3718fa56fba11dffc7d251"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#af6fdfd4b4b3718fa56fba11dffc7d251">placePiece</a> (int row, int col, int board)</td></tr>
+<tr class="memdesc:af6fdfd4b4b3718fa56fba11dffc7d251"><td class="mdescLeft">&#160;</td><td class="mdescRight">This checks if there is a piece already in the position on the board you are trying to place a piece on, if there is no piece in the position then you will place a red piece in that position  <a href="class_board.html#af6fdfd4b4b3718fa56fba11dffc7d251">More...</a><br /></td></tr>
 <tr class="separator:af6fdfd4b4b3718fa56fba11dffc7d251"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebbc16bded6ce5d795ffce064dd2dc63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#aebbc16bded6ce5d795ffce064dd2dc63">aiTurn</a> ()</td></tr>
+<tr class="memdesc:aebbc16bded6ce5d795ffce064dd2dc63"><td class="mdescLeft">&#160;</td><td class="mdescRight">This gets the AI move and sets the position on the board then updates the display  <a href="class_board.html#aebbc16bded6ce5d795ffce064dd2dc63">More...</a><br /></td></tr>
 <tr class="separator:aebbc16bded6ce5d795ffce064dd2dc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab41f02cc8fc2e07a089e6d320f2dc074"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#ab41f02cc8fc2e07a089e6d320f2dc074">gameOver</a> ()</td></tr>
+<tr class="memdesc:ab41f02cc8fc2e07a089e6d320f2dc074"><td class="mdescLeft">&#160;</td><td class="mdescRight">This checks if the game is over or not and returns the state  <a href="class_board.html#ab41f02cc8fc2e07a089e6d320f2dc074">More...</a><br /></td></tr>
 <tr class="separator:ab41f02cc8fc2e07a089e6d320f2dc074"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a751170d1696454357573216394d6dcdf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#a751170d1696454357573216394d6dcdf">updateDisplayOfBoard</a> ()</td></tr>
+<tr class="memdesc:a751170d1696454357573216394d6dcdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This updates the display of the board in the debug window, incase someone would want to play the game and view it in ASCII  <a href="class_board.html#a751170d1696454357573216394d6dcdf">More...</a><br /></td></tr>
 <tr class="separator:a751170d1696454357573216394d6dcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8614233acd580506139f20b6bc039f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#af8614233acd580506139f20b6bc039f7">setCheckerPosition</a> ()</td></tr>
+<tr class="memdesc:af8614233acd580506139f20b6bc039f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">setCheckerPosition is used to set each checker in their correct place on the correct board by using just an index. We will use this for easier complete manipulation when changing the views from 2d to 3d.  <a href="class_board.html#af8614233acd580506139f20b6bc039f7">More...</a><br /></td></tr>
+<tr class="separator:af8614233acd580506139f20b6bc039f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ad0fe0fdbd79a6ddfbc3d1e7314933749"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_minimax.html">Minimax</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_board.html#ad0fe0fdbd79a6ddfbc3d1e7314933749">m_ai</a></td></tr>
+<tr class="separator:ad0fe0fdbd79a6ddfbc3d1e7314933749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_board_8h_source.html#l00012">12</a> of file <a class="el" href="_board_8h_source.html">Board.h</a>.</p>
+<div class="textblock"><p >This class holds the checkers and all 4 boards </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aedb98f6950b5da17ae147a8a9b441e1a" name="aedb98f6950b5da17ae147a8a9b441e1a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aedb98f6950b5da17ae147a8a9b441e1a">&#9670;&nbsp;</a></span>Board()</h2>
@@ -135,7 +131,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00003">3</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This is the constructor for the <a class="el" href="class_board.html" title="This class holds the checkers and all 4 boards">Board</a> class: Initializes values for needed variables Creates 4 boards Creates all checkers </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t_window</td><td>Render Window</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -153,8 +155,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00030">30</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
 
 </div>
 </div>
@@ -174,7 +174,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00120">120</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This gets the AI move and sets the position on the board then updates the display </p>
 
 </div>
 </div>
@@ -193,12 +193,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00127">127</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This checks if the game is over or not and returns the state </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
 <a id="af6fdfd4b4b3718fa56fba11dffc7d251" name="af6fdfd4b4b3718fa56fba11dffc7d251"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6fdfd4b4b3718fa56fba11dffc7d251">&#9670;&nbsp;</a></span>placePiece() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af6fdfd4b4b3718fa56fba11dffc7d251">&#9670;&nbsp;</a></span>placePiece()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,27 +230,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00110">110</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a8833be65b5b1ea1bb9246f76a8f6a2de" name="a8833be65b5b1ea1bb9246f76a8f6a2de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8833be65b5b1ea1bb9246f76a8f6a2de">&#9670;&nbsp;</a></span>placePiece() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Board::placePiece </td>
-          <td>(</td>
-          <td class="paramtype">sf::Vector2i&#160;</td>
-          <td class="paramname"><em>t_mousePosition</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00086">86</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This checks if there is a piece already in the position on the board you are trying to place a piece on, if there is no piece in the position then you will place a red piece in that position </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">row</td><td></td></tr>
+    <tr><td class="paramname">col</td><td></td></tr>
+    <tr><td class="paramname">board</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>
@@ -269,7 +259,32 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00038">38</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This is called in the games render function, it renders the board and all the checkers to the screen, alongside the ui that allows you to play the game. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t_window</td><td>We need to pass in the game window to display all necessary objects to the player</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af8614233acd580506139f20b6bc039f7" name="af8614233acd580506139f20b6bc039f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8614233acd580506139f20b6bc039f7">&#9670;&nbsp;</a></span>setCheckerPosition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Board::setCheckerPosition </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>setCheckerPosition is used to set each checker in their correct place on the correct board by using just an index. We will use this for easier complete manipulation when changing the views from 2d to 3d. </p>
 
 </div>
 </div>
@@ -288,7 +303,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00098">98</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This checks to see if we need to be changing the view from 2D to (fake) 3D </p>
 
 </div>
 </div>
@@ -307,8 +322,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00034">34</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
-
 </div>
 </div>
 <a id="a751170d1696454357573216394d6dcdf" name="a751170d1696454357573216394d6dcdf"></a>
@@ -326,22 +339,33 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_board_8cpp_source.html#l00132">132</a> of file <a class="el" href="_board_8cpp_source.html">Board.cpp</a>.</p>
+<p>This updates the display of the board in the debug window, incase someone would want to play the game and view it in ASCII </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad0fe0fdbd79a6ddfbc3d1e7314933749" name="ad0fe0fdbd79a6ddfbc3d1e7314933749"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0fe0fdbd79a6ddfbc3d1e7314933749">&#9670;&nbsp;</a></span>m_ai</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_minimax.html">Minimax</a> Board::m_ai</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>E:/college/AI/4Tec-Group-JK/4Tec-Group-JK/4Tec-Group-JK/<a class="el" href="_board_8h_source.html">Board.h</a></li>
-<li>E:/college/AI/4Tec-Group-JK/4Tec-Group-JK/4Tec-Group-JK/<a class="el" href="_board_8cpp_source.html">Board.cpp</a></li>
+<li>E:/college/AI/4Tec-Group-JK/4Tec-Group-JK/4Tec-Group-JK/<a class="el" href="_board_8cpp.html">Board.cpp</a></li>
 </ul>
 </div><!-- contents -->
-</div><!-- doc-content -->
 <!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="navelem"><a class="el" href="class_board.html">Board</a></li>
-    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
-  </ul>
-</div>
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+</small></address>
 </body>
 </html>
