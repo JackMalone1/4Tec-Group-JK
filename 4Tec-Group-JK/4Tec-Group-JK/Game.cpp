@@ -3,12 +3,13 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC" },
-	m_exitGame{ false }, //when true game will exit,
-	m_board{ m_window }
+	m_exitGame{ false } //when true game will exit,
+	//m_board{ m_window }
 {
 	m_window.setFramerateLimit(fps);
 	ImGui::SFML::Init(m_window);
-	m_board.updateDisplayOfBoard();
+	m_board = new Board(m_window);
+	m_board->updateDisplayOfBoard();
 	//updateGUI();
 }
 
@@ -53,13 +54,13 @@ void Game::processEvents()
 		if (event.mouseButton.button == sf::Mouse::Left &&
 			event.type == sf::Event::MouseButtonReleased)
 		{
-			m_board.placePiece(sf::Mouse::getPosition(m_window));
+			m_board->placePiece(sf::Mouse::getPosition(m_window));
 		}
 
 		// Turn on/off isometric view
 		if (event.KeyReleased == event.type && event.key.code == sf::Keyboard::A)
 		{
-			m_board.switchView();
+			m_board->switchView();
 		}
 	}
 }
@@ -94,7 +95,7 @@ void Game::render()
 	//updateGUI();
 	m_window.clear(sf::Color::White);
 
-	m_board.render(m_window);
+	m_board->render(m_window);
 
 	ImGui::SFML::Render(m_window);
 	m_window.display();
@@ -102,35 +103,78 @@ void Game::render()
 
 void Game::updateGUI()
 {
-	ImGui::Begin("Hello, world!");
-	if (ImGui::SliderInt("Row", &input, 1, 4))
+	if (playingGame)
 	{
-		std::cout << input << std::endl;
-	}
+		ImGui::Begin("Hello, world!");
 
-	if (ImGui::SliderInt("Col", &col, 1, 4))
-	{
-		std::cout << col << std::endl;
-	}
-
-	if (ImGui::SliderInt("Board", &board, 1, 4))
-	{
-		std::cout << board << std::endl;
-	}
-
-	if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
-	{
-		if (m_board.placePiece(input - 1, col - 1, board - 1))
+		if (ImGui::SliderInt("Row", &input, 1, 4))
 		{
-			m_board.updateDisplayOfBoard();
-			if (m_board.gameOver()) m_window.close();
-			std::cout << "Placed piece at row: " << input << " at col: " << col << " on board: " << board << std::endl;
-			m_board.aiTurn();
-			if (m_board.gameOver()) m_window.close();
+			std::cout << input << std::endl;
 		}
+
+		if (ImGui::SliderInt("Col", &col, 1, 4))
+		{
+			std::cout << col << std::endl;
+		}
+
+		if (ImGui::SliderInt("Board", &board, 1, 4))
+		{
+			std::cout << board << std::endl;
+		}
+
+		if (ImGui::Button("Select Square", sf::Vector2f(100.0f, 100.0f)))
+		{
+			if (m_board->placePiece(input - 1, col - 1, board - 1))
+			{
+				m_board->updateDisplayOfBoard();
+				if (m_board->gameOver()) playingGame = false;
+				std::cout << "Placed piece at row: " << input << " at col: " << col << " on board: " << board << std::endl;
+				m_board->aiTurn();
+				if (m_board->gameOver()) playingGame = false;
+			}
+		}
+
+		ImGui::End();
 	}
 
-	ImGui::End();
+
+	if (!playingGame)
+	{
+		ImGui::Begin("Difficulty level");
+
+		if (ImGui::Button("Easy", sf::Vector2f(100.0f, 100.0f)))
+		{
+			delete m_board;
+
+			m_board = new Board(m_window);
+			m_board->updateDisplayOfBoard();
+
+			m_board->m_ai.SetMaxDepth(2);
+			playingGame = true;
+		}
+		else if (ImGui::Button("Medium", sf::Vector2f(100.0f, 100.0f)))
+		{
+			delete m_board;
+
+			m_board = new Board(m_window);
+			m_board->updateDisplayOfBoard();
+
+			m_board->m_ai.SetMaxDepth(1);
+			playingGame = true;
+		}
+		else if (ImGui::Button("Hard", sf::Vector2f(100.0f, 100.0f)))
+		{
+			delete m_board;
+
+			m_board = new Board(m_window);
+			m_board->updateDisplayOfBoard();
+
+			m_board->m_ai.SetMaxDepth(3);
+			playingGame = true;
+		}
+
+		ImGui::End();
+	}
 
 	ImGui::Begin("Quit Game");
 	

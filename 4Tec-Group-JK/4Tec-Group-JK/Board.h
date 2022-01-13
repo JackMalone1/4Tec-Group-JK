@@ -23,6 +23,8 @@ public:
 	void aiTurn();
 	bool gameOver();
 	void updateDisplayOfBoard();
+
+	Minimax m_ai;
 private:
 
 	//std::array<std::array<std::array<Checker*, 4>, 4>, 4> m_boards;
@@ -43,7 +45,6 @@ private:
 
 	/// Testing
 	sf::CircleShape m_circ;
-	Minimax m_ai;
 	State state;
 };
 #endif

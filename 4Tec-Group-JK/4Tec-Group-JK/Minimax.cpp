@@ -248,3 +248,9 @@ bool Minimax::areAllColour(CheckerType& colour, std::array<CheckerType, 3>& arr)
 	}
 	return true;
 }
+
+void Minimax::SetMaxDepth(int t_maxDepth)
+{
+	MAX_DEPTH = t_maxDepth;
+	std::cout << "Max Depth: " << MAX_DEPTH;
+}
