@@ -1,6 +1,9 @@
 #include "Game.h"
 #include <iostream>
 
+/// <summary>
+/// Constructor for the game creates all the necessary game stuff
+/// </summary>
 Game::Game() :
 	m_window{ sf::VideoMode{ G_WINDOW_WIDTH, G_WINDOW_HEIGHT, 32U }, "4TEC", sf::Style::None },
 	m_exitGame{ false } //when true game will exit
@@ -17,6 +20,9 @@ Game::~Game()
 	ImGui::SFML::Shutdown();
 }
 
+/// <summary>
+/// Runs the game loop
+/// </summary>
 void Game::run()
 {
 	sf::Clock clock;
@@ -33,6 +39,9 @@ void Game::run()
 	}
 }
 
+/// <summary>
+/// Processes all the game events when different keys and events are pressed
+/// </summary>
 void Game::processEvents()
 {
 	sf::Event event;
@@ -41,7 +50,7 @@ void Game::processEvents()
 		ImGui::SFML::ProcessEvent(m_window, event);
 		if (sf::Event::Closed == event.type) // window message
 		{
-m_window.close();
+			m_window.close();
 		}
 		if (sf::Event::KeyPressed == event.type ||
 			sf::Event::MouseButtonReleased == event.type) //user pressed a key
@@ -56,6 +65,10 @@ m_window.close();
 	}
 }
 
+/// <summary>
+/// Processes the current event passed into the function
+/// </summary>
+/// <param name="t_event">The event type</param>
 void Game::processKeys(sf::Event t_event)
 {
 	if (sf::Keyboard::Escape == t_event.key.code)
@@ -64,12 +77,19 @@ void Game::processKeys(sf::Event t_event)
 	}
 }
 
+/// <summary>
+/// Runs every frame to update all necessary game stuff
+/// </summary>
+/// <param name="t_deltaTime">current time since last frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
 	m_deltaTime = t_deltaTime;
 	m_board->update();
 }
 
+/// <summary>
+/// Draws all the stuff in the game
+/// </summary>
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
