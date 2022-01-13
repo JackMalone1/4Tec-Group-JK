@@ -22,7 +22,7 @@ public:
 	sf::Vector2f getPosition();
 	sf::Vector2f getOrigin();
 	sf::Sprite m_checker;
-
+	void resetTexture();
 private:
 
 	sf::Texture m_checkerTexture;

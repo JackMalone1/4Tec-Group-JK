@@ -102,3 +102,8 @@ void Checker::setOrigin(sf::Vector2f t_pos)
 {
 	m_checker.setOrigin(t_pos);
 }
+
+void Checker::resetTexture()
+{
+	m_checker.setTexture(m_checkerTexture);
+}

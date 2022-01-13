@@ -72,10 +72,10 @@ Board::Board(sf::RenderWindow& t_window) :
 
 	v = t_window.getDefaultView();
 
-	m_checkerGroup1.create(208, 208);
-	m_checkerGroup2.create(208, 208);
-	m_checkerGroup3.create(208, 208);
-	m_checkerGroup4.create(208, 208);
+	m_checkerGroup1.create(808, 808);
+	m_checkerGroup2.create(808, 808);
+	m_checkerGroup3.create(808, 808);
+	m_checkerGroup4.create(808, 808);
 }
 
 /// <summary>
@@ -267,6 +267,13 @@ void Board::render(sf::RenderWindow& t_window)
 	}
 
 	m_checkerGroup1.clear(sf::Color::Transparent);
+	m_checkerGroup2.clear(sf::Color::Transparent);
+	m_checkerGroup3.clear(sf::Color::Transparent);
+	m_checkerGroup4.clear(sf::Color::Transparent);
+	for (auto& checker : m_checkers)
+	{
+		checker.resetTexture();
+	}
 	for (int i = 0; i < 64; i++)
 	{
 		if (i < 16 && i >= 0)
@@ -292,18 +299,27 @@ void Board::render(sf::RenderWindow& t_window)
 	
 	m_checkerGroup1.display();
 	m_checks.setTexture(m_checkerGroup1.getTexture());
+	m_checks.setRotation(45);
+	m_checks.setPosition(m_board.at(0).getPosition());
+	m_checks.setRotation(m_board.at(0).getRotation());
 	m_window.draw(m_checks);
 
 	m_checkerGroup2.display();
 	m_checks.setTexture(m_checkerGroup2.getTexture());
+	m_checks.setPosition(m_board.at(1).getPosition());
+	m_checks.setRotation(m_board.at(1).getRotation());
 	m_window.draw(m_checks);
 
 	m_checkerGroup3.display();
 	m_checks.setTexture(m_checkerGroup3.getTexture());
+	m_checks.setPosition(m_board.at(2).getPosition());
+	m_checks.setRotation(m_board.at(2).getRotation());
 	m_window.draw(m_checks);
 
 	m_checkerGroup4.display();
 	m_checks.setTexture(m_checkerGroup4.getTexture());
+	m_checks.setPosition(m_board.at(3).getPosition());
+	m_checks.setRotation(m_board.at(3).getRotation());
 	m_window.draw(m_checks);
 
 	if (m_viewOn)
