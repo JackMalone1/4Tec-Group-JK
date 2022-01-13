@@ -72,10 +72,10 @@ Board::Board(sf::RenderWindow& t_window) :
 
 	v = t_window.getDefaultView();
 
-	m_checkerGroup1.create(900, 980);
-	m_checkerGroup2.create(900, 980);
-	m_checkerGroup3.create(900, 980);
-	m_checkerGroup4.create(900, 980);
+	m_checkerGroup1.create(1500, 1500);
+	m_checkerGroup2.create(1500, 1500);
+	m_checkerGroup3.create(1500, 1500);
+	m_checkerGroup4.create(1500, 1500);
 }
 
 /// <summary>
@@ -276,7 +276,7 @@ void Board::render(sf::RenderWindow& t_window)
 	m_checks.setTexture(m_checkerGroup1.getTexture());
 	m_checks.setRotation(45);
 	m_checks.setOrigin(m_board.at(0).getPosition());
-	m_checks.setPosition(m_board.at(0).getPosition());
+	m_checks.setPosition(m_board.at(0).getPosition() );
 	m_checks.setRotation(m_board.at(0).getRotation());
 	m_window.draw(m_checks);
 
