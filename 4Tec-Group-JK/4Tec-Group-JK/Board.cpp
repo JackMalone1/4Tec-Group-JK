@@ -93,33 +93,36 @@ void Board::setCheckerPosition()
 			row++;
 		}
 
+
 		if (i < 16 && i >= 0)
 		{
 			m_checkers.at(i).setPosition(sf::Vector2f(
-				/*X*/ (m_board.at(0).getGlobalBounds().width / 4 * (i % 4) + m_board.at(0).getPosition().x - (m_board.at(0).getGlobalBounds().width / 2) + 2.5),
-				/*Y*/ (m_board.at(0).getGlobalBounds().height / 4 * row) + m_board.at(0).getPosition().y - (m_board.at(0).getGlobalBounds().height / 2) - 47.5));
+				/*X*/ (m_board.at(0).getGlobalBounds().width / 4 * (i % 4) + m_board.at(0).getPosition().x - (m_board.at(0).getGlobalBounds().width / 2) + m_offset.x),
+				/*Y*/ (m_board.at(0).getGlobalBounds().height / 4 * row) + m_board.at(0).getPosition().y - (m_board.at(0).getGlobalBounds().height / 2) - m_offset.y));
 		}
 
 		if (i < 32 && i >= 16)
 		{
 			m_checkers.at(i).setPosition(sf::Vector2f(
-				/*X*/ (m_board.at(1).getGlobalBounds().width / 4 * (i % 4) + m_board.at(1).getPosition().x - (m_board.at(1).getGlobalBounds().width / 2) + 2.5),
-				/*Y*/ (m_board.at(1).getGlobalBounds().height / 4 * (row - 4)) + m_board.at(1).getPosition().y - (m_board.at(1).getGlobalBounds().height / 2) - 47.5));
+				/*X*/ (m_board.at(1).getGlobalBounds().width / 4 * (i % 4) + m_board.at(1).getPosition().x - (m_board.at(1).getGlobalBounds().width / 2) + m_offset.x),
+				/*Y*/ (m_board.at(1).getGlobalBounds().height / 4 * (row - 4)) + m_board.at(1).getPosition().y - (m_board.at(1).getGlobalBounds().height / 2) - m_offset.y));
 		}
 
 		if (i < 48 && i >= 32)
 		{
 			m_checkers.at(i).setPosition(sf::Vector2f(
-				/*X*/ (m_board.at(2).getGlobalBounds().width / 4 * (i % 4) + m_board.at(2).getPosition().x - (m_board.at(2).getGlobalBounds().width / 2) + 2.5),
-				/*Y*/ (m_board.at(2).getGlobalBounds().height / 4 * (row - 8)) + m_board.at(2).getPosition().y - (m_board.at(2).getGlobalBounds().height / 2) - 47.5));
+				/*X*/ (m_board.at(2).getGlobalBounds().width / 4 * (i % 4) + m_board.at(2).getPosition().x - (m_board.at(2).getGlobalBounds().width / 2) + m_offset.x),
+				/*Y*/ (m_board.at(2).getGlobalBounds().height / 4 * (row - 8)) + m_board.at(2).getPosition().y - (m_board.at(2).getGlobalBounds().height / 2) - m_offset.y));
 		}
 
 		if (i < 64 && i >= 48)
 		{
 			m_checkers.at(i).setPosition(sf::Vector2f(
-				/*X*/ (m_board.at(3).getGlobalBounds().width / 4 * (i % 4) + m_board.at(3).getPosition().x - (m_board.at(3).getGlobalBounds().width / 2) + 2.5),
-				/*Y*/ (m_board.at(3).getGlobalBounds().height / 4 * (row - 12)) + m_board.at(3).getPosition().y - (m_board.at(3).getGlobalBounds().height / 2) - 47.5));
+				/*X*/ (m_board.at(3).getGlobalBounds().width / 4 * (i % 4) + m_board.at(3).getPosition().x - (m_board.at(3).getGlobalBounds().width / 2) + m_offset.x),
+				/*Y*/ (m_board.at(3).getGlobalBounds().height / 4 * (row - 12)) + m_board.at(3).getPosition().y - (m_board.at(3).getGlobalBounds().height / 2) - m_offset.y));
 		}
+
+		m_checkers.at(i).setOrigin(sf::Vector2f(0, 0));
 	}
 }
 
@@ -128,6 +131,7 @@ void Board::setCheckerOrigin()
 	if ((int)m_checks.getRotation() == 45.0f)
 	{
 		row = 0;
+
 		for (int i = 0; i < 64; i++)
 		{
 			if (i % 4 == 0)
@@ -137,23 +141,75 @@ void Board::setCheckerOrigin()
 
 			if (i < 16 && i >= 0)
 			{
-				m_checkers.at(i).setOrigin(m_checkers.at(i).getPosition());
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x - m_targetPos.at(0).x - m_offset.x, 
+					m_checkers.at(i).getPosition().y - m_targetPos.at(0).y + m_offset.y));
 			}
 
 			if (i < 32 && i >= 16)
 			{
-				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x, m_checkers.at(i).getPosition().y - m_targetPos.at(0).y));
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x - m_targetPos.at(1).x - m_offset.x, 
+					m_checkers.at(i).getPosition().y - m_targetPos.at(1).y + m_offset.y));
 			}
 
 			if (i < 48 && i >= 32)
 			{
-				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x, m_checkers.at(i).getPosition().y - m_targetPos.at(1).y));
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x - m_targetPos.at(2).x - m_offset.x, 
+					m_checkers.at(i).getPosition().y - m_targetPos.at(2).y + m_offset.y));
 			}
 
 			if (i < 64 && i >= 48)
 			{
-				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x, m_checkers.at(i).getPosition().y - m_targetPos.at(2).y));
+				m_checkers.at(i).setOrigin(sf::Vector2f(m_checkers.at(i).getPosition().x - m_targetPos.at(3).x - m_offset.x, 
+					m_checkers.at(i).getPosition().y - m_targetPos.at(3).y + m_offset.y));
 			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 64; i++)
+		{
+			m_checkers.at(i).setOrigin(sf::Vector2f(0, 0));
+		}
+	}
+}
+
+void Board::resetCheckers()
+{
+	row = 0;
+
+	for (int i = 0; i < 64; i++)
+	{
+		if (i % 4 == 0)
+		{
+			row++;
+		}
+
+		if (i < 16 && i >= 0)
+		{
+			m_checkers.at(i).setPosition(sf::Vector2f(
+				/*X*/ (m_board.at(0).getGlobalBounds().width / 4 * (i % 4) + m_defaultPos1.x - (m_board.at(0).getGlobalBounds().width / 2) + 2.5),
+				/*Y*/ (m_board.at(0).getGlobalBounds().height / 4 * row) + m_defaultPos1.y - (m_board.at(0).getGlobalBounds().height / 2) - 47.5));
+		}
+
+		if (i < 32 && i >= 16)
+		{
+			m_checkers.at(i).setPosition(sf::Vector2f(
+				/*X*/ (m_board.at(1).getGlobalBounds().width / 4 * (i % 4) + m_defaultPos2.x - (m_board.at(1).getGlobalBounds().width / 2) + 2.5),
+				/*Y*/ (m_board.at(1).getGlobalBounds().height / 4 * (row - 4)) + m_defaultPos2.y - (m_board.at(1).getGlobalBounds().height / 2) - 47.5));
+		}
+
+		if (i < 48 && i >= 32)
+		{
+			m_checkers.at(i).setPosition(sf::Vector2f(
+				/*X*/ (m_board.at(2).getGlobalBounds().width / 4 * (i % 4) + m_defaultPos3.x - (m_board.at(2).getGlobalBounds().width / 2) + 2.5),
+				/*Y*/ (m_board.at(2).getGlobalBounds().height / 4 * (row - 8)) + m_defaultPos3.y - (m_board.at(2).getGlobalBounds().height / 2) - 47.5));
+		}
+
+		if (i < 64 && i >= 48)
+		{
+			m_checkers.at(i).setPosition(sf::Vector2f(
+				/*X*/ (m_board.at(3).getGlobalBounds().width / 4 * (i % 4) + m_defaultPos4.x - (m_board.at(3).getGlobalBounds().width / 2) + 2.5),
+				/*Y*/ (m_board.at(3).getGlobalBounds().height / 4 * (row - 12)) + m_defaultPos4.y - (m_board.at(3).getGlobalBounds().height / 2) - 47.5));
 		}
 	}
 }
@@ -178,6 +234,7 @@ void Board::render(sf::RenderWindow& t_window)
 	{
 		v.setCenter(v.getSize() * .5f);
 		t_window.setView(v);
+
 		for (int i = 0; i < 4; i++)
 		{
 			// If the boards X position is less than the Target X position
@@ -226,12 +283,7 @@ void Board::render(sf::RenderWindow& t_window)
 			}
 		}
 	}
-
-	std::cout << "1st Board - 1st Checker = " << m_checkers.at(0).getPosition().x << ", " << m_checkers.at(0).getPosition().y << std::endl;
-	std::cout << "2nd Board - 1st Checker = " << m_checkers.at(16).getPosition().x << ", " << m_checkers.at(16).getPosition().y << std::endl;
-	std::cout << "3rd Board - 1st Checker = " << m_checkers.at(32).getPosition().x << ", " << m_checkers.at(32).getPosition().y << std::endl;
-	std::cout << "4th Board - 1st Checker = " << m_checkers.at(48).getPosition().x << ", " << m_checkers.at(48).getPosition().y << std::endl;
-
+	
 	setCheckerOrigin();
 
 	for (int i = 0; i < 4; i++)
@@ -274,7 +326,6 @@ void Board::render(sf::RenderWindow& t_window)
 	
 	m_checkerGroup1.display();
 	m_checks.setTexture(m_checkerGroup1.getTexture());
-	m_checks.setRotation(45);
 	m_checks.setOrigin(m_board.at(0).getPosition());
 	m_checks.setPosition(m_board.at(0).getPosition() );
 	m_checks.setRotation(m_board.at(0).getRotation());
@@ -342,8 +393,7 @@ void Board::switchView()
 			m_board.at(2).setPosition(m_defaultPos3.x, m_defaultPos3.y);
 			m_board.at(3).setPosition(m_defaultPos4.x, m_defaultPos4.y);
 			m_board.at(i).setRotation(0.f);
-			//setCheckerRotation();
-			//setCheckerPosition();
+			resetCheckers();
 		}
 		else
 		{

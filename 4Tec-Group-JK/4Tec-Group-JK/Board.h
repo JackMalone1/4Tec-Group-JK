@@ -28,6 +28,7 @@ public:
 private:
 
 	void setCheckerOrigin();
+	void resetCheckers();
 
 	sf::Texture m_boardTexture;
 	std::vector<Checker> m_checkers;
@@ -40,6 +41,7 @@ private:
 	sf::Vector2f m_defaultPos2 = { 450.0f, 250.0f };
 	sf::Vector2f m_defaultPos3 = { 150.0f, 550.0f };
 	sf::Vector2f m_defaultPos4 = { 450.0f, 550.0f };
+	sf::Vector2f m_offset = { 2.5f , 47.5f };
 	sf::Vector2f m_viewSize;
 
 	sf::View v;
