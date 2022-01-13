@@ -2,7 +2,6 @@
 
 const int G_WINDOW_WIDTH = 900;
 const int G_WINDOW_HEIGHT = 980;
-const int G_CHECKER_COUNT = 21;
 
 const int G_GRID_WIDTH = 208;
 

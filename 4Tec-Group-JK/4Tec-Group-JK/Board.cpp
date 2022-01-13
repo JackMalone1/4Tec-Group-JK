@@ -6,7 +6,7 @@
 /// Creates 4 boards
 /// Creates all checkers
 /// </summary>
-/// <param name="t_window"> We pass the window in to the constructor to help us manipulate the view that the board and pieces are being displayed at.</param>
+/// <param name="t_window">Render Window</param>
 Board::Board(sf::RenderWindow& t_window) :
 	m_window(t_window)
 {
@@ -126,6 +126,9 @@ void Board::setCheckerPosition()
 	}
 }
 
+/// <summary>
+/// This sets the origin of the checkers so they are in the correct poisiton after the sfml view has changed
+/// </summary>
 void Board::setCheckerOrigin()
 {
 	if ((int)m_checks.getRotation() == 315.0f)
@@ -173,6 +176,9 @@ void Board::setCheckerOrigin()
 	}
 }
 
+/// <summary>
+/// This sets the checkers back to their default positions after returning to the 2d view
+/// </summary>
 void Board::resetCheckers()
 {
 	row = 0;
@@ -403,6 +409,9 @@ bool Board::placePiece(int row, int col, int board)
 	return false;
 }
 
+/// <summary>
+/// This gets the AI move and sets the position on the board then updates the display
+/// </summary>
 void Board::aiTurn()
 {
 	Move move = m_ai.doMove(state);
@@ -410,15 +419,22 @@ void Board::aiTurn()
 	updateDisplayOfBoard();
 }
 
+/// <summary>
+/// This checks if the game is over or not and returns the state
+/// </summary>
+/// <returns></returns>
 bool Board::gameOver()
 {
 	return state.checkVictory() != GameOver::None;
 }
 
+/// <summary>
+/// This updates the display of the board in the debug window, incase someone would want to play the game and view it in ASCII
+/// </summary>
 void Board::updateDisplayOfBoard()
 {
 	std::vector<CheckerType> pieces = state.getPieces();
-	//system("cls");
+	system("cls");
 	int numberPlaced = 0;
 	for (int i = 0; i < pieces.size(); ++i)
 	{
@@ -453,5 +469,4 @@ void Board::updateDisplayOfBoard()
 			numberPlaced = 0;
 		}
 	}
-
 }

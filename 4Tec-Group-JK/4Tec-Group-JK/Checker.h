@@ -6,6 +6,9 @@
 
 #include "Globals.h"
 
+/// <summary>
+/// This class is for 1 single checker, instantiated elsewhere in the program
+/// </summary>
 class Checker
 {
 public:
