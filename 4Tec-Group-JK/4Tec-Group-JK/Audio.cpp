@@ -1,7 +1,8 @@
 #include "Audio.h"
 
 /// <summary>
-/// This constructor creates the Audio object and calls the Setup() function and the playBackgroundMusic() function because these need to be called before anything else happens
+/// This constructor creates the Audio object and calls the Setup() function and the playBackgroundMusic() 
+/// function because these need to be called before anything else happens
 /// </summary>
 Audio::Audio()
 {
